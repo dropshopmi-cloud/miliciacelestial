@@ -12,11 +12,20 @@ import logoMilicia from '@/assets/logo-milicia-celestial.png';
 const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { signIn, signUp, user, loading } = useAuth();
 
   useEffect(() => {
+    // Auto-fill
+    const savedEmail = localStorage.getItem('mc_auth_email');
+    const savedPassword = localStorage.getItem('mc_auth_password');
+    const savedRemember = localStorage.getItem('mc_auth_remember');
+    if (savedEmail) setEmail(savedEmail);
+    if (savedPassword) setPassword(savedPassword);
+    if (savedRemember) setRemember(savedRemember === 'true');
+
     if (!loading && user) {
       navigate('/');
     }
@@ -41,7 +50,7 @@ const Auth = () => {
     try {
       // Try to sign in first
       const { error: signInError } = await signIn(email, password);
-      
+
       if (signInError) {
         // If user doesn't exist, create account automatically
         if (signInError.message.includes('Invalid login')) {
@@ -53,17 +62,35 @@ const Auth = () => {
               toast.error(signUpError.message);
             }
           } else {
-            toast.success('Conta criada! Bem-vindo à Milícia Celestial.');
+            if (remember) {
+              localStorage.setItem('mc_auth_email', email);
+              localStorage.setItem('mc_auth_password', password);
+              localStorage.setItem('mc_auth_remember', 'true');
+            } else {
+              localStorage.removeItem('mc_auth_email');
+              localStorage.removeItem('mc_auth_password');
+              localStorage.setItem('mc_auth_remember', 'false');
+            }
+            toast.success('Acesso liberado! Bem-vindo(a).');
             navigate('/');
           }
         } else {
           toast.error(signInError.message);
         }
       } else {
+        if (remember) {
+          localStorage.setItem('mc_auth_email', email);
+          localStorage.setItem('mc_auth_password', password);
+          localStorage.setItem('mc_auth_remember', 'true');
+        } else {
+          localStorage.removeItem('mc_auth_email');
+          localStorage.removeItem('mc_auth_password');
+          localStorage.setItem('mc_auth_remember', 'false');
+        }
         toast.success('Bem-vindo! Que os Arcanjos te protejam.');
         navigate('/');
       }
-    } catch (err) {
+    } catch {
       toast.error('Erro ao processar sua solicitação');
     }
 
@@ -108,6 +135,7 @@ const Auth = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-12 text-base h-12"
+                    autoComplete="email"
                   />
                 </div>
               </div>
@@ -125,20 +153,26 @@ const Auth = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-12 text-base h-12"
+                    autoComplete="current-password"
                   />
                 </div>
+
+                <label className="flex items-center gap-2 text-sm text-muted-foreground font-body select-none">
+                  <input
+                    type="checkbox"
+                    checked={remember}
+                    onChange={(e) => setRemember(e.target.checked)}
+                    className="h-4 w-4 rounded border-border"
+                  />
+                  Lembrar neste dispositivo
+                </label>
+
                 <p className="text-sm text-muted-foreground">
-                  Use o email de compra. Na primeira vez, sua senha será salva.
+                  Use o email de compra. Na primeira vez, definimos sua senha automaticamente.
                 </p>
               </div>
 
-              <Button
-                type="submit"
-                variant="gold"
-                size="xl"
-                className="w-full text-lg"
-                disabled={isLoading}
-              >
+              <Button type="submit" variant="gold" size="xl" className="w-full text-lg" disabled={isLoading}>
                 {isLoading ? (
                   'Entrando...'
                 ) : (

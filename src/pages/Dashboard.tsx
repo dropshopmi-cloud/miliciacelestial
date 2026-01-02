@@ -4,14 +4,33 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/hooks/useAuth';
-import { prayerCategories, readingCategories, meditationCategories, novenas, rosary, liturgicalCalendar, archangelsInfo, dailyBiblePassages, dailyPrayers, dailyQuotes } from '@/data/religiousContent';
+import { prayerCategories } from '@/data/prayersExpanded';
+import { readingCategories } from '@/data/readingsExpanded';
+import { devotionalJourney } from '@/data/devotional30';
+import { meditationCategories, novenas, rosary, liturgicalCalendar, archangelsInfo, dailyBiblePassages, dailyPrayers, dailyQuotes } from '@/data/religiousContent';
 import { toast } from 'sonner';
-import { 
-  User, LogOut, BookOpen, Heart, Sparkles, Shield, 
-  Cross, Menu, X, Clock, ChevronRight, Star, ArrowLeft,
-  Calendar, BookHeart, Flower2, Check, Bell
+import {
+  User,
+  LogOut,
+  BookOpen,
+  Heart,
+  Sparkles,
+  Shield,
+  Cross,
+  Menu,
+  X,
+  Clock,
+  ChevronRight,
+  Star,
+  ArrowLeft,
+  Calendar,
+  BookHeart,
+  Flower2,
+  Check,
+  ScrollText,
 } from 'lucide-react';
 import logoMilicia from '@/assets/logo-milicia-celestial.png';
+import archangelsHero from '@/assets/three-archangels.jpg';
 
 const Dashboard = () => {
   const [userName, setUserName] = useState('');
@@ -85,6 +104,7 @@ const Dashboard = () => {
     { id: 'home', label: 'Início', icon: Shield },
     { id: 'prayers', label: 'Orações', icon: Heart },
     { id: 'readings', label: 'Leituras', icon: BookOpen },
+    { id: 'devotional', label: 'Devocional', icon: ScrollText },
     { id: 'meditation', label: 'Meditação', icon: Sparkles },
     { id: 'novenas', label: 'Novenas', icon: BookHeart },
     { id: 'rosary', label: 'Rosário', icon: Flower2 },
@@ -104,31 +124,63 @@ const Dashboard = () => {
     if (selectedItem) {
       return <DetailView item={selectedItem} goBack={goBack} section={activeSection} />;
     }
-    
+
     switch (activeSection) {
-      case 'prayers': 
-        return selectedCategory 
-          ? <PrayersList category={selectedCategory} goBack={goBack} onSelect={setSelectedItem} />
-          : <PrayersCategories onSelect={setSelectedCategory} goBack={goBack} />;
-      case 'readings': 
-        return selectedCategory 
-          ? <ReadingsList category={selectedCategory} goBack={goBack} onSelect={setSelectedItem} />
-          : <ReadingsCategories onSelect={setSelectedCategory} goBack={goBack} />;
-      case 'meditation': 
-        return selectedCategory 
-          ? <MeditationsList category={selectedCategory} goBack={goBack} onSelect={setSelectedItem} />
-          : <MeditationsCategories onSelect={setSelectedCategory} goBack={goBack} />;
-      case 'novenas': 
-        return selectedItem 
-          ? <DetailView item={selectedItem} goBack={goBack} section="novenas" />
-          : <NovenasSection goBack={goBack} onSelect={setSelectedItem} progress={novenaProgress} toggleDay={toggleNovenaDay} />;
-      case 'rosary': 
-        return selectedCategory 
-          ? <RosaryDetail mystery={selectedCategory} goBack={goBack} />
-          : <RosarySection goBack={goBack} onSelect={setSelectedCategory} />;
-      case 'calendar': return <CalendarSection goBack={goBack} />;
-      case 'archangels': return <ArchangelsSection goBack={goBack} />;
-      default: return <HomeSection userName={userName} dailyPassage={dailyPassage} dailyPrayer={dailyPrayer} dailyQuote={dailyQuote} setActiveSection={setActiveSection} />;
+      case 'prayers':
+        return selectedCategory ? (
+          <PrayersList category={selectedCategory} goBack={goBack} onSelect={setSelectedItem} />
+        ) : (
+          <PrayersCategories onSelect={setSelectedCategory} goBack={goBack} />
+        );
+      case 'readings':
+        return selectedCategory ? (
+          <ReadingsList category={selectedCategory} goBack={goBack} onSelect={setSelectedItem} />
+        ) : (
+          <ReadingsCategories onSelect={setSelectedCategory} goBack={goBack} />
+        );
+      case 'devotional':
+        return selectedItem ? (
+          <DevotionalDayView day={selectedItem} goBack={goBack} />
+        ) : (
+          <DevotionalList goBack={goBack} onSelect={setSelectedItem} />
+        );
+      case 'meditation':
+        return selectedCategory ? (
+          <MeditationsList category={selectedCategory} goBack={goBack} onSelect={setSelectedItem} />
+        ) : (
+          <MeditationsCategories onSelect={setSelectedCategory} goBack={goBack} />
+        );
+      case 'novenas':
+        return selectedItem ? (
+          <DetailView item={selectedItem} goBack={goBack} section="novenas" />
+        ) : (
+          <NovenasSection
+            goBack={goBack}
+            onSelect={setSelectedItem}
+            progress={novenaProgress}
+            toggleDay={toggleNovenaDay}
+          />
+        );
+      case 'rosary':
+        return selectedCategory ? (
+          <RosaryDetail mystery={selectedCategory} goBack={goBack} />
+        ) : (
+          <RosarySection goBack={goBack} onSelect={setSelectedCategory} />
+        );
+      case 'calendar':
+        return <CalendarSection goBack={goBack} />;
+      case 'archangels':
+        return <ArchangelsSection goBack={goBack} />;
+      default:
+        return (
+          <HomeSection
+            userName={userName}
+            dailyPassage={dailyPassage}
+            dailyPrayer={dailyPrayer}
+            dailyQuote={dailyQuote}
+            setActiveSection={setActiveSection}
+          />
+        );
     }
   };
 
@@ -246,16 +298,54 @@ const BackButton = ({ onClick }: { onClick: () => void }) => (
 
 const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, setActiveSection }: any) => (
   <div className="space-y-6 animate-fade-in">
-    <Card variant="sacred" className="bg-gradient-to-r from-navy/80 to-navy-dark/80">
-      <CardContent className="p-6">
-        <h1 className="text-2xl font-display text-gold-light mb-2">Bem-vindo{userName ? `, ${userName}` : ''}!</h1>
-        <p className="text-cream/80 italic font-body">"{dailyQuote}"</p>
+    <Card variant="sacred" className="overflow-hidden">
+      <CardContent className="p-0">
+        <div className="grid lg:grid-cols-5">
+          <div className="lg:col-span-3 p-6 bg-gradient-to-r from-navy/80 to-navy-dark/80">
+            <h1 className="text-2xl font-display text-gold-light mb-2">
+              Bem-vindo{userName ? `, ${userName}` : ''}!
+            </h1>
+            <p className="text-cream/85 italic font-body leading-relaxed">"{dailyQuote}"</p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {[
+                { id: 'prayers', label: 'Orações' },
+                { id: 'readings', label: 'Leituras' },
+                { id: 'devotional', label: 'Devocional' },
+                { id: 'novenas', label: 'Novenas' },
+              ].map((it) => (
+                <Button key={it.id} variant="ghost" size="sm" onClick={() => setActiveSection(it.id)} className="bg-gold/10 hover:bg-gold/20 text-cream">
+                  {it.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-2 relative min-h-[220px]">
+            <div className="absolute inset-0">
+              <img
+                src={archangelsHero}
+                alt="Os Três Arcanjos"
+                loading="lazy"
+                className="w-full h-full object-cover opacity-90"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-background/10 via-background/40 to-background" />
+            </div>
+            <div className="relative h-full p-6 flex items-end">
+              <div className="animate-float">
+                <p className="font-display text-foreground text-sm">Sob a guarda de</p>
+                <p className="font-display text-gold text-lg">Miguel • Gabriel • Rafael</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </CardContent>
     </Card>
 
     <Card variant="sacred">
       <CardHeader className="pb-2">
-        <CardTitle className="flex items-center gap-2 text-foreground text-lg"><BookOpen className="w-5 h-5 text-gold" />Passagem do Dia</CardTitle>
+        <CardTitle className="flex items-center gap-2 text-foreground text-lg">
+          <BookOpen className="w-5 h-5 text-gold" />Passagem do Dia
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <p className="text-foreground/90 font-body text-base leading-relaxed italic">"{dailyPassage.passage}"</p>
@@ -265,7 +355,9 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, setActiv
 
     <Card variant="sacred">
       <CardHeader className="pb-2">
-        <CardTitle className="flex items-center gap-2 text-foreground text-lg"><Heart className="w-5 h-5 text-gold" />Oração do Dia</CardTitle>
+        <CardTitle className="flex items-center gap-2 text-foreground text-lg">
+          <Heart className="w-5 h-5 text-gold" />Oração do Dia
+        </CardTitle>
         <CardDescription>{dailyPrayer.title}</CardDescription>
       </CardHeader>
       <CardContent>
@@ -275,9 +367,9 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, setActiv
 
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {[
-        { id: 'prayers', icon: Heart, title: 'Orações', desc: '10 categorias' },
-        { id: 'readings', icon: BookOpen, title: 'Leituras', desc: '4 temas' },
-        { id: 'meditation', icon: Sparkles, title: 'Meditação', desc: '6 categorias' },
+        { id: 'prayers', icon: Heart, title: 'Orações', desc: 'Textos longos' },
+        { id: 'readings', icon: BookOpen, title: 'Leituras', desc: 'Conteúdo aprofundado' },
+        { id: 'devotional', icon: ScrollText, title: 'Devocional', desc: '30 dias guiados' },
         { id: 'archangels', icon: Cross, title: 'Arcanjos', desc: 'Miguel, Gabriel, Rafael' },
       ].map((item) => (
         <Card key={item.id} variant="sacred" className="cursor-pointer group hover:border-gold/50" onClick={() => setActiveSection(item.id)}>
@@ -296,7 +388,9 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, setActiv
 const PrayersCategories = ({ onSelect, goBack }: { onSelect: (cat: string) => void; goBack: () => void }) => (
   <div className="space-y-6 animate-fade-in">
     <BackButton onClick={goBack} />
-    <h2 className="text-2xl font-display text-foreground flex items-center gap-2"><Heart className="w-6 h-6 text-gold" />Orações por Tema</h2>
+    <h2 className="text-2xl font-display text-foreground flex items-center gap-2">
+      <Heart className="w-6 h-6 text-gold" />Orações por Tema
+    </h2>
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
       {Object.entries(prayerCategories).map(([key, cat]) => (
         <Card key={key} variant="sacred" className="cursor-pointer hover:border-gold/50" onClick={() => onSelect(key)}>
@@ -334,7 +428,9 @@ const PrayersList = ({ category, goBack, onSelect }: { category: string; goBack:
 const ReadingsCategories = ({ onSelect, goBack }: { onSelect: (cat: string) => void; goBack: () => void }) => (
   <div className="space-y-6 animate-fade-in">
     <BackButton onClick={goBack} />
-    <h2 className="text-2xl font-display text-foreground flex items-center gap-2"><BookOpen className="w-6 h-6 text-gold" />Leituras Espirituais</h2>
+    <h2 className="text-2xl font-display text-foreground flex items-center gap-2">
+      <BookOpen className="w-6 h-6 text-gold" />Leituras
+    </h2>
     <div className="grid md:grid-cols-2 gap-4">
       {Object.entries(readingCategories).map(([key, cat]) => (
         <Card key={key} variant="sacred" className="cursor-pointer hover:border-gold/50" onClick={() => onSelect(key)}>
@@ -367,6 +463,47 @@ const ReadingsList = ({ category, goBack, onSelect }: { category: string; goBack
     </div>
   );
 };
+
+const DevotionalList = ({ goBack, onSelect }: { goBack: () => void; onSelect: (day: any) => void }) => (
+  <div className="space-y-6 animate-fade-in">
+    <BackButton onClick={goBack} />
+    <h2 className="text-2xl font-display text-foreground flex items-center gap-2">
+      <ScrollText className="w-6 h-6 text-gold" />{devotionalJourney.title}
+    </h2>
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {devotionalJourney.days.map((d) => (
+        <Card key={d.day} variant="sacred" className="cursor-pointer hover:border-gold/50" onClick={() => onSelect(d)}>
+          <CardContent className="p-5">
+            <p className="text-gold font-display text-sm mb-1">Dia {d.day}</p>
+            <h3 className="font-display text-lg text-foreground mb-1">{d.theme}</h3>
+            <p className="text-muted-foreground text-sm font-body line-clamp-3">{d.reflection.replace(/^Dia\s\d+\nTema:.*\n\n/, '')}</p>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  </div>
+);
+
+const DevotionalDayView = ({ day, goBack }: { day: any; goBack: () => void }) => (
+  <div className="space-y-6 animate-fade-in">
+    <BackButton onClick={goBack} />
+    <Card variant="sacred">
+      <CardHeader>
+        <CardTitle className="text-foreground text-xl">Dia {day.day} — {day.theme}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div>
+          <h4 className="font-display text-gold mb-2">Reflexão</h4>
+          <p className="text-foreground/90 font-body text-base leading-relaxed whitespace-pre-line">{day.reflection.replace(/^Dia\s\d+\nTema:.*\n\n/, '')}</p>
+        </div>
+        <div>
+          <h4 className="font-display text-gold mb-2">Oração</h4>
+          <p className="text-foreground/80 font-body italic whitespace-pre-line">{day.prayer}</p>
+        </div>
+      </CardContent>
+    </Card>
+  </div>
+);
 
 const MeditationsCategories = ({ onSelect, goBack }: { onSelect: (cat: string) => void; goBack: () => void }) => (
   <div className="space-y-6 animate-fade-in">
