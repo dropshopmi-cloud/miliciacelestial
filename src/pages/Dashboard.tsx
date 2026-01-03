@@ -1,13 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/hooks/useAuth';
+import { useUserProgress } from '@/hooks/useUserProgress';
 import { prayerCategories } from '@/data/prayersExpanded';
 import { readingCategories } from '@/data/readingsExpanded';
 import { devotionalJourney } from '@/data/devotional30';
 import { meditationCategories, novenas, rosary, liturgicalCalendar, archangelsInfo, dailyBiblePassages, dailyPrayers, dailyQuotes } from '@/data/religiousContent';
+import { SearchFilter } from '@/components/SearchFilter';
+import { ProgressButtons } from '@/components/ProgressButtons';
+import { Carousel } from '@/components/Carousel';
 import { toast } from 'sonner';
 import {
   User,
@@ -28,9 +33,21 @@ import {
   Flower2,
   Check,
   ScrollText,
+  Sun,
+  Moon,
 } from 'lucide-react';
-import logoMilicia from '@/assets/logo-milicia-celestial.png';
 import archangelsHero from '@/assets/three-archangels.jpg';
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+  transition: { duration: 0.4 }
+};
+
+const staggerContainer = {
+  animate: { transition: { staggerChildren: 0.1 } }
+};
 
 const Dashboard = () => {
   const [userName, setUserName] = useState('');
@@ -41,8 +58,11 @@ const Dashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [novenaProgress, setNovenaProgress] = useState<number[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const navigate = useNavigate();
   const { user, profile, loading, signOut, updateProfile } = useAuth();
+  const { toggleRead, toggleFavorite, isRead, isFavorite, getFavorites } = useUserProgress();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -52,7 +72,6 @@ const Dashboard = () => {
     if (profile?.name) {
       setUserName(profile.name);
     }
-    // Load novena progress from localStorage
     const saved = localStorage.getItem('novenaProgress');
     if (saved) setNovenaProgress(JSON.parse(saved));
   }, [user, profile, loading, navigate]);
@@ -92,6 +111,8 @@ const Dashboard = () => {
     } else {
       setActiveSection('home');
     }
+    setSearchQuery('');
+    setShowFavoritesOnly(false);
   };
 
   const today = new Date();
@@ -99,6 +120,7 @@ const Dashboard = () => {
   const dailyPassage = dailyBiblePassages[(dayOfMonth - 1) % dailyBiblePassages.length];
   const dailyPrayer = dailyPrayers[(dayOfMonth - 1) % dailyPrayers.length];
   const dailyQuote = dailyQuotes[dayOfMonth % dailyQuotes.length];
+  const todayDevotional = devotionalJourney.days[(dayOfMonth - 1) % devotionalJourney.days.length];
 
   const menuItems = [
     { id: 'home', label: 'Início', icon: Shield },
@@ -114,35 +136,95 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-navy-dark">
-        <div className="animate-pulse text-gold font-display text-xl">Carregando...</div>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-sacred">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
+          <div className="w-16 h-16 border-4 border-gold/30 border-t-gold rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gold font-display text-xl">Preparando sua jornada...</p>
+        </motion.div>
       </div>
     );
   }
 
   const renderContent = () => {
     if (selectedItem) {
-      return <DetailView item={selectedItem} goBack={goBack} section={activeSection} />;
+      return (
+        <DetailView 
+          item={selectedItem} 
+          goBack={goBack} 
+          section={activeSection}
+          isRead={isRead}
+          isFavorite={isFavorite}
+          toggleRead={toggleRead}
+          toggleFavorite={toggleFavorite}
+        />
+      );
     }
 
     switch (activeSection) {
       case 'prayers':
         return selectedCategory ? (
-          <PrayersList category={selectedCategory} goBack={goBack} onSelect={setSelectedItem} />
+          <PrayersList 
+            category={selectedCategory} 
+            goBack={goBack} 
+            onSelect={setSelectedItem}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            showFavoritesOnly={showFavoritesOnly}
+            setShowFavoritesOnly={setShowFavoritesOnly}
+            isRead={isRead}
+            isFavorite={isFavorite}
+            toggleRead={toggleRead}
+            toggleFavorite={toggleFavorite}
+            getFavorites={getFavorites}
+          />
         ) : (
           <PrayersCategories onSelect={setSelectedCategory} goBack={goBack} />
         );
       case 'readings':
         return selectedCategory ? (
-          <ReadingsList category={selectedCategory} goBack={goBack} onSelect={setSelectedItem} />
+          <ReadingsList 
+            category={selectedCategory} 
+            goBack={goBack} 
+            onSelect={setSelectedItem}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            showFavoritesOnly={showFavoritesOnly}
+            setShowFavoritesOnly={setShowFavoritesOnly}
+            isRead={isRead}
+            isFavorite={isFavorite}
+            toggleRead={toggleRead}
+            toggleFavorite={toggleFavorite}
+            getFavorites={getFavorites}
+          />
         ) : (
           <ReadingsCategories onSelect={setSelectedCategory} goBack={goBack} />
         );
       case 'devotional':
         return selectedItem ? (
-          <DevotionalDayView day={selectedItem} goBack={goBack} />
+          <DevotionalDayView 
+            day={selectedItem} 
+            goBack={goBack}
+            isRead={isRead}
+            isFavorite={isFavorite}
+            toggleRead={toggleRead}
+            toggleFavorite={toggleFavorite}
+          />
         ) : (
-          <DevotionalList goBack={goBack} onSelect={setSelectedItem} />
+          <DevotionalList 
+            goBack={goBack} 
+            onSelect={setSelectedItem}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            showFavoritesOnly={showFavoritesOnly}
+            setShowFavoritesOnly={setShowFavoritesOnly}
+            isRead={isRead}
+            isFavorite={isFavorite}
+            getFavorites={getFavorites}
+          />
         );
       case 'meditation':
         return selectedCategory ? (
@@ -152,14 +234,9 @@ const Dashboard = () => {
         );
       case 'novenas':
         return selectedItem ? (
-          <DetailView item={selectedItem} goBack={goBack} section="novenas" />
+          <DetailView item={selectedItem} goBack={goBack} section="novenas" isRead={isRead} isFavorite={isFavorite} toggleRead={toggleRead} toggleFavorite={toggleFavorite} />
         ) : (
-          <NovenasSection
-            goBack={goBack}
-            onSelect={setSelectedItem}
-            progress={novenaProgress}
-            toggleDay={toggleNovenaDay}
-          />
+          <NovenasSection goBack={goBack} onSelect={setSelectedItem} progress={novenaProgress} toggleDay={toggleNovenaDay} />
         );
       case 'rosary':
         return selectedCategory ? (
@@ -178,22 +255,30 @@ const Dashboard = () => {
             dailyPassage={dailyPassage}
             dailyPrayer={dailyPrayer}
             dailyQuote={dailyQuote}
+            todayDevotional={todayDevotional}
+            novenaProgress={novenaProgress}
             setActiveSection={setActiveSection}
+            setSelectedItem={setSelectedItem}
           />
         );
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       {/* Desktop Header */}
-      <header className="hidden lg:flex fixed top-0 left-0 right-0 z-50 bg-navy/95 backdrop-blur-lg border-b border-gold/20 px-6 py-3">
+      <header className="hidden lg:flex fixed top-0 left-0 right-0 z-50 bg-gradient-sacred backdrop-blur-lg border-b border-gold/15 px-6 py-3">
         <div className="flex items-center justify-between w-full max-w-7xl mx-auto">
           <div className="flex items-center gap-4">
-            <img src={logoMilicia} alt="Milícia Celestial" className="w-12 h-12 rounded-full border-2 border-gold/50" />
+            <div className="relative">
+              <div className="absolute inset-0 bg-gold/20 rounded-full blur-lg animate-pulse-slow" />
+              <div className="relative w-12 h-12 rounded-full bg-gradient-divine flex items-center justify-center shadow-glow-gold">
+                <Cross className="w-6 h-6 text-navy-dark" />
+              </div>
+            </div>
             <div>
-              <h1 className="font-display text-xl text-gold-light">Milícia Celestial</h1>
-              <p className="text-cream/60 text-xs font-body">Miguel • Gabriel • Rafael</p>
+              <h1 className="font-decorative text-xl text-gold-light tracking-wide">Sanctuarium</h1>
+              <p className="text-cream/60 text-xs font-body tracking-widest">MIGUEL • GABRIEL • RAFAEL</p>
             </div>
           </div>
           
@@ -201,10 +286,10 @@ const Dashboard = () => {
             {menuItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => { setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); }}
-                className={`px-4 py-2 rounded-lg font-body text-sm transition-all ${
+                onClick={() => { setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); setSearchQuery(''); setShowFavoritesOnly(false); }}
+                className={`px-4 py-2 rounded-lg font-body text-sm transition-all duration-300 ${
                   activeSection === item.id 
-                    ? 'bg-gold/20 text-gold' 
+                    ? 'bg-gold/20 text-gold shadow-sm border border-gold/20' 
                     : 'text-cream/70 hover:text-cream hover:bg-gold/10'
                 }`}
               >
@@ -217,7 +302,7 @@ const Dashboard = () => {
             {editingName ? (
               <div className="flex gap-2">
                 <Input value={tempName} onChange={(e) => setTempName(e.target.value)} placeholder="Seu nome" className="h-9 w-40 bg-navy-light/50 border-gold/30 text-cream text-sm" />
-                <Button size="sm" variant="gold" onClick={handleSaveName}>OK</Button>
+                <Button size="sm" onClick={handleSaveName} className="bg-gold hover:bg-gold-light text-navy-dark">OK</Button>
               </div>
             ) : (
               <button onClick={() => { setEditingName(true); setTempName(userName); }} className="flex items-center gap-2 text-cream hover:text-gold transition-colors">
@@ -225,7 +310,7 @@ const Dashboard = () => {
                 <span className="font-body text-sm">{userName || 'Seu nome'}</span>
               </button>
             )}
-            <Button variant="ghost" size="sm" onClick={handleLogout} className="text-cream/70 hover:text-cream">
+            <Button variant="ghost" size="sm" onClick={handleLogout} className="text-cream/70 hover:text-cream hover:bg-white/5">
               <LogOut className="w-5 h-5" />
             </Button>
           </div>
@@ -233,364 +318,769 @@ const Dashboard = () => {
       </header>
 
       {/* Mobile Header */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-navy/95 backdrop-blur-lg border-b border-gold/20 px-4 py-3">
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-sacred backdrop-blur-lg border-b border-gold/15 px-4 py-3">
         <div className="flex items-center justify-between">
-          <button onClick={() => setMobileMenuOpen(true)} className="text-gold-light">
+          <button onClick={() => setMobileMenuOpen(true)} className="text-gold-light p-2 hover:bg-gold/10 rounded-lg transition-colors">
             <Menu className="w-6 h-6" />
           </button>
           <div className="flex items-center gap-2">
-            <img src={logoMilicia} alt="Logo" className="w-8 h-8 rounded-full" />
-            <h1 className="font-display text-gold-light text-lg">Milícia Celestial</h1>
+            <div className="w-8 h-8 rounded-full bg-gradient-divine flex items-center justify-center">
+              <Cross className="w-4 h-4 text-navy-dark" />
+            </div>
+            <h1 className="font-decorative text-gold-light text-lg tracking-wide">Sanctuarium</h1>
           </div>
-          <button onClick={handleLogout} className="text-gold-light">
+          <button onClick={handleLogout} className="text-gold-light p-2 hover:bg-gold/10 rounded-lg transition-colors">
             <LogOut className="w-5 h-5" />
           </button>
         </div>
       </header>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <>
-          <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
-          <div className="fixed inset-y-0 left-0 z-50 w-72 bg-gradient-to-b from-navy via-navy-dark to-brown p-6 lg:hidden">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="font-display text-gold-light text-lg">Menu</h2>
-              <button onClick={() => setMobileMenuOpen(false)} className="text-gold-light"><X className="w-5 h-5" /></button>
-            </div>
-            <div className="mb-6 p-4 bg-gold/10 rounded-lg">
-              {editingName ? (
-                <div className="flex gap-2">
-                  <Input value={tempName} onChange={(e) => setTempName(e.target.value)} placeholder="Seu nome" className="h-9 text-sm" />
-                  <Button size="sm" variant="gold" onClick={() => { handleSaveName(); setMobileMenuOpen(false); }}>OK</Button>
-                </div>
-              ) : (
-                <button onClick={() => { setEditingName(true); setTempName(userName); }} className="flex items-center gap-2 text-cream">
-                  <User className="w-5 h-5" />
-                  <span className="font-body">{userName || 'Adicionar nome'}</span>
-                </button>
-              )}
-            </div>
-            <nav className="space-y-2">
-              {menuItems.map((item) => (
-                <button key={item.id} onClick={() => { setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); setMobileMenuOpen(false); }} className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${activeSection === item.id ? 'bg-gold/20 text-gold' : 'text-cream/70 hover:bg-gold/10'}`}>
-                  <item.icon className="w-5 h-5" />
-                  <span className="font-body">{item.label}</span>
-                </button>
-              ))}
-            </nav>
-          </div>
-        </>
-      )}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden" 
+              onClick={() => setMobileMenuOpen(false)} 
+            />
+            <motion.div 
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed inset-y-0 left-0 z-50 w-72 bg-gradient-sacred p-6 lg:hidden border-r border-gold/15"
+            >
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="font-decorative text-gold-light text-lg tracking-wide">Menu</h2>
+                <button onClick={() => setMobileMenuOpen(false)} className="text-gold-light hover:text-gold transition-colors"><X className="w-5 h-5" /></button>
+              </div>
+              <div className="mb-6 p-4 bg-gold/10 rounded-xl border border-gold/20">
+                {editingName ? (
+                  <div className="flex gap-2">
+                    <Input value={tempName} onChange={(e) => setTempName(e.target.value)} placeholder="Seu nome" className="h-9 text-sm" />
+                    <Button size="sm" onClick={() => { handleSaveName(); setMobileMenuOpen(false); }} className="bg-gold text-navy-dark">OK</Button>
+                  </div>
+                ) : (
+                  <button onClick={() => { setEditingName(true); setTempName(userName); }} className="flex items-center gap-2 text-cream w-full">
+                    <User className="w-5 h-5 text-gold" />
+                    <span className="font-body">{userName || 'Adicionar nome'}</span>
+                  </button>
+                )}
+              </div>
+              <nav className="space-y-1">
+                {menuItems.map((item, index) => (
+                  <motion.button 
+                    key={item.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    onClick={() => { setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); setMobileMenuOpen(false); setSearchQuery(''); setShowFavoritesOnly(false); }} 
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeSection === item.id ? 'bg-gold/20 text-gold border border-gold/20' : 'text-cream/70 hover:bg-gold/10 hover:text-cream'}`}
+                  >
+                    <item.icon className="w-5 h-5" />
+                    <span className="font-body">{item.label}</span>
+                  </motion.button>
+                ))}
+              </nav>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       <main className="min-h-screen pt-20 lg:pt-24">
-        <div className="max-w-7xl mx-auto p-4 lg:p-8">{renderContent()}</div>
+        <div className="max-w-7xl mx-auto p-4 lg:p-8">
+          <AnimatePresence mode="wait">
+            <motion.div key={activeSection + (selectedCategory || '') + (selectedItem?.id || '')} {...fadeInUp}>
+              {renderContent()}
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </main>
     </div>
   );
 };
 
 const BackButton = ({ onClick }: { onClick: () => void }) => (
-  <button onClick={onClick} className="flex items-center gap-2 text-gold hover:text-gold-light transition-colors mb-6 font-body">
-    <ArrowLeft className="w-5 h-5" />
+  <motion.button 
+    onClick={onClick} 
+    className="flex items-center gap-2 text-gold hover:text-gold-light transition-colors mb-6 font-body group"
+    whileHover={{ x: -4 }}
+  >
+    <ArrowLeft className="w-5 h-5 group-hover:animate-pulse" />
     <span>Voltar</span>
-  </button>
+  </motion.button>
 );
 
-const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, setActiveSection }: any) => (
-  <div className="space-y-6 animate-fade-in">
-    <Card variant="sacred" className="overflow-hidden">
-      <CardContent className="p-0">
-        <div className="grid lg:grid-cols-5">
-          <div className="lg:col-span-3 p-6 bg-gradient-to-r from-navy/80 to-navy-dark/80">
-            <h1 className="text-2xl font-display text-gold-light mb-2">
-              Bem-vindo{userName ? `, ${userName}` : ''}!
-            </h1>
-            <p className="text-cream/85 italic font-body leading-relaxed">"{dailyQuote}"</p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {[
-                { id: 'prayers', label: 'Orações' },
-                { id: 'readings', label: 'Leituras' },
-                { id: 'devotional', label: 'Devocional' },
-                { id: 'novenas', label: 'Novenas' },
-              ].map((it) => (
-                <Button key={it.id} variant="ghost" size="sm" onClick={() => setActiveSection(it.id)} className="bg-gold/10 hover:bg-gold/20 text-cream">
-                  {it.label}
-                </Button>
-              ))}
-            </div>
+const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDevotional, novenaProgress, setActiveSection, setSelectedItem }: any) => {
+  const completedNovenas = novenaProgress.length;
+  
+  return (
+    <motion.div className="space-y-8" variants={staggerContainer} initial="initial" animate="animate">
+      {/* Hero Carousel */}
+      <Carousel className="rounded-2xl overflow-hidden shadow-3d">
+        {/* Slide 1 - Welcome */}
+        <div className="relative min-h-[320px] bg-gradient-celestial">
+          <div className="absolute inset-0">
+            <img src={archangelsHero} alt="Os Três Arcanjos" className="w-full h-full object-cover opacity-40" />
+            <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/95 via-navy/80 to-transparent" />
           </div>
-
-          <div className="lg:col-span-2 relative min-h-[220px]">
-            <div className="absolute inset-0">
-              <img
-                src={archangelsHero}
-                alt="Os Três Arcanjos"
-                loading="lazy"
-                className="w-full h-full object-cover opacity-90"
-              />
-              <div className="absolute inset-0 bg-gradient-to-l from-background/10 via-background/40 to-background" />
-            </div>
-            <div className="relative h-full p-6 flex items-end">
-              <div className="animate-float">
-                <p className="font-display text-foreground text-sm">Sob a guarda de</p>
-                <p className="font-display text-gold text-lg">Miguel • Gabriel • Rafael</p>
+          <div className="relative h-full p-8 flex flex-col justify-center min-h-[320px]">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
+              <p className="text-gold/80 font-body text-sm tracking-widest mb-2">BEM-VINDO</p>
+              <h1 className="text-3xl lg:text-4xl font-display text-cream mb-3">
+                {userName ? `Olá, ${userName}` : 'Paz e Bênçãos'}
+              </h1>
+              <p className="text-cream/80 font-body text-lg max-w-xl italic">"{dailyQuote}"</p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button onClick={() => setActiveSection('prayers')} className="bg-gold hover:bg-gold-light text-navy-dark font-body">
+                  <Heart className="w-4 h-4 mr-2" />
+                  Orações
+                </Button>
+                <Button onClick={() => setActiveSection('devotional')} variant="outline" className="border-gold/30 text-cream hover:bg-gold/10">
+                  <ScrollText className="w-4 h-4 mr-2" />
+                  Devocional
+                </Button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </CardContent>
-    </Card>
 
-    <Card variant="sacred">
-      <CardHeader className="pb-2">
-        <CardTitle className="flex items-center gap-2 text-foreground text-lg">
-          <BookOpen className="w-5 h-5 text-gold" />Passagem do Dia
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-foreground/90 font-body text-base leading-relaxed italic">"{dailyPassage.passage}"</p>
-        <p className="text-gold mt-2 font-body text-sm">{dailyPassage.reference}</p>
-      </CardContent>
-    </Card>
+        {/* Slide 2 - Devotional of the Day */}
+        <div className="relative min-h-[320px] bg-gradient-to-br from-navy-dark via-navy to-brown/50 p-8 flex flex-col justify-center">
+          <div className="absolute top-4 right-4 px-3 py-1 bg-gold/20 rounded-full">
+            <span className="text-gold text-xs font-body">Dia {todayDevotional.day}</span>
+          </div>
+          <p className="text-gold/80 font-body text-sm tracking-widest mb-2">DEVOCIONAL DE HOJE</p>
+          <h2 className="text-2xl lg:text-3xl font-display text-cream mb-4">{todayDevotional.theme}</h2>
+          <p className="text-cream/75 font-body line-clamp-3 max-w-2xl mb-6">
+            {todayDevotional.reflection.substring(0, 200)}...
+          </p>
+          <Button onClick={() => { setActiveSection('devotional'); setSelectedItem(todayDevotional); }} className="bg-gold hover:bg-gold-light text-navy-dark font-body w-fit">
+            Ler Reflexão Completa
+          </Button>
+        </div>
 
-    <Card variant="sacred">
-      <CardHeader className="pb-2">
-        <CardTitle className="flex items-center gap-2 text-foreground text-lg">
-          <Heart className="w-5 h-5 text-gold" />Oração do Dia
-        </CardTitle>
-        <CardDescription>{dailyPrayer.title}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p className="text-foreground/90 font-body text-base leading-relaxed">{dailyPrayer.content}</p>
-      </CardContent>
-    </Card>
+        {/* Slide 3 - Daily Prayer */}
+        <div className="relative min-h-[320px] bg-gradient-to-br from-brown/80 via-navy-dark to-navy p-8 flex flex-col justify-center">
+          <p className="text-gold/80 font-body text-sm tracking-widest mb-2">ORAÇÃO DO DIA</p>
+          <h2 className="text-2xl lg:text-3xl font-display text-cream mb-4">{dailyPrayer.title}</h2>
+          <p className="text-cream/75 font-body line-clamp-4 max-w-2xl mb-6">{dailyPrayer.content}</p>
+          <Button onClick={() => setActiveSection('prayers')} className="bg-gold hover:bg-gold-light text-navy-dark font-body w-fit">
+            Ver Mais Orações
+          </Button>
+        </div>
+      </Carousel>
 
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {[
-        { id: 'prayers', icon: Heart, title: 'Orações', desc: 'Textos longos' },
-        { id: 'readings', icon: BookOpen, title: 'Leituras', desc: 'Conteúdo aprofundado' },
-        { id: 'devotional', icon: ScrollText, title: 'Devocional', desc: '30 dias guiados' },
-        { id: 'archangels', icon: Cross, title: 'Arcanjos', desc: 'Miguel, Gabriel, Rafael' },
-      ].map((item) => (
-        <Card key={item.id} variant="sacred" className="cursor-pointer group hover:border-gold/50" onClick={() => setActiveSection(item.id)}>
-          <CardContent className="p-4">
-            <item.icon className="w-8 h-8 text-gold mb-2" />
-            <h3 className="font-display text-base text-foreground">{item.title}</h3>
-            <p className="text-muted-foreground text-sm font-body">{item.desc}</p>
-            <ChevronRight className="w-4 h-4 text-gold mt-2 group-hover:translate-x-1 transition-transform" />
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  </div>
-);
-
-const PrayersCategories = ({ onSelect, goBack }: { onSelect: (cat: string) => void; goBack: () => void }) => (
-  <div className="space-y-6 animate-fade-in">
-    <BackButton onClick={goBack} />
-    <h2 className="text-2xl font-display text-foreground flex items-center gap-2">
-      <Heart className="w-6 h-6 text-gold" />Orações por Tema
-    </h2>
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {Object.entries(prayerCategories).map(([key, cat]) => (
-        <Card key={key} variant="sacred" className="cursor-pointer hover:border-gold/50" onClick={() => onSelect(key)}>
-          <CardContent className="p-5">
-            <h3 className="font-display text-lg text-foreground mb-1">{cat.name}</h3>
-            <p className="text-muted-foreground text-sm font-body mb-2">{cat.description}</p>
-            <p className="text-gold text-xs">{cat.prayers.length} orações</p>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  </div>
-);
-
-const PrayersList = ({ category, goBack, onSelect }: { category: string; goBack: () => void; onSelect: (item: any) => void }) => {
-  const cat = prayerCategories[category as keyof typeof prayerCategories];
-  return (
-    <div className="space-y-4 animate-fade-in">
-      <BackButton onClick={goBack} />
-      <h2 className="text-2xl font-display text-foreground">{cat.name}</h2>
-      <div className="grid gap-3">
-        {cat.prayers.map((prayer) => (
-          <Card key={prayer.id} variant="sacred" className="cursor-pointer hover:border-gold/50" onClick={() => onSelect(prayer)}>
-            <CardContent className="p-4 flex items-center justify-between">
-              <span className="font-body text-foreground">{prayer.title}</span>
-              <ChevronRight className="w-5 h-5 text-gold" />
-            </CardContent>
-          </Card>
+      {/* Quick Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          { icon: ScrollText, label: 'Devocional', value: `Dia ${todayDevotional.day}`, color: 'text-gold', action: () => setActiveSection('devotional') },
+          { icon: BookHeart, label: 'Novena', value: `${completedNovenas}/15 dias`, color: 'text-green-400', action: () => setActiveSection('novenas') },
+          { icon: Heart, label: 'Orações', value: '107 disponíveis', color: 'text-pink-400', action: () => setActiveSection('prayers') },
+          { icon: BookOpen, label: 'Leituras', value: '12 reflexões', color: 'text-blue-400', action: () => setActiveSection('readings') },
+        ].map((stat, i) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
+          >
+            <Card 
+              className="cursor-pointer group hover:border-gold/30 transition-all duration-300 bg-card/80 backdrop-blur-sm"
+              onClick={stat.action}
+            >
+              <CardContent className="p-4 flex items-center gap-4">
+                <div className={`p-3 rounded-xl bg-muted ${stat.color}`}>
+                  <stat.icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-muted-foreground text-xs font-body">{stat.label}</p>
+                  <p className="text-foreground font-display text-lg">{stat.value}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
       </div>
+
+      {/* Daily Content Grid */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Bible Passage */}
+        <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/10 overflow-hidden">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <div className="p-2 rounded-lg bg-gold/10">
+                <BookOpen className="w-5 h-5 text-gold" />
+              </div>
+              <CardTitle className="text-foreground text-lg font-display">Passagem do Dia</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <blockquote className="text-foreground/85 font-body text-base leading-relaxed italic border-l-2 border-gold/50 pl-4">
+              "{dailyPassage.passage}"
+            </blockquote>
+            <p className="text-gold mt-4 font-display text-sm">{dailyPassage.reference}</p>
+          </CardContent>
+        </Card>
+
+        {/* Today's Prayer */}
+        <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/10 overflow-hidden">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <div className="p-2 rounded-lg bg-gold/10">
+                <Heart className="w-5 h-5 text-gold" />
+              </div>
+              <CardTitle className="text-foreground text-lg font-display">Oração do Dia</CardTitle>
+            </div>
+            <CardDescription className="font-body">{dailyPrayer.title}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-foreground/85 font-body text-base leading-relaxed line-clamp-4">{dailyPrayer.content}</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Quick Access Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          { id: 'prayers', icon: Heart, title: 'Orações', desc: '10 categorias', gradient: 'from-rose-500/20 to-pink-500/10' },
+          { id: 'readings', icon: BookOpen, title: 'Leituras', desc: '4 seções', gradient: 'from-blue-500/20 to-cyan-500/10' },
+          { id: 'meditation', icon: Sparkles, title: 'Meditação', desc: 'Práticas guiadas', gradient: 'from-purple-500/20 to-violet-500/10' },
+          { id: 'archangels', icon: Cross, title: 'Arcanjos', desc: 'Miguel, Gabriel, Rafael', gradient: 'from-gold/20 to-amber-500/10' },
+        ].map((item, i) => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 + i * 0.1 }}
+          >
+            <Card 
+              className={`cursor-pointer group hover:border-gold/40 transition-all duration-300 bg-gradient-to-br ${item.gradient} backdrop-blur-sm`}
+              onClick={() => setActiveSection(item.id)}
+            >
+              <CardContent className="p-5">
+                <item.icon className="w-8 h-8 text-gold mb-3 group-hover:scale-110 transition-transform" />
+                <h3 className="font-display text-lg text-foreground">{item.title}</h3>
+                <p className="text-muted-foreground text-sm font-body">{item.desc}</p>
+                <ChevronRight className="w-4 h-4 text-gold mt-2 group-hover:translate-x-1 transition-transform" />
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+
+const PrayersCategories = ({ onSelect, goBack }: { onSelect: (cat: string) => void; goBack: () => void }) => (
+  <div className="space-y-6">
+    <BackButton onClick={goBack} />
+    <div className="flex items-center gap-3 mb-6">
+      <div className="p-3 rounded-xl bg-gold/10">
+        <Heart className="w-6 h-6 text-gold" />
+      </div>
+      <div>
+        <h2 className="text-2xl font-display text-foreground">Orações por Tema</h2>
+        <p className="text-muted-foreground font-body text-sm">Escolha uma categoria para explorar</p>
+      </div>
+    </div>
+    <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4" variants={staggerContainer} initial="initial" animate="animate">
+      {Object.entries(prayerCategories).map(([key, cat], i) => (
+        <motion.div key={key} variants={fadeInUp}>
+          <Card className="cursor-pointer hover:border-gold/40 hover:shadow-lg transition-all duration-300 group" onClick={() => onSelect(key)}>
+            <CardContent className="p-6">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h3 className="font-display text-xl text-foreground mb-2 group-hover:text-gold transition-colors">{cat.name}</h3>
+                  <p className="text-muted-foreground text-sm font-body mb-3">{cat.description}</p>
+                  <span className="text-gold text-xs font-body bg-gold/10 px-2 py-1 rounded-full">{cat.prayers.length} orações</span>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gold group-hover:translate-x-1 transition-transform" />
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      ))}
+    </motion.div>
+  </div>
+);
+
+const PrayersList = ({ category, goBack, onSelect, searchQuery, setSearchQuery, showFavoritesOnly, setShowFavoritesOnly, isRead, isFavorite, toggleRead, toggleFavorite, getFavorites }: any) => {
+  const cat = prayerCategories[category as keyof typeof prayerCategories];
+  const favoriteIds = getFavorites('prayer');
+  
+  const filteredPrayers = useMemo(() => {
+    let prayers = cat.prayers;
+    
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      prayers = prayers.filter(p => 
+        p.title.toLowerCase().includes(query) || 
+        p.content.toLowerCase().includes(query)
+      );
+    }
+    
+    if (showFavoritesOnly) {
+      prayers = prayers.filter(p => favoriteIds.includes(`${category}-${p.id}`));
+    }
+    
+    return prayers;
+  }, [cat.prayers, searchQuery, showFavoritesOnly, favoriteIds, category]);
+
+  return (
+    <div className="space-y-6">
+      <BackButton onClick={goBack} />
+      <div className="flex items-center gap-3 mb-2">
+        <div className="p-3 rounded-xl bg-gold/10">
+          <Heart className="w-6 h-6 text-gold" />
+        </div>
+        <h2 className="text-2xl font-display text-foreground">{cat.name}</h2>
+      </div>
+      
+      <SearchFilter
+        placeholder="Buscar orações..."
+        onSearch={setSearchQuery}
+        showFavoritesFilter
+        favoritesActive={showFavoritesOnly}
+        onFilterFavorites={() => setShowFavoritesOnly(!showFavoritesOnly)}
+      />
+
+      <motion.div className="grid gap-3" variants={staggerContainer} initial="initial" animate="animate">
+        {filteredPrayers.length === 0 ? (
+          <Card className="p-8 text-center">
+            <p className="text-muted-foreground font-body">Nenhuma oração encontrada</p>
+          </Card>
+        ) : (
+          filteredPrayers.map((prayer) => {
+            const itemId = `${category}-${prayer.id}`;
+            return (
+              <motion.div key={prayer.id} variants={fadeInUp}>
+                <Card className="cursor-pointer hover:border-gold/40 transition-all duration-300 group" onClick={() => onSelect({ ...prayer, category })}>
+                  <CardContent className="p-4 flex items-center justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        {isRead('prayer', itemId) && (
+                          <span className="text-xs bg-green-500/20 text-green-500 px-2 py-0.5 rounded-full">Lido</span>
+                        )}
+                        <span className="font-body text-foreground group-hover:text-gold transition-colors">{prayer.title}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <ProgressButtons
+                        size="sm"
+                        isRead={isRead('prayer', itemId)}
+                        isFavorite={isFavorite('prayer', itemId)}
+                        onToggleRead={() => toggleRead('prayer', itemId)}
+                        onToggleFavorite={() => toggleFavorite('prayer', itemId)}
+                      />
+                      <ChevronRight className="w-5 h-5 text-gold" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })
+        )}
+      </motion.div>
     </div>
   );
 };
 
 const ReadingsCategories = ({ onSelect, goBack }: { onSelect: (cat: string) => void; goBack: () => void }) => (
-  <div className="space-y-6 animate-fade-in">
+  <div className="space-y-6">
     <BackButton onClick={goBack} />
-    <h2 className="text-2xl font-display text-foreground flex items-center gap-2">
-      <BookOpen className="w-6 h-6 text-gold" />Leituras
-    </h2>
-    <div className="grid md:grid-cols-2 gap-4">
-      {Object.entries(readingCategories).map(([key, cat]) => (
-        <Card key={key} variant="sacred" className="cursor-pointer hover:border-gold/50" onClick={() => onSelect(key)}>
-          <CardContent className="p-5">
-            <h3 className="font-display text-lg text-foreground mb-1">{cat.name}</h3>
-            <p className="text-muted-foreground text-sm font-body">{cat.description}</p>
-          </CardContent>
-        </Card>
-      ))}
+    <div className="flex items-center gap-3 mb-6">
+      <div className="p-3 rounded-xl bg-gold/10">
+        <BookOpen className="w-6 h-6 text-gold" />
+      </div>
+      <div>
+        <h2 className="text-2xl font-display text-foreground">Leituras Espirituais</h2>
+        <p className="text-muted-foreground font-body text-sm">Reflexões profundas para sua jornada</p>
+      </div>
     </div>
+    <motion.div className="grid md:grid-cols-2 gap-4" variants={staggerContainer} initial="initial" animate="animate">
+      {Object.entries(readingCategories).map(([key, cat]) => (
+        <motion.div key={key} variants={fadeInUp}>
+          <Card className="cursor-pointer hover:border-gold/40 hover:shadow-lg transition-all duration-300 group" onClick={() => onSelect(key)}>
+            <CardContent className="p-6">
+              <h3 className="font-display text-xl text-foreground mb-2 group-hover:text-gold transition-colors">{cat.name}</h3>
+              <p className="text-muted-foreground text-sm font-body mb-3">{cat.description}</p>
+              <span className="text-gold text-xs font-body">{cat.readings.length} leituras</span>
+            </CardContent>
+          </Card>
+        </motion.div>
+      ))}
+    </motion.div>
   </div>
 );
 
-const ReadingsList = ({ category, goBack, onSelect }: { category: string; goBack: () => void; onSelect: (item: any) => void }) => {
+const ReadingsList = ({ category, goBack, onSelect, searchQuery, setSearchQuery, showFavoritesOnly, setShowFavoritesOnly, isRead, isFavorite, toggleRead, toggleFavorite, getFavorites }: any) => {
   const cat = readingCategories[category as keyof typeof readingCategories];
+  const favoriteIds = getFavorites('reading');
+  
+  const filteredReadings = useMemo(() => {
+    let readings = cat.readings;
+    
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      readings = readings.filter(r => 
+        r.title.toLowerCase().includes(query) || 
+        r.summary.toLowerCase().includes(query) ||
+        r.content.toLowerCase().includes(query)
+      );
+    }
+    
+    if (showFavoritesOnly) {
+      readings = readings.filter(r => favoriteIds.includes(`${category}-${r.id}`));
+    }
+    
+    return readings;
+  }, [cat.readings, searchQuery, showFavoritesOnly, favoriteIds, category]);
+
   return (
-    <div className="space-y-4 animate-fade-in">
+    <div className="space-y-6">
       <BackButton onClick={goBack} />
       <h2 className="text-2xl font-display text-foreground">{cat.name}</h2>
-      <div className="grid gap-3">
-        {cat.readings.map((reading) => (
-          <Card key={reading.id} variant="sacred" className="cursor-pointer hover:border-gold/50" onClick={() => onSelect(reading)}>
-            <CardContent className="p-4">
-              <h4 className="font-display text-foreground mb-1">{reading.title}</h4>
-              <p className="text-muted-foreground text-sm font-body">{reading.summary}</p>
-            </CardContent>
+      
+      <SearchFilter
+        placeholder="Buscar leituras..."
+        onSearch={setSearchQuery}
+        showFavoritesFilter
+        favoritesActive={showFavoritesOnly}
+        onFilterFavorites={() => setShowFavoritesOnly(!showFavoritesOnly)}
+      />
+
+      <motion.div className="grid gap-4" variants={staggerContainer} initial="initial" animate="animate">
+        {filteredReadings.length === 0 ? (
+          <Card className="p-8 text-center">
+            <p className="text-muted-foreground font-body">Nenhuma leitura encontrada</p>
           </Card>
-        ))}
-      </div>
+        ) : (
+          filteredReadings.map((reading) => {
+            const itemId = `${category}-${reading.id}`;
+            return (
+              <motion.div key={reading.id} variants={fadeInUp}>
+                <Card className="cursor-pointer hover:border-gold/40 transition-all duration-300" onClick={() => onSelect({ ...reading, category })}>
+                  <CardContent className="p-5">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          {isRead('reading', itemId) && (
+                            <span className="text-xs bg-green-500/20 text-green-500 px-2 py-0.5 rounded-full">Lido</span>
+                          )}
+                          <h4 className="font-display text-lg text-foreground">{reading.title}</h4>
+                        </div>
+                        <p className="text-muted-foreground text-sm font-body line-clamp-2">{reading.summary}</p>
+                      </div>
+                      <ProgressButtons
+                        size="sm"
+                        isRead={isRead('reading', itemId)}
+                        isFavorite={isFavorite('reading', itemId)}
+                        onToggleRead={() => toggleRead('reading', itemId)}
+                        onToggleFavorite={() => toggleFavorite('reading', itemId)}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })
+        )}
+      </motion.div>
     </div>
   );
 };
 
-const DevotionalList = ({ goBack, onSelect }: { goBack: () => void; onSelect: (day: any) => void }) => (
-  <div className="space-y-6 animate-fade-in">
-    <BackButton onClick={goBack} />
-    <h2 className="text-2xl font-display text-foreground flex items-center gap-2">
-      <ScrollText className="w-6 h-6 text-gold" />{devotionalJourney.title}
-    </h2>
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {devotionalJourney.days.map((d) => (
-        <Card key={d.day} variant="sacred" className="cursor-pointer hover:border-gold/50" onClick={() => onSelect(d)}>
-          <CardContent className="p-5">
-            <p className="text-gold font-display text-sm mb-1">Dia {d.day}</p>
-            <h3 className="font-display text-lg text-foreground mb-1">{d.theme}</h3>
-            <p className="text-muted-foreground text-sm font-body line-clamp-3">{d.reflection.replace(/^Dia\s\d+\nTema:.*\n\n/, '')}</p>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  </div>
-);
+const DevotionalList = ({ goBack, onSelect, searchQuery, setSearchQuery, showFavoritesOnly, setShowFavoritesOnly, isRead, isFavorite, getFavorites }: any) => {
+  const favoriteIds = getFavorites('devotional');
+  const today = new Date().getDate();
+  
+  const filteredDays = useMemo(() => {
+    let days = devotionalJourney.days;
+    
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      days = days.filter(d => 
+        d.theme.toLowerCase().includes(query) || 
+        d.reflection.toLowerCase().includes(query)
+      );
+    }
+    
+    if (showFavoritesOnly) {
+      days = days.filter(d => favoriteIds.includes(`day-${d.day}`));
+    }
+    
+    return days;
+  }, [searchQuery, showFavoritesOnly, favoriteIds]);
 
-const DevotionalDayView = ({ day, goBack }: { day: any; goBack: () => void }) => (
-  <div className="space-y-6 animate-fade-in">
-    <BackButton onClick={goBack} />
-    <Card variant="sacred">
-      <CardHeader>
-        <CardTitle className="text-foreground text-xl">Dia {day.day} — {day.theme}</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div>
-          <h4 className="font-display text-gold mb-2">Reflexão</h4>
-          <p className="text-foreground/90 font-body text-base leading-relaxed whitespace-pre-line">{day.reflection.replace(/^Dia\s\d+\nTema:.*\n\n/, '')}</p>
+  return (
+    <div className="space-y-6">
+      <BackButton onClick={goBack} />
+      <div className="flex items-center gap-3 mb-2">
+        <div className="p-3 rounded-xl bg-gold/10">
+          <ScrollText className="w-6 h-6 text-gold" />
         </div>
         <div>
-          <h4 className="font-display text-gold mb-2">Oração</h4>
-          <p className="text-foreground/80 font-body italic whitespace-pre-line">{day.prayer}</p>
+          <h2 className="text-2xl font-display text-foreground">{devotionalJourney.title}</h2>
+          <p className="text-muted-foreground font-body text-sm">30 dias de reflexão e oração</p>
         </div>
-      </CardContent>
-    </Card>
-  </div>
-);
+      </div>
 
-const MeditationsCategories = ({ onSelect, goBack }: { onSelect: (cat: string) => void; goBack: () => void }) => (
-  <div className="space-y-6 animate-fade-in">
-    <BackButton onClick={goBack} />
-    <h2 className="text-2xl font-display text-foreground flex items-center gap-2"><Sparkles className="w-6 h-6 text-gold" />Meditações</h2>
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {Object.entries(meditationCategories).map(([key, cat]) => (
-        <Card key={key} variant="sacred" className={`cursor-pointer hover:border-gold/50 ${'recommended' in cat && cat.recommended ? 'border-gold/40' : ''}`} onClick={() => onSelect(key)}>
-          <CardContent className="p-5">
-            {'recommended' in cat && cat.recommended && <span className="text-xs bg-gold/20 text-gold px-2 py-1 rounded mb-2 inline-block">Recomendado hoje</span>}
-            <h3 className="font-display text-lg text-foreground mb-1">{cat.name}</h3>
-            <p className="text-muted-foreground text-sm font-body">{cat.description}</p>
-          </CardContent>
-        </Card>
-      ))}
+      <SearchFilter
+        placeholder="Buscar por tema..."
+        onSearch={setSearchQuery}
+        showFavoritesFilter
+        favoritesActive={showFavoritesOnly}
+        onFilterFavorites={() => setShowFavoritesOnly(!showFavoritesOnly)}
+      />
+
+      <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4" variants={staggerContainer} initial="initial" animate="animate">
+        {filteredDays.length === 0 ? (
+          <Card className="p-8 text-center col-span-full">
+            <p className="text-muted-foreground font-body">Nenhum dia encontrado</p>
+          </Card>
+        ) : (
+          filteredDays.map((d) => {
+            const itemId = `day-${d.day}`;
+            const isToday = d.day === ((today - 1) % 30) + 1;
+            return (
+              <motion.div key={d.day} variants={fadeInUp}>
+                <Card 
+                  className={`cursor-pointer hover:border-gold/40 transition-all duration-300 ${isToday ? 'border-gold/40 shadow-glow-gold' : ''}`} 
+                  onClick={() => onSelect(d)}
+                >
+                  <CardContent className="p-5">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-gold font-display text-sm bg-gold/10 px-2 py-1 rounded-full">Dia {d.day}</span>
+                        {isToday && <span className="text-xs bg-green-500/20 text-green-500 px-2 py-0.5 rounded-full">Hoje</span>}
+                        {isRead('devotional', itemId) && <Check className="w-4 h-4 text-green-500" />}
+                      </div>
+                      <ProgressButtons
+                        size="sm"
+                        isRead={isRead('devotional', itemId)}
+                        isFavorite={isFavorite('devotional', itemId)}
+                        onToggleRead={() => {}}
+                        onToggleFavorite={() => {}}
+                      />
+                    </div>
+                    <h3 className="font-display text-lg text-foreground mb-2">{d.theme}</h3>
+                    <p className="text-muted-foreground text-sm font-body line-clamp-3">{d.reflection.substring(0, 120)}...</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })
+        )}
+      </motion.div>
     </div>
-  </div>
-);
+  );
+};
+
+const DevotionalDayView = ({ day, goBack, isRead, isFavorite, toggleRead, toggleFavorite }: any) => {
+  const itemId = `day-${day.day}`;
+  
+  return (
+    <div className="space-y-6">
+      <BackButton onClick={goBack} />
+      <Card className="overflow-hidden">
+        <div className="bg-gradient-to-r from-navy via-navy-dark to-brown/50 p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-gold/80 font-body text-sm">Dia {day.day} de 30</span>
+              <h2 className="text-2xl font-display text-cream mt-1">{day.theme}</h2>
+            </div>
+            <ProgressButtons
+              isRead={isRead('devotional', itemId)}
+              isFavorite={isFavorite('devotional', itemId)}
+              onToggleRead={() => toggleRead('devotional', itemId)}
+              onToggleFavorite={() => toggleFavorite('devotional', itemId)}
+            />
+          </div>
+        </div>
+        <CardContent className="p-6 space-y-6">
+          <div>
+            <h4 className="font-display text-gold mb-4 text-lg flex items-center gap-2">
+              <Sun className="w-5 h-5" />
+              Reflexão
+            </h4>
+            <div className="text-foreground/90 font-body text-base leading-relaxed whitespace-pre-line bg-muted/30 p-6 rounded-xl border border-border/50">
+              {day.reflection}
+            </div>
+          </div>
+          <div>
+            <h4 className="font-display text-gold mb-4 text-lg flex items-center gap-2">
+              <Moon className="w-5 h-5" />
+              Oração
+            </h4>
+            <div className="text-foreground/80 font-body italic whitespace-pre-line bg-gold/5 p-6 rounded-xl border border-gold/20">
+              {day.prayer}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+const MeditationsCategories = ({ onSelect, goBack }: { onSelect: (cat: string) => void; goBack: () => void }) => {
+  const today = new Date().getDate();
+  const recommendedKey = Object.keys(meditationCategories)[today % Object.keys(meditationCategories).length];
+  
+  return (
+    <div className="space-y-6">
+      <BackButton onClick={goBack} />
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-3 rounded-xl bg-gold/10">
+          <Sparkles className="w-6 h-6 text-gold" />
+        </div>
+        <div>
+          <h2 className="text-2xl font-display text-foreground">Meditações</h2>
+          <p className="text-muted-foreground font-body text-sm">Práticas guiadas para paz interior</p>
+        </div>
+      </div>
+      <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4" variants={staggerContainer} initial="initial" animate="animate">
+        {Object.entries(meditationCategories).map(([key, cat]) => (
+          <motion.div key={key} variants={fadeInUp}>
+            <Card 
+              className={`cursor-pointer hover:border-gold/40 transition-all duration-300 ${key === recommendedKey ? 'border-gold/40 shadow-glow-gold' : ''}`} 
+              onClick={() => onSelect(key)}
+            >
+              <CardContent className="p-6">
+                {key === recommendedKey && (
+                  <span className="text-xs bg-gold/20 text-gold px-2 py-1 rounded-full mb-3 inline-block">
+                    <Star className="w-3 h-3 inline mr-1" />
+                    Recomendado hoje
+                  </span>
+                )}
+                <h3 className="font-display text-lg text-foreground mb-2">{cat.name}</h3>
+                <p className="text-muted-foreground text-sm font-body">{cat.description}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
 
 const MeditationsList = ({ category, goBack, onSelect }: { category: string; goBack: () => void; onSelect: (item: any) => void }) => {
   const cat = meditationCategories[category as keyof typeof meditationCategories];
   return (
-    <div className="space-y-4 animate-fade-in">
+    <div className="space-y-6">
       <BackButton onClick={goBack} />
       <h2 className="text-2xl font-display text-foreground">{cat.name}</h2>
-      <div className="grid gap-3">
+      <motion.div className="grid gap-4" variants={staggerContainer} initial="initial" animate="animate">
         {cat.meditations.map((med) => (
-          <Card key={med.id} variant="sacred" className="cursor-pointer hover:border-gold/50" onClick={() => onSelect(med)}>
-            <CardContent className="p-4 flex items-center justify-between">
-              <div>
-                <h4 className="font-display text-foreground">{med.title}</h4>
-                <span className="text-muted-foreground text-sm flex items-center gap-1"><Clock className="w-3 h-3" />{med.duration}</span>
-              </div>
-              <ChevronRight className="w-5 h-5 text-gold" />
-            </CardContent>
-          </Card>
+          <motion.div key={med.id} variants={fadeInUp}>
+            <Card className="cursor-pointer hover:border-gold/40 transition-all" onClick={() => onSelect(med)}>
+              <CardContent className="p-5 flex items-center justify-between">
+                <div>
+                  <h4 className="font-display text-foreground text-lg">{med.title}</h4>
+                  <span className="text-muted-foreground text-sm flex items-center gap-1 mt-1">
+                    <Clock className="w-4 h-4" />{med.duration}
+                  </span>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gold" />
+              </CardContent>
+            </Card>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };
 
 const NovenasSection = ({ goBack, onSelect, progress, toggleDay }: { goBack: () => void; onSelect: (item: any) => void; progress: number[]; toggleDay: (day: number) => void }) => (
-  <div className="space-y-6 animate-fade-in">
+  <div className="space-y-6">
     <BackButton onClick={goBack} />
-    <h2 className="text-2xl font-display text-foreground flex items-center gap-2"><BookHeart className="w-6 h-6 text-gold" />Novena aos Arcanjos</h2>
-    <p className="text-muted-foreground font-body">{novenas.description}</p>
-    <div className="grid gap-3">
-      {novenas.days.map((day) => (
-        <Card key={day.day} variant="sacred" className={`${progress.includes(day.day) ? 'border-green-500/50 bg-green-500/5' : ''}`}>
-          <CardContent className="p-4 flex items-center justify-between">
-            <div className="flex-1 cursor-pointer" onClick={() => onSelect(day)}>
-              <h4 className="font-display text-foreground">{day.title}</h4>
-              <p className="text-muted-foreground text-sm">{day.archangel}</p>
-            </div>
-            <button onClick={(e) => { e.stopPropagation(); toggleDay(day.day); }} className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${progress.includes(day.day) ? 'bg-green-500 text-white' : 'bg-muted hover:bg-gold/20'}`}>
-              {progress.includes(day.day) && <Check className="w-5 h-5" />}
-            </button>
-          </CardContent>
-        </Card>
-      ))}
+    <div className="flex items-center gap-3 mb-2">
+      <div className="p-3 rounded-xl bg-gold/10">
+        <BookHeart className="w-6 h-6 text-gold" />
+      </div>
+      <div>
+        <h2 className="text-2xl font-display text-foreground">Novena aos Arcanjos</h2>
+        <p className="text-muted-foreground font-body text-sm">{progress.length}/15 dias completos</p>
+      </div>
     </div>
+    
+    {/* Progress bar */}
+    <div className="bg-muted rounded-full h-3 overflow-hidden">
+      <motion.div 
+        className="bg-gradient-divine h-full rounded-full"
+        initial={{ width: 0 }}
+        animate={{ width: `${(progress.length / 15) * 100}%` }}
+        transition={{ duration: 0.5 }}
+      />
+    </div>
+    
+    <p className="text-muted-foreground font-body">{novenas.description}</p>
+    
+    <motion.div className="grid gap-3" variants={staggerContainer} initial="initial" animate="animate">
+      {novenas.days.map((day) => (
+        <motion.div key={day.day} variants={fadeInUp}>
+          <Card className={`transition-all duration-300 ${progress.includes(day.day) ? 'border-green-500/50 bg-green-500/5' : 'hover:border-gold/40'}`}>
+            <CardContent className="p-4 flex items-center justify-between">
+              <div className="flex-1 cursor-pointer" onClick={() => onSelect(day)}>
+                <div className="flex items-center gap-2">
+                  <span className="text-gold font-display text-sm">Dia {day.day}</span>
+                  {progress.includes(day.day) && <span className="text-xs bg-green-500/20 text-green-500 px-2 py-0.5 rounded-full">Completo</span>}
+                </div>
+                <h4 className="font-display text-foreground mt-1">{day.title}</h4>
+                <p className="text-muted-foreground text-sm">{day.archangel}</p>
+              </div>
+              <button 
+                onClick={(e) => { e.stopPropagation(); toggleDay(day.day); }} 
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${progress.includes(day.day) ? 'bg-green-500 text-white' : 'bg-muted hover:bg-gold/20 border border-border'}`}
+              >
+                {progress.includes(day.day) && <Check className="w-5 h-5" />}
+              </button>
+            </CardContent>
+          </Card>
+        </motion.div>
+      ))}
+    </motion.div>
   </div>
 );
 
 const RosarySection = ({ goBack, onSelect }: { goBack: () => void; onSelect: (mystery: string) => void }) => (
-  <div className="space-y-6 animate-fade-in">
+  <div className="space-y-6">
     <BackButton onClick={goBack} />
-    <h2 className="text-2xl font-display text-foreground flex items-center gap-2"><Flower2 className="w-6 h-6 text-gold" />Santo Rosário</h2>
-    <div className="grid md:grid-cols-2 gap-4">
-      {Object.entries(rosary).filter(([key]) => key !== 'howToPray').map(([key, mystery]: [string, any]) => (
-        <Card key={key} variant="sacred" className="cursor-pointer hover:border-gold/50" onClick={() => onSelect(key)}>
-          <CardContent className="p-5">
-            <h3 className="font-display text-lg text-foreground mb-1">{mystery.name}</h3>
-            <p className="text-gold text-sm font-body">{mystery.recommendation}</p>
-          </CardContent>
-        </Card>
-      ))}
+    <div className="flex items-center gap-3 mb-6">
+      <div className="p-3 rounded-xl bg-gold/10">
+        <Flower2 className="w-6 h-6 text-gold" />
+      </div>
+      <h2 className="text-2xl font-display text-foreground">Santo Rosário</h2>
     </div>
-    <Card variant="sacred">
-      <CardHeader><CardTitle className="text-foreground">Como Rezar o Rosário</CardTitle></CardHeader>
+    <motion.div className="grid md:grid-cols-2 gap-4" variants={staggerContainer} initial="initial" animate="animate">
+      {Object.entries(rosary).filter(([key]) => key !== 'howToPray').map(([key, mystery]: [string, any]) => (
+        <motion.div key={key} variants={fadeInUp}>
+          <Card className="cursor-pointer hover:border-gold/40 transition-all duration-300" onClick={() => onSelect(key)}>
+            <CardContent className="p-6">
+              <h3 className="font-display text-lg text-foreground mb-2">{mystery.name}</h3>
+              <p className="text-gold text-sm font-body">{mystery.recommendation}</p>
+            </CardContent>
+          </Card>
+        </motion.div>
+      ))}
+    </motion.div>
+    <Card className="mt-6">
+      <CardHeader>
+        <CardTitle className="text-foreground font-display">Como Rezar o Rosário</CardTitle>
+      </CardHeader>
       <CardContent>
-        <ol className="space-y-2">
+        <ol className="space-y-3">
           {rosary.howToPray.map((step, i) => (
-            <li key={i} className="flex gap-3 text-foreground/80 font-body text-sm">
-              <span className="w-6 h-6 rounded-full bg-gold/20 flex items-center justify-center text-gold text-xs flex-shrink-0">{i + 1}</span>
-              {step}
+            <li key={i} className="flex gap-4 text-foreground/80 font-body text-sm">
+              <span className="w-7 h-7 rounded-full bg-gold/20 flex items-center justify-center text-gold text-xs flex-shrink-0 font-display">{i + 1}</span>
+              <span className="pt-1">{step}</span>
             </li>
           ))}
         </ol>
@@ -602,90 +1092,184 @@ const RosarySection = ({ goBack, onSelect }: { goBack: () => void; onSelect: (my
 const RosaryDetail = ({ mystery, goBack }: { mystery: string; goBack: () => void }) => {
   const data = rosary[mystery as keyof typeof rosary] as any;
   return (
-    <div className="space-y-4 animate-fade-in">
+    <div className="space-y-6">
       <BackButton onClick={goBack} />
-      <h2 className="text-2xl font-display text-foreground">{data.name}</h2>
-      <p className="text-gold font-body">{data.recommendation}</p>
-      <div className="grid gap-4">
-        {data.mysteries.map((m: any) => (
-          <Card key={m.number} variant="sacred">
-            <CardContent className="p-5">
-              <h4 className="font-display text-gold mb-2">{m.number}º Mistério: {m.title}</h4>
-              <p className="text-foreground/80 font-body mb-3">{m.reflection}</p>
-              <p className="text-muted-foreground text-sm font-body italic">{m.meditation}</p>
-            </CardContent>
-          </Card>
-        ))}
+      <div className="flex items-center gap-3 mb-2">
+        <div className="p-3 rounded-xl bg-gold/10">
+          <Flower2 className="w-6 h-6 text-gold" />
+        </div>
+        <div>
+          <h2 className="text-2xl font-display text-foreground">{data.name}</h2>
+          <p className="text-gold font-body text-sm">{data.recommendation}</p>
+        </div>
       </div>
+      <motion.div className="grid gap-4" variants={staggerContainer} initial="initial" animate="animate">
+        {data.mysteries.map((m: any) => (
+          <motion.div key={m.number} variants={fadeInUp}>
+            <Card>
+              <CardContent className="p-6">
+                <h4 className="font-display text-gold mb-3 text-lg">{m.number}º Mistério: {m.title}</h4>
+                <p className="text-foreground/85 font-body mb-4 leading-relaxed">{m.reflection}</p>
+                <p className="text-muted-foreground text-sm font-body italic bg-muted/30 p-4 rounded-lg">{m.meditation}</p>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   );
 };
 
 const CalendarSection = ({ goBack }: { goBack: () => void }) => (
-  <div className="space-y-6 animate-fade-in">
+  <div className="space-y-6">
     <BackButton onClick={goBack} />
-    <h2 className="text-2xl font-display text-foreground flex items-center gap-2"><Calendar className="w-6 h-6 text-gold" />Calendário Litúrgico</h2>
-    <p className="text-muted-foreground font-body text-sm">* Datas marcadas com asterisco variam conforme o calendário da Páscoa de cada ano.</p>
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {liturgicalCalendar.map((event, i) => (
-        <Card key={i} variant="sacred">
-          <CardContent className="p-4">
-            <p className="text-gold font-display text-sm mb-1">{event.date}</p>
-            <h3 className="text-foreground font-display text-base mb-1">{event.feast}</h3>
-            <p className="text-muted-foreground text-sm font-body mb-2">{event.description}</p>
-            <span className={`px-2 py-1 rounded text-xs ${event.type === 'Solenidade' ? 'bg-gold/20 text-gold' : event.type === 'Festa' ? 'bg-navy/20 text-foreground' : 'bg-muted text-muted-foreground'}`}>{event.type}</span>
-          </CardContent>
-        </Card>
-      ))}
+    <div className="flex items-center gap-3 mb-6">
+      <div className="p-3 rounded-xl bg-gold/10">
+        <Calendar className="w-6 h-6 text-gold" />
+      </div>
+      <div>
+        <h2 className="text-2xl font-display text-foreground">Calendário Litúrgico</h2>
+        <p className="text-muted-foreground font-body text-sm">* Datas com asterisco variam conforme a Páscoa</p>
+      </div>
     </div>
+    <motion.div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4" variants={staggerContainer} initial="initial" animate="animate">
+      {liturgicalCalendar.map((event, i) => (
+        <motion.div key={i} variants={fadeInUp}>
+          <Card>
+            <CardContent className="p-5">
+              <p className="text-gold font-display text-sm mb-2">{event.date}</p>
+              <h3 className="text-foreground font-display text-lg mb-2">{event.feast}</h3>
+              <p className="text-muted-foreground text-sm font-body mb-3 line-clamp-2">{event.description}</p>
+              <span className={`px-3 py-1 rounded-full text-xs font-body ${
+                event.type === 'Solenidade' ? 'bg-gold/20 text-gold' : 
+                event.type === 'Festa' ? 'bg-blue-500/20 text-blue-400' : 
+                'bg-muted text-muted-foreground'
+              }`}>
+                {event.type}
+              </span>
+            </CardContent>
+          </Card>
+        </motion.div>
+      ))}
+    </motion.div>
   </div>
 );
 
 const ArchangelsSection = ({ goBack }: { goBack: () => void }) => (
-  <div className="space-y-6 animate-fade-in">
+  <div className="space-y-6">
     <BackButton onClick={goBack} />
-    <h2 className="text-2xl font-display text-foreground flex items-center gap-2"><Cross className="w-6 h-6 text-gold" />Os Três Arcanjos</h2>
-    {Object.entries(archangelsInfo).map(([key, arch]) => (
-      <Card key={key} variant="sacred">
-        <CardHeader>
-          <CardTitle className="text-gold text-xl">{arch.name}</CardTitle>
-          <CardDescription>{arch.title} • "{arch.meaning}"</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-foreground/80 font-body leading-relaxed">{arch.description}</p>
-          <p className="text-foreground/80 font-body leading-relaxed">{arch.history}</p>
-          <div className="flex flex-wrap gap-2">
-            <span className="font-display text-sm text-foreground">Festa:</span>
-            <span className="px-3 py-1 rounded-full bg-gold/20 text-gold text-sm">{arch.feast}</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <span className="font-display text-sm text-foreground">Patrono de:</span>
-            {arch.patronOf.map((p, i) => <span key={i} className="px-2 py-1 rounded bg-muted text-muted-foreground text-xs">{p}</span>)}
-          </div>
-        </CardContent>
-      </Card>
-    ))}
+    <div className="flex items-center gap-3 mb-6">
+      <div className="p-3 rounded-xl bg-gold/10">
+        <Cross className="w-6 h-6 text-gold" />
+      </div>
+      <h2 className="text-2xl font-display text-foreground">Os Três Arcanjos</h2>
+    </div>
+    <motion.div className="space-y-6" variants={staggerContainer} initial="initial" animate="animate">
+      {Object.entries(archangelsInfo).map(([key, arch]) => (
+        <motion.div key={key} variants={fadeInUp}>
+          <Card className="overflow-hidden">
+            <div className="bg-gradient-to-r from-navy via-navy-dark to-brown/30 p-6">
+              <h3 className="text-2xl font-display text-gold">{arch.name}</h3>
+              <p className="text-cream/80 font-body">{arch.title} • "{arch.meaning}"</p>
+            </div>
+            <CardContent className="p-6 space-y-4">
+              <p className="text-foreground/85 font-body leading-relaxed">{arch.description}</p>
+              <p className="text-foreground/80 font-body leading-relaxed">{arch.history}</p>
+              <div className="flex flex-wrap gap-4 pt-4 border-t border-border">
+                <div>
+                  <span className="font-display text-sm text-foreground block mb-2">Festa:</span>
+                  <span className="px-3 py-1 rounded-full bg-gold/20 text-gold text-sm">{arch.feast}</span>
+                </div>
+                <div>
+                  <span className="font-display text-sm text-foreground block mb-2">Patrono de:</span>
+                  <div className="flex flex-wrap gap-2">
+                    {arch.patronOf.map((p, i) => (
+                      <span key={i} className="px-2 py-1 rounded bg-muted text-muted-foreground text-xs">{p}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      ))}
+    </motion.div>
   </div>
 );
 
-const DetailView = ({ item, goBack, section }: { item: any; goBack: () => void; section: string }) => (
-  <div className="space-y-6 animate-fade-in">
-    <BackButton onClick={goBack} />
-    <Card variant="sacred">
-      <CardHeader>
-        <CardTitle className="text-foreground text-xl">{item.title}</CardTitle>
-        {item.archangel && <CardDescription>{item.archangel}</CardDescription>}
-        {item.duration && <CardDescription className="flex items-center gap-1"><Clock className="w-4 h-4" />{item.duration}</CardDescription>}
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {item.content && <p className="text-foreground/90 font-body text-base leading-relaxed whitespace-pre-line">{item.content}</p>}
-        {item.reflection && <div><h4 className="font-display text-gold mb-2">Reflexão</h4><p className="text-foreground/80 font-body">{item.reflection}</p></div>}
-        {item.prayer && <div><h4 className="font-display text-gold mb-2">Oração</h4><p className="text-foreground/80 font-body italic">{item.prayer}</p></div>}
-        {item.intention && <div><h4 className="font-display text-gold mb-2">Intenção</h4><p className="text-gold/80 font-body">{item.intention}</p></div>}
-        {item.recommendedBooks && <div><h4 className="font-display text-gold mb-2">Leituras Recomendadas</h4><ul className="list-disc list-inside text-muted-foreground">{item.recommendedBooks.map((b: string, i: number) => <li key={i}>{b}</li>)}</ul></div>}
-      </CardContent>
-    </Card>
-  </div>
-);
+const DetailView = ({ item, goBack, section, isRead, isFavorite, toggleRead, toggleFavorite }: any) => {
+  const getItemType = () => {
+    if (section === 'prayers') return 'prayer';
+    if (section === 'readings') return 'reading';
+    if (section === 'devotional') return 'devotional';
+    if (section === 'novenas') return 'novena';
+    return 'item';
+  };
+  
+  const itemType = getItemType();
+  const itemId = item.category ? `${item.category}-${item.id}` : `${item.id}`;
+
+  return (
+    <div className="space-y-6">
+      <BackButton onClick={goBack} />
+      <Card className="overflow-hidden">
+        <div className="bg-gradient-to-r from-navy via-navy-dark to-brown/30 p-6">
+          <div className="flex items-start justify-between">
+            <div>
+              <h2 className="text-2xl font-display text-cream">{item.title}</h2>
+              {item.archangel && <p className="text-gold/80 font-body mt-1">{item.archangel}</p>}
+              {item.duration && (
+                <p className="text-cream/70 font-body text-sm flex items-center gap-1 mt-2">
+                  <Clock className="w-4 h-4" />{item.duration}
+                </p>
+              )}
+            </div>
+            {(section === 'prayers' || section === 'readings') && (
+              <ProgressButtons
+                isRead={isRead(itemType, itemId)}
+                isFavorite={isFavorite(itemType, itemId)}
+                onToggleRead={() => toggleRead(itemType, itemId)}
+                onToggleFavorite={() => toggleFavorite(itemType, itemId)}
+              />
+            )}
+          </div>
+        </div>
+        <CardContent className="p-6 space-y-6">
+          {item.content && (
+            <div className="text-foreground/90 font-body text-base leading-relaxed whitespace-pre-line">
+              {item.content}
+            </div>
+          )}
+          {item.reflection && (
+            <div>
+              <h4 className="font-display text-gold mb-3 text-lg">Reflexão</h4>
+              <p className="text-foreground/85 font-body leading-relaxed bg-muted/30 p-5 rounded-xl">{item.reflection}</p>
+            </div>
+          )}
+          {item.prayer && (
+            <div>
+              <h4 className="font-display text-gold mb-3 text-lg">Oração</h4>
+              <p className="text-foreground/80 font-body italic bg-gold/5 p-5 rounded-xl border border-gold/20">{item.prayer}</p>
+            </div>
+          )}
+          {item.intention && (
+            <div>
+              <h4 className="font-display text-gold mb-3 text-lg">Intenção</h4>
+              <p className="text-gold/90 font-body bg-gold/10 p-4 rounded-xl">{item.intention}</p>
+            </div>
+          )}
+          {item.recommendedBooks && (
+            <div>
+              <h4 className="font-display text-gold mb-3 text-lg">Leituras Recomendadas</h4>
+              <ul className="list-disc list-inside text-muted-foreground font-body space-y-1">
+                {item.recommendedBooks.map((b: string, i: number) => <li key={i}>{b}</li>)}
+              </ul>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
 
 export default Dashboard;
