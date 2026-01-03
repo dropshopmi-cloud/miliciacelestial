@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      notification_settings: {
+        Row: {
+          created_at: string
+          devotional_time: string | null
+          id: string
+          prayer_time: string | null
+          push_enabled: boolean | null
+          push_subscription: Json | null
+          reading_time: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          devotional_time?: string | null
+          id?: string
+          prayer_time?: string | null
+          push_enabled?: boolean | null
+          push_subscription?: Json | null
+          reading_time?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          devotional_time?: string | null
+          id?: string
+          prayer_time?: string | null
+          push_enabled?: boolean | null
+          push_subscription?: Json | null
+          reading_time?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -36,6 +72,45 @@ export type Database = {
           email?: string | null
           id?: string
           name?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_progress: {
+        Row: {
+          created_at: string
+          favorited_at: string | null
+          id: string
+          is_favorite: boolean | null
+          is_read: boolean | null
+          item_id: string
+          item_type: string
+          read_at: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          favorited_at?: string | null
+          id?: string
+          is_favorite?: boolean | null
+          is_read?: boolean | null
+          item_id: string
+          item_type: string
+          read_at?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          favorited_at?: string | null
+          id?: string
+          is_favorite?: boolean | null
+          is_read?: boolean | null
+          item_id?: string
+          item_type?: string
+          read_at?: string | null
           updated_at?: string
           user_id?: string
         }
