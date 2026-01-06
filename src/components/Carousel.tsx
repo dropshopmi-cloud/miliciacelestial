@@ -11,12 +11,14 @@ interface CarouselProps {
   className?: string;
 }
 
+// Default to showArrows = false
+
 export const Carousel = ({
   children,
   autoPlay = true,
   interval = 5000,
   showDots = true,
-  showArrows = true,
+  showArrows = false,
   className = '',
 }: CarouselProps) => {
   const [current, setCurrent] = useState(0);
