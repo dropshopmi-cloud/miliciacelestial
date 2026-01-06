@@ -37,6 +37,10 @@ import {
   Moon,
 } from 'lucide-react';
 import archangelsHero from '@/assets/three-archangels.jpg';
+import arcanjoMiguel from '@/assets/arcanjo-miguel.png';
+import arcanjoGabriel from '@/assets/arcanjo-gabriel.png';
+import arcanjoRafael from '@/assets/arcanjo-rafael.png';
+import logoMilicia from '@/assets/arcanjos-logo.png';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -272,12 +276,12 @@ const Dashboard = () => {
           <div className="flex items-center gap-4">
             <div className="relative">
               <div className="absolute inset-0 bg-gold/20 rounded-full blur-lg animate-pulse-slow" />
-              <div className="relative w-12 h-12 rounded-full bg-gradient-divine flex items-center justify-center shadow-glow-gold">
-                <Cross className="w-6 h-6 text-navy-dark" />
+              <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gold/50 shadow-glow-gold">
+                <img src={logoMilicia} alt="Milícia Celestial" className="w-full h-full object-cover" />
               </div>
             </div>
             <div>
-              <h1 className="font-decorative text-xl text-gold-light tracking-wide">Sanctuarium</h1>
+              <h1 className="font-decorative text-xl text-gold-light tracking-wide">Milícia Celestial</h1>
               <p className="text-cream/60 text-xs font-body tracking-widest">MIGUEL • GABRIEL • RAFAEL</p>
             </div>
           </div>
@@ -324,10 +328,10 @@ const Dashboard = () => {
             <Menu className="w-6 h-6" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-gradient-divine flex items-center justify-center">
-              <Cross className="w-4 h-4 text-navy-dark" />
+            <div className="w-8 h-8 rounded-full overflow-hidden border border-gold/50">
+              <img src={logoMilicia} alt="Milícia Celestial" className="w-full h-full object-cover" />
             </div>
-            <h1 className="font-decorative text-gold-light text-lg tracking-wide">Sanctuarium</h1>
+            <h1 className="font-decorative text-gold-light text-lg tracking-wide">Milícia Celestial</h1>
           </div>
           <button onClick={handleLogout} className="text-gold-light p-2 hover:bg-gold/10 rounded-lg transition-colors">
             <LogOut className="w-5 h-5" />
@@ -416,6 +420,27 @@ const BackButton = ({ onClick }: { onClick: () => void }) => (
 
 const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDevotional, novenaProgress, setActiveSection, setSelectedItem }: any) => {
   const completedNovenas = novenaProgress.length;
+
+  const archangels = [
+    { 
+      name: 'São Miguel Arcanjo', 
+      image: arcanjoMiguel, 
+      phrase: 'Príncipe da Milícia Celestial, defensor contra as forças do mal.',
+      color: 'from-red-500/20 to-amber-500/10'
+    },
+    { 
+      name: 'São Gabriel Arcanjo', 
+      image: arcanjoGabriel, 
+      phrase: 'Mensageiro de Deus, portador da Boa Nova e da esperança.',
+      color: 'from-blue-500/20 to-cyan-500/10'
+    },
+    { 
+      name: 'São Rafael Arcanjo', 
+      image: arcanjoRafael, 
+      phrase: 'Medicina de Deus, guia dos peregrinos e curador das almas.',
+      color: 'from-emerald-500/20 to-green-500/10'
+    },
+  ];
   
   return (
     <motion.div className="space-y-8" variants={staggerContainer} initial="initial" animate="animate">
@@ -433,19 +458,15 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <p className="text-gold/80 font-body text-sm tracking-widest mb-2">BEM-VINDO</p>
+              <p className="text-gold/80 font-body text-sm tracking-widest mb-2">BEM-VINDO À MILÍCIA CELESTIAL</p>
               <h1 className="text-3xl lg:text-4xl font-display text-cream mb-3">
                 {userName ? `Olá, ${userName}` : 'Paz e Bênçãos'}
               </h1>
               <p className="text-cream/80 font-body text-lg max-w-xl italic">"{dailyQuote}"</p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Button onClick={() => setActiveSection('prayers')} className="bg-gold hover:bg-gold-light text-navy-dark font-body">
-                  <Heart className="w-4 h-4 mr-2" />
-                  Orações
-                </Button>
-                <Button onClick={() => setActiveSection('devotional')} variant="outline" className="border-gold/30 text-cream hover:bg-gold/10">
+                <Button onClick={() => setActiveSection('devotional')} className="bg-gold hover:bg-gold-light text-navy-dark font-body">
                   <ScrollText className="w-4 h-4 mr-2" />
-                  Devocional
+                  Iniciar Jornada de 30 Dias
                 </Button>
               </div>
             </motion.div>
@@ -477,6 +498,108 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
           </Button>
         </div>
       </Carousel>
+
+      {/* Como Usar Este Guia */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/20 overflow-hidden">
+          <CardHeader className="pb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 rounded-xl bg-gold/10">
+                <BookOpen className="w-6 h-6 text-gold" />
+              </div>
+              <div>
+                <CardTitle className="text-foreground text-xl font-display">Como Usar Este Guia</CardTitle>
+                <CardDescription className="font-body">Para aproveitar ao máximo esta jornada espiritual de 30 dias</CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: Calendar,
+                  title: 'Reze durante 30 Dias Seguidos',
+                  description: 'Dedique-se a cada oração diariamente, seguindo a sequência recomendada para maior benefício espiritual.'
+                },
+                {
+                  icon: Clock,
+                  title: 'Reserve um Momento Tranquilo',
+                  description: 'Escolha um horário fixo do dia, de preferência pela manhã, para sua oração em silêncio e sem distrações.'
+                },
+                {
+                  icon: Heart,
+                  title: 'Ore com o Coração',
+                  description: 'Entregue-se de coração aberto, permitindo que cada palavra ressoe em sua alma e transforme sua vida.'
+                }
+              ].map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + i * 0.1 }}
+                  className="p-5 rounded-xl bg-muted/30 border border-gold/10 hover:border-gold/30 transition-all"
+                >
+                  <div className="p-3 rounded-lg bg-gold/10 w-fit mb-4">
+                    <item.icon className="w-6 h-6 text-gold" />
+                  </div>
+                  <h3 className="font-display text-lg text-foreground mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground font-body text-sm leading-relaxed">{item.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Os Três Arcanjos */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-3 rounded-xl bg-gold/10">
+            <Shield className="w-6 h-6 text-gold" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-display text-foreground">Os Três Arcanjos</h2>
+            <p className="text-muted-foreground font-body text-sm">Seus protetores celestiais</p>
+          </div>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-6">
+          {archangels.map((archangel, i) => (
+            <motion.div
+              key={archangel.name}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5 + i * 0.1 }}
+            >
+              <Card 
+                className={`overflow-hidden group hover:border-gold/40 transition-all duration-300 bg-gradient-to-br ${archangel.color} cursor-pointer`}
+                onClick={() => setActiveSection('archangels')}
+              >
+                <CardContent className="p-6 text-center">
+                  <div className="relative mx-auto w-32 h-32 mb-4">
+                    <div className="absolute inset-0 bg-gold/10 rounded-full blur-xl group-hover:bg-gold/20 transition-all" />
+                    <img 
+                      src={archangel.image} 
+                      alt={archangel.name} 
+                      className="relative w-full h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-300" 
+                    />
+                  </div>
+                  <h3 className="font-display text-lg text-foreground mb-2">{archangel.name}</h3>
+                  <p className="text-muted-foreground font-body text-sm italic leading-relaxed">"{archangel.phrase}"</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -545,35 +668,6 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
             <p className="text-foreground/85 font-body text-base leading-relaxed line-clamp-4">{dailyPrayer.content}</p>
           </CardContent>
         </Card>
-      </div>
-
-      {/* Quick Access Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { id: 'prayers', icon: Heart, title: 'Orações', desc: '10 categorias', gradient: 'from-rose-500/20 to-pink-500/10' },
-          { id: 'readings', icon: BookOpen, title: 'Leituras', desc: '4 seções', gradient: 'from-blue-500/20 to-cyan-500/10' },
-          { id: 'meditation', icon: Sparkles, title: 'Meditação', desc: 'Práticas guiadas', gradient: 'from-purple-500/20 to-violet-500/10' },
-          { id: 'archangels', icon: Cross, title: 'Arcanjos', desc: 'Miguel, Gabriel, Rafael', gradient: 'from-gold/20 to-amber-500/10' },
-        ].map((item, i) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 + i * 0.1 }}
-          >
-            <Card 
-              className={`cursor-pointer group hover:border-gold/40 transition-all duration-300 bg-gradient-to-br ${item.gradient} backdrop-blur-sm`}
-              onClick={() => setActiveSection(item.id)}
-            >
-              <CardContent className="p-5">
-                <item.icon className="w-8 h-8 text-gold mb-3 group-hover:scale-110 transition-transform" />
-                <h3 className="font-display text-lg text-foreground">{item.title}</h3>
-                <p className="text-muted-foreground text-sm font-body">{item.desc}</p>
-                <ChevronRight className="w-4 h-4 text-gold mt-2 group-hover:translate-x-1 transition-transform" />
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
       </div>
     </motion.div>
   );
