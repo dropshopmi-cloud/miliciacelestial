@@ -41,6 +41,7 @@ import arcanjoMiguel from '@/assets/arcanjo-miguel.png';
 import arcanjoGabriel from '@/assets/arcanjo-gabriel.png';
 import arcanjoRafael from '@/assets/arcanjo-rafael.png';
 import logoMilicia from '@/assets/arcanjos-logo.png';
+import bibliaImg from '@/assets/biblia.png';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -499,6 +500,38 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
         </div>
       </Carousel>
 
+      {/* Quick Stats - Moved to top */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          { icon: ScrollText, label: 'Devocional', value: `Dia ${todayDevotional.day}`, color: 'text-gold', action: () => setActiveSection('devotional') },
+          { icon: BookHeart, label: 'Novena', value: `${completedNovenas}/15 dias`, color: 'text-green-400', action: () => setActiveSection('novenas') },
+          { icon: Heart, label: 'Orações', value: '119 disponíveis', color: 'text-pink-400', action: () => setActiveSection('prayers') },
+          { icon: BookOpen, label: 'Leituras', value: '12 reflexões', color: 'text-blue-400', action: () => setActiveSection('readings') },
+        ].map((stat, i) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
+          >
+            <Card 
+              className="cursor-pointer group hover:border-gold/30 transition-all duration-300 bg-card/80 backdrop-blur-sm"
+              onClick={stat.action}
+            >
+              <CardContent className="p-4 flex items-center gap-4">
+                <div className={`p-3 rounded-xl bg-muted ${stat.color}`}>
+                  <stat.icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-muted-foreground text-xs font-body">{stat.label}</p>
+                  <p className="text-foreground font-display text-lg">{stat.value}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+
       {/* Como Usar Este Guia */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -601,37 +634,36 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
         </div>
       </motion.div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { icon: ScrollText, label: 'Devocional', value: `Dia ${todayDevotional.day}`, color: 'text-gold', action: () => setActiveSection('devotional') },
-          { icon: BookHeart, label: 'Novena', value: `${completedNovenas}/15 dias`, color: 'text-green-400', action: () => setActiveSection('novenas') },
-          { icon: Heart, label: 'Orações', value: '107 disponíveis', color: 'text-pink-400', action: () => setActiveSection('prayers') },
-          { icon: BookOpen, label: 'Leituras', value: '12 reflexões', color: 'text-blue-400', action: () => setActiveSection('readings') },
-        ].map((stat, i) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-          >
-            <Card 
-              className="cursor-pointer group hover:border-gold/30 transition-all duration-300 bg-card/80 backdrop-blur-sm"
-              onClick={stat.action}
+      {/* Bible Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6 }}
+      >
+        <Card className="bg-gradient-to-br from-card via-card to-amber-900/10 border-gold/20 overflow-hidden">
+          <CardContent className="p-8 text-center">
+            <h2 className="text-2xl lg:text-3xl font-display text-gold mb-6">Leia a Bíblia</h2>
+            <div className="relative mx-auto max-w-md mb-6">
+              <div className="absolute inset-0 bg-gold/5 rounded-2xl blur-2xl" />
+              <img 
+                src={bibliaImg} 
+                alt="Sagrada Bíblia" 
+                className="relative w-full h-auto rounded-2xl shadow-2xl border border-gold/20"
+              />
+            </div>
+            <p className="text-foreground/85 font-body text-lg leading-relaxed max-w-2xl mx-auto">
+              A Bíblia é fonte de sabedoria eterna. Nela estão as palavras que iluminam decisões, curam feridas e fortalecem a fé.
+            </p>
+            <Button 
+              onClick={() => setActiveSection('readings')} 
+              className="mt-6 bg-gold hover:bg-gold-light text-navy-dark font-body"
             >
-              <CardContent className="p-4 flex items-center gap-4">
-                <div className={`p-3 rounded-xl bg-muted ${stat.color}`}>
-                  <stat.icon className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-muted-foreground text-xs font-body">{stat.label}</p>
-                  <p className="text-foreground font-display text-lg">{stat.value}</p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
+              <BookOpen className="w-4 h-4 mr-2" />
+              Explorar Leituras
+            </Button>
+          </CardContent>
+        </Card>
+      </motion.div>
 
       {/* Daily Content Grid */}
       <div className="grid lg:grid-cols-2 gap-6">
