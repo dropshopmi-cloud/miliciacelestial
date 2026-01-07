@@ -395,7 +395,7 @@ const Dashboard = () => {
         )}
       </AnimatePresence>
 
-      <main className="min-h-screen pt-20 lg:pt-24">
+      <main className="min-h-screen pt-20 lg:pt-24 pb-20">
         <div className="max-w-7xl mx-auto p-4 lg:p-8">
           <AnimatePresence mode="wait">
             <motion.div key={activeSection + (selectedCategory || '') + (selectedItem?.id || '')} {...fadeInUp}>
@@ -404,6 +404,21 @@ const Dashboard = () => {
           </AnimatePresence>
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="bg-gradient-sacred border-t border-gold/15 py-8">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="font-decorative text-3xl lg:text-4xl text-gold tracking-wide mb-2">
+            Milícia Celestial
+          </h2>
+          <p className="text-cream/60 font-body text-sm tracking-widest">
+            MIGUEL • GABRIEL • RAFAEL
+          </p>
+          <p className="text-cream/40 font-body text-xs mt-4">
+            © {new Date().getFullYear()} Milícia Celestial. Todos os direitos reservados.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
@@ -530,6 +545,43 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
             </Card>
           </motion.div>
         ))}
+      </div>
+
+      {/* Daily Content - Passagem e Oração do Dia */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Bible Passage */}
+        <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/10 overflow-hidden">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <div className="p-2 rounded-lg bg-gold/10">
+                <BookOpen className="w-5 h-5 text-gold" />
+              </div>
+              <CardTitle className="text-foreground text-lg font-display">Passagem do Dia</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <blockquote className="text-foreground/85 font-body text-base leading-relaxed italic border-l-2 border-gold/50 pl-4">
+              "{dailyPassage.passage}"
+            </blockquote>
+            <p className="text-gold mt-4 font-display text-sm">{dailyPassage.reference}</p>
+          </CardContent>
+        </Card>
+
+        {/* Today's Prayer */}
+        <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/10 overflow-hidden">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <div className="p-2 rounded-lg bg-gold/10">
+                <Heart className="w-5 h-5 text-gold" />
+              </div>
+              <CardTitle className="text-foreground text-lg font-display">Oração do Dia</CardTitle>
+            </div>
+            <CardDescription className="font-body">{dailyPrayer.title}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-foreground/85 font-body text-base leading-relaxed line-clamp-4">{dailyPrayer.content}</p>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Como Usar Este Guia */}
@@ -665,42 +717,6 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
         </Card>
       </motion.div>
 
-      {/* Daily Content Grid */}
-      <div className="grid lg:grid-cols-2 gap-6">
-        {/* Bible Passage */}
-        <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/10 overflow-hidden">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-gold/10">
-                <BookOpen className="w-5 h-5 text-gold" />
-              </div>
-              <CardTitle className="text-foreground text-lg font-display">Passagem do Dia</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <blockquote className="text-foreground/85 font-body text-base leading-relaxed italic border-l-2 border-gold/50 pl-4">
-              "{dailyPassage.passage}"
-            </blockquote>
-            <p className="text-gold mt-4 font-display text-sm">{dailyPassage.reference}</p>
-          </CardContent>
-        </Card>
-
-        {/* Today's Prayer */}
-        <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/10 overflow-hidden">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-gold/10">
-                <Heart className="w-5 h-5 text-gold" />
-              </div>
-              <CardTitle className="text-foreground text-lg font-display">Oração do Dia</CardTitle>
-            </div>
-            <CardDescription className="font-body">{dailyPrayer.title}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-foreground/85 font-body text-base leading-relaxed line-clamp-4">{dailyPrayer.content}</p>
-          </CardContent>
-        </Card>
-      </div>
     </motion.div>
   );
 };
