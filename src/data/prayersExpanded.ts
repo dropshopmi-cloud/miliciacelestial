@@ -1,4 +1,5 @@
-// Orações por tema (107 orações) — cada oração com conteúdo único de 1000+ caracteres
+// Orações por tema (107+ orações) — cada oração com conteúdo único de 1000+ caracteres
+import { saintsCategory } from './saintsPrayers';
 
 type Prayer = { id: number; title: string; content: string };
 
@@ -9,7 +10,7 @@ type PrayerCategory = {
   prayers: Prayer[];
 };
 
-export const prayerCategories: Record<string, PrayerCategory> = {
+const basePrayerCategories: Record<string, PrayerCategory> = {
   cura: {
     name: "Cura",
     description: "Cura física, emocional e espiritual",
@@ -1973,4 +1974,10 @@ Maria, Rainha da Paz, ensina-me a cultivar e espalhar a paz por onde eu for. Am�
       }
     ]
   }
+};
+
+// Exportar todas as categorias incluindo Santos
+export const prayerCategories: Record<string, PrayerCategory> = {
+  ...basePrayerCategories,
+  santos: saintsCategory
 };
