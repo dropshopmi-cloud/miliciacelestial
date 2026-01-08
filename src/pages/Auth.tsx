@@ -227,7 +227,7 @@ const Auth = () => {
                 </label>
 
                 <p className="text-xs text-muted-foreground mt-3 leading-relaxed">
-                  Use o email de compra. Na primeira vez, definimos sua senha automaticamente.
+                  Use o email de compra e a senha fornecida.
                 </p>
               </motion.div>
 

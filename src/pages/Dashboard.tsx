@@ -13,6 +13,7 @@ import { meditationCategories, novenas, rosary, liturgicalCalendar, archangelsIn
 import { SearchFilter } from '@/components/SearchFilter';
 import { ProgressButtons } from '@/components/ProgressButtons';
 import { Carousel } from '@/components/Carousel';
+import { NotificationSettings } from '@/components/NotificationSettings';
 import { toast } from 'sonner';
 import {
   User,
@@ -35,6 +36,9 @@ import {
   ScrollText,
   Sun,
   Moon,
+  Bell,
+  Flame,
+  Zap,
 } from 'lucide-react';
 import archangelsHero from '@/assets/three-archangels.jpg';
 import arcanjoMiguel from '@/assets/arcanjo-miguel.png';
@@ -405,20 +409,6 @@ const Dashboard = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-gradient-sacred border-t border-gold/15 py-8">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="font-decorative text-3xl lg:text-4xl text-gold tracking-wide mb-2">
-            Milícia Celestial
-          </h2>
-          <p className="text-cream/60 font-body text-sm tracking-widest">
-            MIGUEL • GABRIEL • RAFAEL
-          </p>
-          <p className="text-cream/40 font-body text-xs mt-4">
-            © {new Date().getFullYear()} Milícia Celestial. Todos os direitos reservados.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };
@@ -435,6 +425,7 @@ const BackButton = ({ onClick }: { onClick: () => void }) => (
 );
 
 const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDevotional, novenaProgress, setActiveSection, setSelectedItem }: any) => {
+  const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   const completedNovenas = novenaProgress.length;
 
   const archangels = [
@@ -459,6 +450,26 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
   ];
   
   return (
+    <>
+    {showNotificationSettings && (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        onClick={() => setShowNotificationSettings(false)}
+      >
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          onClick={(e) => e.stopPropagation()}
+          className="w-full max-w-md"
+        >
+          <NotificationSettings onClose={() => setShowNotificationSettings(false)} />
+        </motion.div>
+      </motion.div>
+    )}
     <motion.div className="space-y-8" variants={staggerContainer} initial="initial" animate="animate">
       {/* Hero Carousel */}
       <Carousel className="rounded-2xl overflow-hidden shadow-3d">
@@ -717,7 +728,92 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
         </Card>
       </motion.div>
 
+      {/* Notification Settings Button */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7 }}
+      >
+        <Card className="bg-gradient-to-br from-card via-card to-purple-900/10 border-gold/20 overflow-hidden">
+          <CardContent className="p-6">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              <div className="p-4 rounded-2xl bg-gold/10">
+                <Bell className="w-10 h-10 text-gold" />
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-xl font-display text-foreground mb-2">Lembretes de Oração</h3>
+                <p className="text-muted-foreground font-body text-sm">
+                  Configure notificações para nunca esquecer de suas orações diárias, leituras e devocionais.
+                </p>
+              </div>
+              <Button 
+                onClick={() => setShowNotificationSettings(true)}
+                className="bg-gold hover:bg-gold-light text-navy-dark font-body"
+              >
+                <Bell className="w-4 h-4 mr-2" />
+                Configurar Lembretes
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Inspirational Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8 }}
+      >
+        <Card className="bg-gradient-to-br from-navy-dark via-navy to-brown/30 border-gold/20 overflow-hidden">
+          <CardContent className="p-8">
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: Flame,
+                  title: 'Fé Inabalável',
+                  description: 'A fé move montanhas. Confie no poder divino que guia seus passos.',
+                  color: 'text-orange-400'
+                },
+                {
+                  icon: Shield,
+                  title: 'Proteção Celestial',
+                  description: 'Os Santos Arcanjos estão sempre ao seu lado, protegendo-o do mal.',
+                  color: 'text-blue-400'
+                },
+                {
+                  icon: Zap,
+                  title: 'Força Interior',
+                  description: 'Através da oração, você encontra forças para superar qualquer desafio.',
+                  color: 'text-yellow-400'
+                }
+              ].map((item, i) => (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9 + i * 0.1 }}
+                  className="text-center p-6 rounded-xl bg-white/5 border border-gold/10 hover:border-gold/30 transition-all"
+                >
+                  <div className={`p-4 rounded-full bg-muted/20 w-fit mx-auto mb-4 ${item.color}`}>
+                    <item.icon className="w-8 h-8" />
+                  </div>
+                  <h3 className="font-display text-lg text-cream mb-2">{item.title}</h3>
+                  <p className="text-cream/70 font-body text-sm leading-relaxed">{item.description}</p>
+                </motion.div>
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <p className="text-gold/80 font-body italic text-lg">
+                "Porque onde estiverem dois ou três reunidos em meu nome, aí estou eu no meio deles."
+              </p>
+              <p className="text-gold/60 font-body text-sm mt-2">Mateus 18:20</p>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
     </motion.div>
+    </>
   );
 };
 
