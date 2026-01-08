@@ -10,6 +10,8 @@ import { toast } from 'sonner';
 import { Mail, Lock, LogIn, Shield, Sparkles } from 'lucide-react';
 import logoMilicia from '@/assets/arcanjos-logo.png';
 
+const MASTER_PASSWORD = 'Arcanjos@';
+
 const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,12 +21,10 @@ const Auth = () => {
   const { signIn, signUp, user, loading } = useAuth();
 
   useEffect(() => {
-    // Auto-fill
+    // Auto-fill email only
     const savedEmail = localStorage.getItem('mc_auth_email');
-    const savedPassword = localStorage.getItem('mc_auth_password');
     const savedRemember = localStorage.getItem('mc_auth_remember');
     if (savedEmail) setEmail(savedEmail);
-    if (savedPassword) setPassword(savedPassword);
     if (savedRemember) setRemember(savedRemember === 'true');
 
     if (!loading && user) {
@@ -42,20 +42,21 @@ const Auth = () => {
       return;
     }
 
-    if (password.length < 6) {
-      toast.error('A senha deve ter pelo menos 6 caracteres');
+    // Validate master password
+    if (password !== MASTER_PASSWORD) {
+      toast.error('Senha incorreta. Use a senha fornecida.');
       setIsLoading(false);
       return;
     }
 
     try {
       // Try to sign in first
-      const { error: signInError } = await signIn(email, password);
+      const { error: signInError } = await signIn(email, MASTER_PASSWORD);
 
       if (signInError) {
         // If user doesn't exist, create account automatically
         if (signInError.message.includes('Invalid login')) {
-          const { error: signUpError } = await signUp(email, password);
+          const { error: signUpError } = await signUp(email, MASTER_PASSWORD);
           if (signUpError) {
             if (signUpError.message.includes('already registered')) {
               toast.error('Email ou senha incorretos');
@@ -65,11 +66,9 @@ const Auth = () => {
           } else {
             if (remember) {
               localStorage.setItem('mc_auth_email', email);
-              localStorage.setItem('mc_auth_password', password);
               localStorage.setItem('mc_auth_remember', 'true');
             } else {
               localStorage.removeItem('mc_auth_email');
-              localStorage.removeItem('mc_auth_password');
               localStorage.setItem('mc_auth_remember', 'false');
             }
             toast.success('Acesso liberado! Bem-vindo(a) à Milícia Celestial.');
@@ -81,11 +80,9 @@ const Auth = () => {
       } else {
         if (remember) {
           localStorage.setItem('mc_auth_email', email);
-          localStorage.setItem('mc_auth_password', password);
           localStorage.setItem('mc_auth_remember', 'true');
         } else {
           localStorage.removeItem('mc_auth_email');
-          localStorage.removeItem('mc_auth_password');
           localStorage.setItem('mc_auth_remember', 'false');
         }
         toast.success('Bem-vindo! Que os Arcanjos te protejam.');

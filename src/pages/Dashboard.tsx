@@ -394,6 +394,11 @@ const Dashboard = () => {
                   </motion.button>
                 ))}
               </nav>
+
+              {/* Notification Settings in Mobile Menu */}
+              <div className="mt-6 pt-6 border-t border-gold/20">
+                <NotificationSettings />
+              </div>
             </motion.div>
           </>
         )}
@@ -425,7 +430,6 @@ const BackButton = ({ onClick }: { onClick: () => void }) => (
 );
 
 const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDevotional, novenaProgress, setActiveSection, setSelectedItem }: any) => {
-  const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   const completedNovenas = novenaProgress.length;
 
   const archangels = [
@@ -450,26 +454,6 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
   ];
   
   return (
-    <>
-    {showNotificationSettings && (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-        onClick={() => setShowNotificationSettings(false)}
-      >
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          onClick={(e) => e.stopPropagation()}
-          className="w-full max-w-md"
-        >
-          <NotificationSettings onClose={() => setShowNotificationSettings(false)} />
-        </motion.div>
-      </motion.div>
-    )}
     <motion.div className="space-y-8" variants={staggerContainer} initial="initial" animate="animate">
       {/* Hero Carousel */}
       <Carousel className="rounded-2xl overflow-hidden shadow-3d">
@@ -728,92 +712,98 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
         </Card>
       </motion.div>
 
-      {/* Notification Settings Button */}
+      {/* Inspirational Section - Final */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7 }}
       >
-        <Card className="bg-gradient-to-br from-card via-card to-purple-900/10 border-gold/20 overflow-hidden">
-          <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row items-center gap-6">
-              <div className="p-4 rounded-2xl bg-gold/10">
-                <Bell className="w-10 h-10 text-gold" />
-              </div>
-              <div className="flex-1 text-center md:text-left">
-                <h3 className="text-xl font-display text-foreground mb-2">Lembretes de Oração</h3>
-                <p className="text-muted-foreground font-body text-sm">
-                  Configure notificações para nunca esquecer de suas orações diárias, leituras e devocionais.
-                </p>
-              </div>
-              <Button 
-                onClick={() => setShowNotificationSettings(true)}
-                className="bg-gold hover:bg-gold-light text-navy-dark font-body"
-              >
-                <Bell className="w-4 h-4 mr-2" />
-                Configurar Lembretes
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* Inspirational Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8 }}
-      >
-        <Card className="bg-gradient-to-br from-navy-dark via-navy to-brown/30 border-gold/20 overflow-hidden">
+        <Card className="bg-gradient-to-br from-navy-dark via-navy to-navy-dark border-gold/20 overflow-hidden">
           <CardContent className="p-8">
-            <div className="grid md:grid-cols-3 gap-6">
+            {/* Section Title */}
+            <div className="text-center mb-8">
+              <h2 className="text-2xl lg:text-3xl font-display text-gold mb-2">Jornada Espiritual</h2>
+              <p className="text-cream/60 font-body text-sm">Fortaleça sua fé diariamente</p>
+            </div>
+
+            {/* Virtues Grid */}
+            <div className="grid md:grid-cols-3 gap-6 mb-10">
               {[
                 {
                   icon: Flame,
                   title: 'Fé Inabalável',
-                  description: 'A fé move montanhas. Confie no poder divino que guia seus passos.',
-                  color: 'text-orange-400'
+                  description: 'A fé move montanhas. Confie no poder divino que guia seus passos em cada momento.',
+                  gradient: 'from-orange-500/20 to-amber-500/10'
                 },
                 {
                   icon: Shield,
                   title: 'Proteção Celestial',
-                  description: 'Os Santos Arcanjos estão sempre ao seu lado, protegendo-o do mal.',
-                  color: 'text-blue-400'
+                  description: 'Os Santos Arcanjos estão sempre ao seu lado, protegendo você de todo mal.',
+                  gradient: 'from-blue-500/20 to-cyan-500/10'
                 },
                 {
-                  icon: Zap,
-                  title: 'Força Interior',
-                  description: 'Através da oração, você encontra forças para superar qualquer desafio.',
-                  color: 'text-yellow-400'
+                  icon: Heart,
+                  title: 'Amor Divino',
+                  description: 'O amor de Deus é infinito e incondicional. Deixe-o preencher seu coração.',
+                  gradient: 'from-pink-500/20 to-rose-500/10'
                 }
               ].map((item, i) => (
                 <motion.div
                   key={item.title}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9 + i * 0.1 }}
-                  className="text-center p-6 rounded-xl bg-white/5 border border-gold/10 hover:border-gold/30 transition-all"
+                  transition={{ delay: 0.8 + i * 0.1 }}
+                  className={`text-center p-6 rounded-2xl bg-gradient-to-br ${item.gradient} border border-gold/10 hover:border-gold/30 transition-all duration-300`}
                 >
-                  <div className={`p-4 rounded-full bg-muted/20 w-fit mx-auto mb-4 ${item.color}`}>
-                    <item.icon className="w-8 h-8" />
+                  <div className="p-4 rounded-full bg-gold/10 w-fit mx-auto mb-4">
+                    <item.icon className="w-8 h-8 text-gold" />
                   </div>
-                  <h3 className="font-display text-lg text-cream mb-2">{item.title}</h3>
+                  <h3 className="font-display text-lg text-cream mb-3">{item.title}</h3>
                   <p className="text-cream/70 font-body text-sm leading-relaxed">{item.description}</p>
                 </motion.div>
               ))}
             </div>
-            <div className="mt-8 text-center">
-              <p className="text-gold/80 font-body italic text-lg">
+
+            {/* Quick Access Buttons */}
+            <div className="flex flex-wrap justify-center gap-4 mb-10">
+              <Button 
+                onClick={() => setActiveSection('prayers')} 
+                variant="outline"
+                className="border-gold/30 text-gold hover:bg-gold/10 font-body"
+              >
+                <Heart className="w-4 h-4 mr-2" />
+                Orações
+              </Button>
+              <Button 
+                onClick={() => setActiveSection('devotional')} 
+                variant="outline"
+                className="border-gold/30 text-gold hover:bg-gold/10 font-body"
+              >
+                <ScrollText className="w-4 h-4 mr-2" />
+                Devocional
+              </Button>
+              <Button 
+                onClick={() => setActiveSection('novenas')} 
+                variant="outline"
+                className="border-gold/30 text-gold hover:bg-gold/10 font-body"
+              >
+                <BookHeart className="w-4 h-4 mr-2" />
+                Novenas
+              </Button>
+            </div>
+
+            {/* Final Quote */}
+            <div className="text-center p-6 rounded-2xl bg-gold/5 border border-gold/10">
+              <p className="text-cream font-body italic text-lg leading-relaxed mb-3">
                 "Porque onde estiverem dois ou três reunidos em meu nome, aí estou eu no meio deles."
               </p>
-              <p className="text-gold/60 font-body text-sm mt-2">Mateus 18:20</p>
+              <p className="text-gold font-display text-sm">— Mateus 18:20</p>
             </div>
           </CardContent>
         </Card>
       </motion.div>
 
     </motion.div>
-    </>
   );
 };
 
