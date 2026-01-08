@@ -204,14 +204,15 @@ export const NotificationSettings = ({ onClose }: NotificationSettingsProps) => 
                 </div>
               </div>
 
-              {/* Test Notification */}
+              {/* Start Notifications Button */}
               <Button 
-                variant="outline" 
-                onClick={showTestNotification}
-                className="w-full border-gold/30 text-gold hover:bg-gold/10"
+                onClick={() => {
+                  showTestNotification();
+                }}
+                className="w-full bg-gold hover:bg-gold-light text-navy-dark font-body"
               >
                 <Bell className="w-4 h-4 mr-2" />
-                Testar Notificação
+                Notificar
               </Button>
             </motion.div>
           )}
