@@ -147,11 +147,6 @@ const Auth = () => {
               <CardTitle className="text-3xl text-gold-light font-decorative tracking-wide">
                 Milícia Celestial
               </CardTitle>
-              <CardDescription className="text-base mt-3 font-body text-cream/80 flex items-center justify-center gap-2">
-                <Shield className="w-4 h-4 text-gold" />
-                <span>São Miguel • São Gabriel • São Rafael</span>
-                <Shield className="w-4 h-4 text-gold" />
-              </CardDescription>
             </motion.div>
           </CardHeader>
           
