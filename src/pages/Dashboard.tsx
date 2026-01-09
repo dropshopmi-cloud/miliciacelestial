@@ -37,8 +37,6 @@ import {
   Sun,
   Moon,
   Bell,
-  Flame,
-  Zap,
 } from 'lucide-react';
 import archangelsHero from '@/assets/three-archangels.jpg';
 import arcanjoMiguel from '@/assets/arcanjo-miguel.png';
@@ -69,6 +67,7 @@ const Dashboard = () => {
   const [novenaProgress, setNovenaProgress] = useState<number[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   const navigate = useNavigate();
   const { user, profile, loading, signOut, updateProfile } = useAuth();
   const { toggleRead, toggleFavorite, isRead, isFavorite, getFavorites } = useUserProgress();
@@ -395,10 +394,42 @@ const Dashboard = () => {
                 ))}
               </nav>
 
-              {/* Notification Settings in Mobile Menu */}
+              {/* Notification Settings Button in Mobile Menu */}
               <div className="mt-6 pt-6 border-t border-gold/20">
-                <NotificationSettings />
+                <button
+                  onClick={() => {
+                    setShowNotificationSettings(true);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-cream/70 hover:bg-gold/10 hover:text-cream transition-all"
+                >
+                  <Bell className="w-5 h-5" />
+                  <span className="font-body">Configurar Notificações</span>
+                </button>
               </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Notification Settings Modal */}
+      <AnimatePresence>
+        {showNotificationSettings && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" 
+              onClick={() => setShowNotificationSettings(false)} 
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-50 md:w-full md:max-w-lg overflow-auto max-h-[90vh]"
+            >
+              <NotificationSettings onClose={() => setShowNotificationSettings(false)} />
             </motion.div>
           </>
         )}
@@ -708,97 +739,6 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
               <BookOpen className="w-4 h-4 mr-2" />
               Explorar Leituras
             </Button>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* Inspirational Section - Final */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7 }}
-      >
-        <Card className="bg-gradient-to-br from-navy-dark via-navy to-navy-dark border-gold/20 overflow-hidden">
-          <CardContent className="p-8">
-            {/* Section Title */}
-            <div className="text-center mb-8">
-              <h2 className="text-2xl lg:text-3xl font-display text-gold mb-2">Jornada Espiritual</h2>
-              <p className="text-cream/60 font-body text-sm">Fortaleça sua fé diariamente</p>
-            </div>
-
-            {/* Virtues Grid */}
-            <div className="grid md:grid-cols-3 gap-6 mb-10">
-              {[
-                {
-                  icon: Flame,
-                  title: 'Fé Inabalável',
-                  description: 'A fé move montanhas. Confie no poder divino que guia seus passos em cada momento.',
-                  gradient: 'from-orange-500/20 to-amber-500/10'
-                },
-                {
-                  icon: Shield,
-                  title: 'Proteção Celestial',
-                  description: 'Os Santos Arcanjos estão sempre ao seu lado, protegendo você de todo mal.',
-                  gradient: 'from-blue-500/20 to-cyan-500/10'
-                },
-                {
-                  icon: Heart,
-                  title: 'Amor Divino',
-                  description: 'O amor de Deus é infinito e incondicional. Deixe-o preencher seu coração.',
-                  gradient: 'from-pink-500/20 to-rose-500/10'
-                }
-              ].map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 + i * 0.1 }}
-                  className={`text-center p-6 rounded-2xl bg-gradient-to-br ${item.gradient} border border-gold/10 hover:border-gold/30 transition-all duration-300`}
-                >
-                  <div className="p-4 rounded-full bg-gold/10 w-fit mx-auto mb-4">
-                    <item.icon className="w-8 h-8 text-gold" />
-                  </div>
-                  <h3 className="font-display text-lg text-cream mb-3">{item.title}</h3>
-                  <p className="text-cream/70 font-body text-sm leading-relaxed">{item.description}</p>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Quick Access Buttons */}
-            <div className="flex flex-wrap justify-center gap-4 mb-10">
-              <Button 
-                onClick={() => setActiveSection('prayers')} 
-                variant="outline"
-                className="border-gold/30 text-gold hover:bg-gold/10 font-body"
-              >
-                <Heart className="w-4 h-4 mr-2" />
-                Orações
-              </Button>
-              <Button 
-                onClick={() => setActiveSection('devotional')} 
-                variant="outline"
-                className="border-gold/30 text-gold hover:bg-gold/10 font-body"
-              >
-                <ScrollText className="w-4 h-4 mr-2" />
-                Devocional
-              </Button>
-              <Button 
-                onClick={() => setActiveSection('novenas')} 
-                variant="outline"
-                className="border-gold/30 text-gold hover:bg-gold/10 font-body"
-              >
-                <BookHeart className="w-4 h-4 mr-2" />
-                Novenas
-              </Button>
-            </div>
-
-            {/* Final Quote */}
-            <div className="text-center p-6 rounded-2xl bg-gold/5 border border-gold/10">
-              <p className="text-cream font-body italic text-lg leading-relaxed mb-3">
-                "Porque onde estiverem dois ou três reunidos em meu nome, aí estou eu no meio deles."
-              </p>
-              <p className="text-gold font-display text-sm">— Mateus 18:20</p>
-            </div>
           </CardContent>
         </Card>
       </motion.div>
