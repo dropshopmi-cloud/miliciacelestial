@@ -401,10 +401,10 @@ const Dashboard = () => {
                     setShowNotificationSettings(true);
                     setMobileMenuOpen(false);
                   }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-cream/70 hover:bg-gold/10 hover:text-cream transition-all"
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gold/10 border border-gold/30 text-gold hover:bg-gold/20 transition-all"
                 >
                   <Bell className="w-5 h-5" />
-                  <span className="font-body">Configurar Notificações</span>
+                  <span className="font-body font-medium">Configurar Notificação</span>
                 </button>
               </div>
             </motion.div>

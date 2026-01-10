@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { Bell, BellOff, Clock, Heart, BookOpen, ScrollText, Check, X } from 'lucide-react';
+import { Bell, BellOff, Heart, BookOpen, ScrollText, X, Check } from 'lucide-react';
 import { usePushNotifications } from '@/hooks/usePushNotifications';
 
 interface TimeOption {
@@ -35,10 +35,12 @@ export const NotificationSettings = ({ onClose }: NotificationSettingsProps) => 
     settings,
     loading,
     permissionStatus,
+    isNotificationActive,
     enableNotifications,
     disableNotifications,
     saveSettings,
-    showTestNotification,
+    activateNotifications,
+    deactivateNotifications,
   } = usePushNotifications();
 
   const [localSettings, setLocalSettings] = useState({
@@ -47,9 +49,21 @@ export const NotificationSettings = ({ onClose }: NotificationSettingsProps) => 
     devotional_time: settings.devotional_time || '20:00',
   });
 
+  const [isActivating, setIsActivating] = useState(false);
+
+  // Sync local settings when settings change
+  useEffect(() => {
+    setLocalSettings({
+      prayer_time: settings.prayer_time || '07:00',
+      reading_time: settings.reading_time || '12:00',
+      devotional_time: settings.devotional_time || '20:00',
+    });
+  }, [settings]);
+
   const handleToggleNotifications = async () => {
     if (settings.push_enabled) {
       await disableNotifications();
+      deactivateNotifications();
     } else {
       await enableNotifications();
     }
@@ -58,6 +72,12 @@ export const NotificationSettings = ({ onClose }: NotificationSettingsProps) => 
   const handleSaveTime = async (type: 'prayer_time' | 'reading_time' | 'devotional_time', value: string) => {
     setLocalSettings(prev => ({ ...prev, [type]: value }));
     await saveSettings({ [type]: value });
+  };
+
+  const handleActivateNotifications = async () => {
+    setIsActivating(true);
+    await activateNotifications();
+    setIsActivating(false);
   };
 
   if (loading) {
@@ -204,15 +224,28 @@ export const NotificationSettings = ({ onClose }: NotificationSettingsProps) => 
                 </div>
               </div>
 
-              {/* Start Notifications Button */}
+              {/* Activate Notifications Button */}
               <Button 
-                onClick={() => {
-                  showTestNotification();
-                }}
-                className="w-full bg-gold hover:bg-gold-light text-navy-dark font-body"
+                onClick={isNotificationActive ? deactivateNotifications : handleActivateNotifications}
+                disabled={isActivating}
+                className={`w-full font-body transition-all duration-300 ${
+                  isNotificationActive 
+                    ? 'bg-green-600 hover:bg-green-700 text-white' 
+                    : 'bg-gold hover:bg-gold-light text-navy-dark'
+                }`}
               >
-                <Bell className="w-4 h-4 mr-2" />
-                Notificar
+                <motion.div
+                  animate={isNotificationActive ? { rotate: [0, -15, 15, -15, 15, 0] } : {}}
+                  transition={{ duration: 0.5, repeat: isNotificationActive ? Infinity : 0, repeatDelay: 3 }}
+                  className="mr-2"
+                >
+                  {isNotificationActive ? (
+                    <Check className="w-4 h-4" />
+                  ) : (
+                    <Bell className="w-4 h-4" />
+                  )}
+                </motion.div>
+                {isActivating ? 'Ativando...' : isNotificationActive ? 'Notificações Ativas' : 'Notificar'}
               </Button>
             </motion.div>
           )}
