@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from './useAuth';
 import { toast } from 'sonner';
@@ -17,17 +17,38 @@ const defaultSettings: NotificationSettings = {
   devotional_time: null,
 };
 
+const NOTIFICATION_MESSAGES = {
+  prayer: {
+    title: '🙏 Hora da Oração',
+    body: 'Chegou a hora de fazer sua oração diária. Que São Miguel Arcanjo te proteja!',
+  },
+  reading: {
+    title: '📖 Hora da Leitura',
+    body: 'É hora de sua leitura espiritual. São Gabriel te ilumina!',
+  },
+  devotional: {
+    title: '✨ Hora do Devocional',
+    body: 'Momento de reflexão e devocional. São Rafael te acompanha!',
+  },
+};
+
 export const usePushNotifications = () => {
   const { user } = useAuth();
   const [settings, setSettings] = useState<NotificationSettings>(defaultSettings);
   const [loading, setLoading] = useState(true);
   const [permissionStatus, setPermissionStatus] = useState<NotificationPermission>('default');
+  const [isNotificationActive, setIsNotificationActive] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const lastNotifiedRef = useRef<{ prayer?: string; reading?: string; devotional?: string }>({});
 
   // Check browser notification permission
   useEffect(() => {
     if ('Notification' in window) {
       setPermissionStatus(Notification.permission);
     }
+    // Check if notifications were previously activated
+    const active = localStorage.getItem('notificationsActive') === 'true';
+    setIsNotificationActive(active);
   }, []);
 
   // Fetch user notification settings
@@ -66,6 +87,79 @@ export const usePushNotifications = () => {
 
     fetchSettings();
   }, [user]);
+
+  // Check and fire notifications
+  const checkAndFireNotifications = useCallback(() => {
+    if (permissionStatus !== 'granted') return;
+
+    const now = new Date();
+    const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    const today = now.toDateString();
+
+    const schedules = localStorage.getItem('notificationSchedules');
+    if (!schedules) return;
+
+    const { prayer, reading, devotional } = JSON.parse(schedules);
+
+    // Check prayer time
+    if (prayer && currentTime === prayer && lastNotifiedRef.current.prayer !== today) {
+      new Notification(NOTIFICATION_MESSAGES.prayer.title, {
+        body: NOTIFICATION_MESSAGES.prayer.body,
+        icon: '/favicon.ico',
+        badge: '/favicon.ico',
+        tag: 'prayer-notification',
+      });
+      lastNotifiedRef.current.prayer = today;
+    }
+
+    // Check reading time
+    if (reading && currentTime === reading && lastNotifiedRef.current.reading !== today) {
+      new Notification(NOTIFICATION_MESSAGES.reading.title, {
+        body: NOTIFICATION_MESSAGES.reading.body,
+        icon: '/favicon.ico',
+        badge: '/favicon.ico',
+        tag: 'reading-notification',
+      });
+      lastNotifiedRef.current.reading = today;
+    }
+
+    // Check devotional time
+    if (devotional && currentTime === devotional && lastNotifiedRef.current.devotional !== today) {
+      new Notification(NOTIFICATION_MESSAGES.devotional.title, {
+        body: NOTIFICATION_MESSAGES.devotional.body,
+        icon: '/favicon.ico',
+        badge: '/favicon.ico',
+        tag: 'devotional-notification',
+      });
+      lastNotifiedRef.current.devotional = today;
+    }
+  }, [permissionStatus]);
+
+  // Start notification scheduler
+  const startNotificationScheduler = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    
+    // Check every 30 seconds for more accuracy
+    intervalRef.current = setInterval(checkAndFireNotifications, 30000);
+    
+    // Also check immediately
+    checkAndFireNotifications();
+  }, [checkAndFireNotifications]);
+
+  // Effect to manage the scheduler
+  useEffect(() => {
+    if (isNotificationActive && permissionStatus === 'granted') {
+      startNotificationScheduler();
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isNotificationActive, permissionStatus, startNotificationScheduler]);
 
   // Request notification permission
   const requestPermission = useCallback(async (): Promise<boolean> => {
@@ -122,7 +216,6 @@ export const usePushNotifications = () => {
         return false;
       }
 
-      toast.success('Configurações salvas com sucesso!');
       return true;
     } catch (err) {
       console.error('Error:', err);
@@ -135,9 +228,6 @@ export const usePushNotifications = () => {
     const permitted = await requestPermission();
     if (permitted) {
       const success = await saveSettings({ push_enabled: true });
-      if (success) {
-        scheduleNotifications();
-      }
       return success;
     }
     return false;
@@ -148,18 +238,44 @@ export const usePushNotifications = () => {
     return saveSettings({ push_enabled: false });
   }, [saveSettings]);
 
-  // Schedule local notifications based on settings
-  const scheduleNotifications = useCallback(() => {
-    if (!settings.push_enabled || permissionStatus !== 'granted') return;
+  // Activate notifications and start scheduler
+  const activateNotifications = useCallback(async (): Promise<boolean> => {
+    const permitted = await requestPermission();
+    if (!permitted) return false;
 
-    // Store scheduled times in localStorage for service worker
+    // Save schedules to localStorage
     const schedules = {
       prayer: settings.prayer_time,
       reading: settings.reading_time,
       devotional: settings.devotional_time,
     };
     localStorage.setItem('notificationSchedules', JSON.stringify(schedules));
-  }, [settings, permissionStatus]);
+    localStorage.setItem('notificationsActive', 'true');
+    
+    setIsNotificationActive(true);
+    startNotificationScheduler();
+    
+    // Show confirmation notification
+    new Notification('✅ Notificações Ativadas', {
+      body: 'Você receberá lembretes nos horários configurados.',
+      icon: '/favicon.ico',
+      badge: '/favicon.ico',
+      tag: 'activation-notification',
+    });
+
+    toast.success('Notificações ativadas com sucesso!');
+    return true;
+  }, [requestPermission, settings, startNotificationScheduler]);
+
+  // Deactivate notifications
+  const deactivateNotifications = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    localStorage.setItem('notificationsActive', 'false');
+    setIsNotificationActive(false);
+    toast.info('Notificações desativadas');
+  }, []);
 
   // Show a test notification
   const showTestNotification = useCallback(() => {
@@ -180,11 +296,13 @@ export const usePushNotifications = () => {
     settings,
     loading,
     permissionStatus,
+    isNotificationActive,
     enableNotifications,
     disableNotifications,
     saveSettings,
     requestPermission,
     showTestNotification,
-    scheduleNotifications,
+    activateNotifications,
+    deactivateNotifications,
   };
 };
