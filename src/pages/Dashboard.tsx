@@ -13,7 +13,7 @@ import { meditationCategories, novenas, rosary, liturgicalCalendar, archangelsIn
 import { SearchFilter } from '@/components/SearchFilter';
 import { ProgressButtons } from '@/components/ProgressButtons';
 import { Carousel } from '@/components/Carousel';
-import { NotificationSettings } from '@/components/NotificationSettings';
+
 import { toast } from 'sonner';
 import {
   User,
@@ -36,7 +36,7 @@ import {
   ScrollText,
   Sun,
   Moon,
-  Bell,
+  
 } from 'lucide-react';
 import archangelsHero from '@/assets/three-archangels.jpg';
 import arcanjoMiguel from '@/assets/arcanjo-miguel.png';
@@ -67,7 +67,7 @@ const Dashboard = () => {
   const [novenaProgress, setNovenaProgress] = useState<number[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-  const [showNotificationSettings, setShowNotificationSettings] = useState(false);
+  
   const navigate = useNavigate();
   const { user, profile, loading, signOut, updateProfile } = useAuth();
   const { toggleRead, toggleFavorite, isRead, isFavorite, getFavorites } = useUserProgress();
@@ -394,42 +394,6 @@ const Dashboard = () => {
                 ))}
               </nav>
 
-              {/* Notification Settings Button in Mobile Menu */}
-              <div className="mt-6 pt-6 border-t border-gold/20">
-                <button
-                  onClick={() => {
-                    setShowNotificationSettings(true);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gold/10 border border-gold/30 text-gold hover:bg-gold/20 transition-all"
-                >
-                  <Bell className="w-5 h-5" />
-                  <span className="font-body font-medium">Configurar Notificação</span>
-                </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
-      {/* Notification Settings Modal */}
-      <AnimatePresence>
-        {showNotificationSettings && (
-          <>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" 
-              onClick={() => setShowNotificationSettings(false)} 
-            />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-50 md:w-full md:max-w-lg overflow-auto max-h-[90vh]"
-            >
-              <NotificationSettings onClose={() => setShowNotificationSettings(false)} />
             </motion.div>
           </>
         )}
