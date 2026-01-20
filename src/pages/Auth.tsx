@@ -71,7 +71,7 @@ const Auth = () => {
               localStorage.removeItem('mc_auth_email');
               localStorage.setItem('mc_auth_remember', 'false');
             }
-            toast.success('Acesso liberado! Bem-vindo(a) à Milícia Celestial.');
+            toast.success('Acesso liberado! Bem-vindo(a) à Trindade dos Arcanjos.');
             navigate('/');
           }
         } else {
@@ -135,7 +135,7 @@ const Auth = () => {
             >
               <div className="absolute inset-0 bg-gold/20 rounded-full blur-2xl scale-125 animate-pulse-slow" />
               <div className="relative w-36 h-36 rounded-full overflow-hidden border-4 border-gold/50 shadow-glow-gold">
-                <img src={logoMilicia} alt="Milícia Celestial" className="w-full h-full object-cover" />
+                <img src={logoMilicia} alt="Trindade dos Arcanjos" className="w-full h-full object-cover" />
               </div>
             </motion.div>
             
@@ -144,8 +144,8 @@ const Auth = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <CardTitle className="text-3xl text-gold-light font-decorative tracking-wide">
-                Milícia Celestial
+              <CardTitle className="text-3xl text-navy font-brand tracking-wide">
+                Trindade dos Arcanjos
               </CardTitle>
             </motion.div>
           </CardHeader>
@@ -241,7 +241,7 @@ const Auth = () => {
                   ) : (
                     <>
                       <LogIn className="w-5 h-5 mr-2" />
-                      Entrar na Milícia
+                      Entrar
                     </>
                   )}
                 </Button>
