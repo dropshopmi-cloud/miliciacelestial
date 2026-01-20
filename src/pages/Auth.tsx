@@ -144,7 +144,7 @@ const Auth = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <CardTitle className="text-3xl text-navy font-brand tracking-wide">
+              <CardTitle className="text-3xl text-navy font-decorative tracking-wider">
                 Trindade dos Arcanjos
               </CardTitle>
             </motion.div>

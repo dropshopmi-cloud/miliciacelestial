@@ -505,7 +505,7 @@ export const dailyQuotes = [
   "A proteção celestial é real para quem crê.",
   "Em cada dificuldade, um anjo é enviado para nos fortalecer.",
   "Os mensageiros de Deus trazem luz à nossa escuridão.",
-  "A milícia celestial combate ao nosso lado.",
+  "A Trindade dos Arcanjos combate ao nosso lado.",
   "Confie nos Arcanjos: eles são nossos intercessores no céu.",
   "A presença angelical traz paz ao coração atribulado.",
   "São Miguel, São Gabriel, São Rafael: nossos protetores celestes.",
