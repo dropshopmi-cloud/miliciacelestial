@@ -281,11 +281,11 @@ const Dashboard = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-gold/20 rounded-full blur-lg animate-pulse-slow" />
               <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gold/50 shadow-glow-gold">
-                <img src={logoMilicia} alt="Milícia Celestial" className="w-full h-full object-cover" />
+                <img src={logoMilicia} alt="Trindade dos Arcanjos" className="w-full h-full object-cover" />
               </div>
             </div>
             <div>
-              <h1 className="font-decorative text-xl text-gold-light tracking-wide">Milícia Celestial</h1>
+              <h1 className="font-brand text-xl text-gold-light tracking-wide">Trindade dos Arcanjos</h1>
               <p className="text-cream/60 text-xs font-body tracking-widest">MIGUEL • GABRIEL • RAFAEL</p>
             </div>
           </div>
@@ -333,9 +333,9 @@ const Dashboard = () => {
           </button>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full overflow-hidden border border-gold/50">
-              <img src={logoMilicia} alt="Milícia Celestial" className="w-full h-full object-cover" />
+              <img src={logoMilicia} alt="Trindade dos Arcanjos" className="w-full h-full object-cover" />
             </div>
-            <h1 className="font-decorative text-gold-light text-lg tracking-wide">Milícia Celestial</h1>
+            <h1 className="font-brand text-gold-light text-lg tracking-wide">Trindade dos Arcanjos</h1>
           </div>
           <button onClick={handleLogout} className="text-gold-light p-2 hover:bg-gold/10 rounded-lg transition-colors">
             <LogOut className="w-5 h-5" />
