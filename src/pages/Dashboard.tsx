@@ -285,7 +285,7 @@ const Dashboard = () => {
               </div>
             </div>
             <div>
-              <h1 className="font-brand text-xl text-gold-light tracking-wide">Trindade dos Arcanjos</h1>
+              <h1 className="font-decorative text-xl text-gold-light tracking-wider">Trindade dos Arcanjos</h1>
               <p className="text-cream/60 text-xs font-body tracking-widest">MIGUEL • GABRIEL • RAFAEL</p>
             </div>
           </div>
@@ -335,7 +335,7 @@ const Dashboard = () => {
             <div className="w-8 h-8 rounded-full overflow-hidden border border-gold/50">
               <img src={logoMilicia} alt="Trindade dos Arcanjos" className="w-full h-full object-cover" />
             </div>
-            <h1 className="font-brand text-gold-light text-lg tracking-wide">Trindade dos Arcanjos</h1>
+            <h1 className="font-decorative text-gold-light text-lg tracking-wider">Trindade dos Arcanjos</h1>
           </div>
           <button onClick={handleLogout} className="text-gold-light p-2 hover:bg-gold/10 rounded-lg transition-colors">
             <LogOut className="w-5 h-5" />
@@ -431,7 +431,7 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
     { 
       name: 'São Miguel Arcanjo', 
       image: arcanjoMiguel, 
-      phrase: 'Príncipe da Milícia Celestial, defensor contra as forças do mal.',
+      phrase: 'Príncipe da Trindade dos Arcanjos, defensor contra as forças do mal.',
       color: 'from-red-500/20 to-amber-500/10'
     },
     { 
@@ -464,7 +464,7 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <p className="text-gold/80 font-body text-sm tracking-widest mb-2">BEM-VINDO À MILÍCIA CELESTIAL</p>
+              <p className="text-gold/80 font-body text-sm tracking-widest mb-2">BEM-VINDO À TRINDADE DOS ARCANJOS</p>
               <h1 className="text-3xl lg:text-4xl font-display text-cream mb-3">
                 {userName ? `Olá, ${userName}` : 'Paz e Bênçãos'}
               </h1>
