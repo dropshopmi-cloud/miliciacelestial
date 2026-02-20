@@ -86,4 +86,40 @@ export const readingCategories: Record<string, ReadingCategory> = {
       make(3, "Esperança que Não Engana", "Quando tudo parece atrasado.", "Às vezes você olha para a vida e pensa: ‘Está demorando demais’. Demora dói. Mas esperança cristã não é otimismo ingênuo; é confiança em Deus no tempo de Deus.\n\nEnquanto espera, cuide do que está ao seu alcance: sua saúde, sua casa, sua oração, seu perdão. Deus trabalha no intervalo.\n\nHoje, diga com sinceridade: ‘Senhor, eu espero em ti’. E permaneça.", ["Romanos 5", "Salmos", "Espiritualidade da esperança"]),
     ],
   },
+  marianas: {
+    name: "Leituras Marianas",
+    description: "Reflexões sobre Nossa Senhora e sua importância",
+    readings: [
+      make(1, "O Papel de Maria na Salvação", "Como Maria cooperou no plano redentor de Deus.", "Maria não é apenas uma figura histórica — ela é parte essencial do plano de salvação. Seu 'sim' na Anunciação possibilitou a Encarnação do Verbo. Sem Maria, o plano de Deus teria tomado outro caminho. Ela cooperou livremente, com fé e amor, tornando-se a Nova Eva que desfaz o pecado da primeira.\n\nA Igreja ensina que Maria é co-redentora — não no sentido de ser igual a Cristo, mas no sentido de que sua cooperação foi única e insubstituível. Aos pés da cruz, ela uniu seu sofrimento ao de Jesus, oferecendo-se como mãe espiritual de toda a humanidade.", ["Tratado da Verdadeira Devoção – São Luís de Montfort", "Lucas 1-2"]),
+      make(2, "Maria e o Rosário", "A importância do Rosário na vida espiritual.", "O Rosário é a oração mariana por excelência. Ao rezá-lo, meditamos nos mistérios da vida de Jesus e de Maria, unindo nossa voz à da Virgem. São Padre Pio dizia: 'O Rosário é a arma.' Em Fátima, Nossa Senhora pediu que rezássemos o Rosário todos os dias pela paz do mundo.\n\nCada Ave Maria é um abraço espiritual de Maria. Cada mistério é uma janela para a vida de Cristo. O Rosário nos ensina a contemplar, a meditar, a entrar no silêncio onde Deus fala.", ["O Segredo do Rosário – São Luís de Montfort", "Rosarium Virginis Mariae"]),
+      make(3, "As Virtudes de Maria para os Dias de Hoje", "Como imitar as virtudes marianas na vida moderna.", "Em um mundo que valoriza o barulho, a pressa e a autopromoção, as virtudes de Maria parecem contracorrente: humildade, silêncio, obediência, confiança. Mas são exatamente essas virtudes que trazem paz interior e nos aproximam de Deus.\n\nImitar Maria não significa ser passivo — significa ser corajoso o suficiente para confiar quando tudo parece incerto, para servir quando ninguém está olhando, para permanecer fiel quando o mundo convida à desistência.", ["Glórias de Maria – Santo Afonso de Ligório", "Maria de Nazaré – Ratzinger"]),
+    ],
+  },
+  virtudes: {
+    name: "Leituras sobre Virtudes",
+    description: "Paciência, caridade, esperança e mais",
+    readings: [
+      make(1, "A Paciência como Caminho de Santidade", "Aprender a esperar com fé e serenidade.", "A paciência é uma das virtudes mais difíceis de praticar, mas também uma das mais transformadoras. Em um mundo que exige resultados imediatos, esperar parece um desperdício. Mas Deus trabalha no tempo, não contra o tempo.\n\nA paciência cristã não é passividade — é confiança ativa de que Deus está agindo, mesmo quando não vemos. Santa Teresinha do Menino Jesus dizia que cada pequeno sofrimento suportado com paciência é uma oferenda de amor a Deus.", ["História de uma Alma – Santa Teresinha", "Tiago 1,2-4"]),
+      make(2, "A Caridade que Transforma", "O amor ao próximo como fundamento da vida cristã.", "São Paulo nos diz que se não temos caridade, nada somos. A caridade não é apenas dar esmolas — é amar o outro como Cristo nos ama: sem condições, sem julgamento, sem limites.\n\nA caridade é ver Cristo no rosto do pobre, do doente, do excluído. É servir sem esperar recompensa. É perdoar quando a justiça humana pediria vingança.", ["1 Coríntios 13", "Deus Caritas Est – Papa Bento XVI"]),
+      make(3, "A Esperança nos Tempos Difíceis", "Manter a esperança quando tudo parece escuro.", "A esperança cristã não é otimismo ingênuo — é certeza de que Deus é fiel às Suas promessas. Mesmo quando tudo parece desmoronar, a esperança nos sustenta porque não depende das circunstâncias, mas de Deus.\n\nComo dizia São João Paulo II: 'Não tenham medo! Abram as portas a Cristo!'", ["Spe Salvi – Papa Bento XVI", "Romanos 8,28"]),
+    ],
+  },
+  vidaSantos: {
+    name: "Vida dos Santos",
+    description: "Histórias e exemplos de santidade",
+    readings: [
+      make(1, "São Francisco de Assis – O Pobre de Deus", "A vida radical de pobreza e amor à criação.", "Francisco de Assis nasceu rico, mas escolheu a pobreza. Abandonou tudo para seguir Cristo literalmente, vivendo como os pobres, cuidando dos leprosos e pregando o Evangelho com simplicidade.\n\nSua conversão começou quando ouviu a voz de Cristo na igreja de São Damião: 'Francisco, vai e repara a minha casa.' São Francisco nos ensina que a verdadeira riqueza está em Deus.", ["Fioretti de São Francisco", "Cântico das Criaturas"]),
+      make(2, "Santa Teresa de Ávila – Mística e Reformadora", "A experiência mística e a reforma do Carmelo.", "Teresa de Ávila foi uma das maiores místicas da história da Igreja. Doutora da Igreja, reformou a Ordem Carmelita e escreveu obras fundamentais sobre a vida de oração.\n\nSua frase célebre resume sua espiritualidade: 'Deus passeia entre as panelas.' Teresa nos ensina que a santidade se vive no cotidiano.", ["O Castelo Interior – Santa Teresa de Ávila", "Caminho de Perfeição"]),
+      make(3, "São José – O Justo e Silencioso", "O modelo de pai, esposo e homem de fé.", "São José é o santo do silêncio. Nos Evangelhos, não há uma única palavra registrada dele. Mas suas ações falam mais alto que qualquer discurso. Ele acolheu Maria, protegeu Jesus, trabalhou humildemente como carpinteiro e obedeceu a Deus sem questionar.\n\nPapa Francisco o chamou de 'homem que sonha' — porque é nos sonhos que Deus lhe revelou Sua vontade.", ["Patris Corde – Papa Francisco", "Mateus 1-2"]),
+    ],
+  },
+  formacao: {
+    name: "Formação Espiritual",
+    description: "Fundamentos da fé e vida cristã",
+    readings: [
+      make(1, "O que é a Graça Santificante", "Entendendo o dom que nos torna filhos de Deus.", "A graça santificante é o dom sobrenatural que Deus derrama em nossa alma no Batismo, tornando-nos participantes da natureza divina. É ela que nos faz filhos de Deus, templos do Espírito Santo e herdeiros do céu.\n\nO pecado mortal destrói a graça santificante; a Confissão a restaura. Por isso a vida sacramental é tão importante: ela nos mantém conectados à fonte da graça.", ["Catecismo da Igreja Católica – Seção sobre a Graça", "João 15,5"]),
+      make(2, "Os Sacramentos como Encontro com Cristo", "Cada sacramento é uma experiência viva do amor de Deus.", "Os sete sacramentos não são meros rituais — são encontros reais com Cristo. No Batismo, morremos e ressuscitamos com Ele. Na Eucaristia, recebemos Seu Corpo e Sangue. Na Confissão, experimentamos Sua misericórdia.\n\nParticipar dos sacramentos com consciência e devoção transforma nossa vida. Não são obrigações — são presentes de Deus.", ["Catecismo da Igreja Católica – Sacramentos", "Sacrosanctum Concilium"]),
+      make(3, "A Oração como Relacionamento", "Rezar não é recitar — é conversar com Deus.", "Muitas pessoas abandonam a oração porque a tratam como uma lista de pedidos ou uma obrigação. Mas a oração é, antes de tudo, um relacionamento. É conversa com Deus — e toda conversa inclui falar, ouvir e simplesmente estar presente.\n\nSanta Teresa de Ávila definiu a oração como 'um trato de amizade, um estar a sós com quem sabemos que nos ama.'", ["Caminho de Perfeição – Santa Teresa de Ávila", "Catecismo da Igreja Católica – A Oração"]),
+    ],
+  },
 };

@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
-import { Mail, Lock, LogIn, Shield, Sparkles } from 'lucide-react';
-import logoMilicia from '@/assets/arcanjos-logo.png';
+import { Mail, Lock, LogIn, Sparkles } from 'lucide-react';
+import logoCaminho from '@/assets/caminho-da-santidade.png';
 
 const MASTER_PASSWORD = 'Arcanjos@';
 
@@ -21,7 +21,6 @@ const Auth = () => {
   const { signIn, signUp, user, loading } = useAuth();
 
   useEffect(() => {
-    // Auto-fill email only
     const savedEmail = localStorage.getItem('mc_auth_email');
     const savedRemember = localStorage.getItem('mc_auth_remember');
     if (savedEmail) setEmail(savedEmail);
@@ -42,7 +41,6 @@ const Auth = () => {
       return;
     }
 
-    // Validate master password
     if (password !== MASTER_PASSWORD) {
       toast.error('Senha incorreta. Use a senha fornecida.');
       setIsLoading(false);
@@ -50,11 +48,9 @@ const Auth = () => {
     }
 
     try {
-      // Try to sign in first
       const { error: signInError } = await signIn(email, MASTER_PASSWORD);
 
       if (signInError) {
-        // If user doesn't exist, create account automatically
         if (signInError.message.includes('Invalid login')) {
           const { error: signUpError } = await signUp(email, MASTER_PASSWORD);
           if (signUpError) {
@@ -71,7 +67,7 @@ const Auth = () => {
               localStorage.removeItem('mc_auth_email');
               localStorage.setItem('mc_auth_remember', 'false');
             }
-            toast.success('Acesso liberado! Bem-vindo(a) à Trindade dos Arcanjos.');
+            toast.success('Acesso liberado! Bem-vindo(a) ao Caminho da Santidade.');
             navigate('/');
           }
         } else {
@@ -85,7 +81,7 @@ const Auth = () => {
           localStorage.removeItem('mc_auth_email');
           localStorage.setItem('mc_auth_remember', 'false');
         }
-        toast.success('Bem-vindo! Que os Arcanjos te protejam.');
+        toast.success('Bem-vindo(a) ao Caminho da Santidade!');
         navigate('/');
       }
     } catch {
@@ -112,7 +108,6 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen bg-gradient-sacred flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/5 rounded-full blur-3xl animate-pulse-slow" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gold/3 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }} />
@@ -126,7 +121,6 @@ const Auth = () => {
       >
         <Card className="backdrop-blur-xl bg-card/95 border-gold/30 shadow-glow-gold">
           <CardHeader className="text-center pb-4">
-            {/* Logo with glow effect */}
             <motion.div 
               className="relative mx-auto mb-6"
               initial={{ scale: 0.8, opacity: 0 }}
@@ -135,7 +129,7 @@ const Auth = () => {
             >
               <div className="absolute inset-0 bg-gold/20 rounded-full blur-2xl scale-125 animate-pulse-slow" />
               <div className="relative w-36 h-36 rounded-full overflow-hidden border-4 border-gold/50 shadow-glow-gold">
-                <img src={logoMilicia} alt="Trindade dos Arcanjos" className="w-full h-full object-cover" />
+                <img src={logoCaminho} alt="Caminho da Santidade" className="w-full h-full object-cover" />
               </div>
             </motion.div>
             
@@ -145,7 +139,7 @@ const Auth = () => {
               transition={{ delay: 0.3 }}
             >
               <CardTitle className="text-3xl text-navy font-decorative tracking-wider">
-                Trindade dos Arcanjos
+                Caminho da Santidade
               </CardTitle>
             </motion.div>
           </CardHeader>
@@ -247,22 +241,6 @@ const Auth = () => {
                 </Button>
               </motion.div>
             </form>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="mt-8 text-center"
-            >
-              <div className="flex items-center justify-center gap-2 mb-3">
-                <Sparkles className="w-4 h-4 text-gold" />
-                <span className="text-gold/60 text-xs font-body tracking-widest">PROTEÇÃO CELESTIAL</span>
-                <Sparkles className="w-4 h-4 text-gold" />
-              </div>
-              <p className="text-sm text-muted-foreground font-body italic leading-relaxed">
-                "Que os Santos Arcanjos Miguel, Gabriel e Rafael vos protejam sempre."
-              </p>
-            </motion.div>
           </CardContent>
         </Card>
       </motion.div>

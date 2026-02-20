@@ -13,6 +13,7 @@ import { meditationCategories, novenas, rosary, liturgicalCalendar, archangelsIn
 import { SearchFilter } from '@/components/SearchFilter';
 import { ProgressButtons } from '@/components/ProgressButtons';
 import { Carousel } from '@/components/Carousel';
+import CentralMariana from '@/components/CentralMariana';
 
 import { toast } from 'sonner';
 import {
@@ -42,7 +43,8 @@ import archangelsHero from '@/assets/three-archangels.jpg';
 import arcanjoMiguel from '@/assets/arcanjo-miguel.png';
 import arcanjoGabriel from '@/assets/arcanjo-gabriel.png';
 import arcanjoRafael from '@/assets/arcanjo-rafael.png';
-import logoMilicia from '@/assets/arcanjos-logo.png';
+import logoCaminho from '@/assets/caminho-da-santidade.png';
+import nossaSenhoraImg from '@/assets/nossa-senhora.png';
 import bibliaImg from '@/assets/biblia.png';
 
 const fadeInUp = {
@@ -99,7 +101,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     await signOut();
-    toast.success('Até logo! Que os Arcanjos te protejam.');
+    toast.success('Até logo! Que Deus te abençoe.');
     navigate('/auth');
   };
 
@@ -132,6 +134,7 @@ const Dashboard = () => {
 
   const menuItems = [
     { id: 'home', label: 'Início', icon: Shield },
+    { id: 'central-mariana', label: 'Central Mariana', icon: Flower2 },
     { id: 'prayers', label: 'Orações', icon: Heart },
     { id: 'readings', label: 'Leituras', icon: BookOpen },
     { id: 'devotional', label: 'Devocional', icon: ScrollText },
@@ -256,6 +259,8 @@ const Dashboard = () => {
         return <CalendarSection goBack={goBack} />;
       case 'archangels':
         return <ArchangelsSection goBack={goBack} />;
+      case 'central-mariana':
+        return <CentralMariana goBack={goBack} isFavorite={isFavorite} toggleFavorite={toggleFavorite} />;
       default:
         return (
           <HomeSection
@@ -281,12 +286,11 @@ const Dashboard = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-gold/20 rounded-full blur-lg animate-pulse-slow" />
               <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gold/50 shadow-glow-gold">
-                <img src={logoMilicia} alt="Trindade dos Arcanjos" className="w-full h-full object-cover" />
+                <img src={logoCaminho} alt="Caminho da Santidade" className="w-full h-full object-cover" />
               </div>
             </div>
             <div>
-              <h1 className="font-decorative text-xl text-gold-light tracking-wider">Trindade dos Arcanjos</h1>
-              <p className="text-cream/60 text-xs font-body tracking-widest">MIGUEL • GABRIEL • RAFAEL</p>
+              <h1 className="font-decorative text-xl text-gold-light tracking-wider">Caminho da Santidade</h1>
             </div>
           </div>
           
@@ -333,9 +337,9 @@ const Dashboard = () => {
           </button>
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full overflow-hidden border border-gold/50">
-              <img src={logoMilicia} alt="Trindade dos Arcanjos" className="w-full h-full object-cover" />
+              <img src={logoCaminho} alt="Caminho da Santidade" className="w-full h-full object-cover" />
             </div>
-            <h1 className="font-decorative text-gold-light text-lg tracking-wider">Trindade dos Arcanjos</h1>
+            <h1 className="font-decorative text-gold-light text-lg tracking-wider">Caminho da Santidade</h1>
           </div>
           <button onClick={handleLogout} className="text-gold-light p-2 hover:bg-gold/10 rounded-lg transition-colors">
             <LogOut className="w-5 h-5" />
@@ -431,7 +435,7 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
     { 
       name: 'São Miguel Arcanjo', 
       image: arcanjoMiguel, 
-      phrase: 'Príncipe da Trindade dos Arcanjos, defensor contra as forças do mal.',
+      phrase: 'Príncipe da milícia celestial, defensor contra as forças do mal.',
       color: 'from-red-500/20 to-amber-500/10'
     },
     { 
@@ -464,7 +468,7 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <p className="text-gold/80 font-body text-sm tracking-widest mb-2">BEM-VINDO À TRINDADE DOS ARCANJOS</p>
+              <p className="text-gold/80 font-body text-sm tracking-widest mb-2">BEM-VINDO AO CAMINHO DA SANTIDADE</p>
               <h1 className="text-3xl lg:text-4xl font-display text-cream mb-3">
                 {userName ? `Olá, ${userName}` : 'Paz e Bênçãos'}
               </h1>
@@ -626,6 +630,35 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
                 </motion.div>
               ))}
             </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Nossa Senhora - Central Mariana */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35 }}
+        className="cursor-pointer"
+        onClick={() => setActiveSection('central-mariana')}
+      >
+        <Card className="overflow-hidden hover:border-gold/40 hover:shadow-xl transition-all duration-300 group">
+          <CardContent className="p-8 text-center">
+            <div className="relative mx-auto w-48 h-48 mb-6">
+              <div className="absolute inset-0 bg-gold/10 rounded-full blur-2xl group-hover:bg-gold/20 transition-all" />
+              <img
+                src={nossaSenhoraImg}
+                alt="Nossa Senhora"
+                className="relative w-full h-full object-cover rounded-2xl shadow-2xl border border-gold/20 group-hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <p className="text-foreground/85 font-body text-base leading-relaxed max-w-xl mx-auto italic">
+              "Nossa Senhora, modelo de fé, humildade e entrega. Caminhe com Maria rumo à santidade."
+            </p>
+            <Button className="mt-4 bg-gold hover:bg-gold-light text-navy-dark font-body">
+              <Flower2 className="w-4 h-4 mr-2" />
+              Central Mariana
+            </Button>
           </CardContent>
         </Card>
       </motion.div>
