@@ -110,33 +110,140 @@ export const aparicoes = [
   },
 ];
 
-export const oracoesMariana = [
+// ========== ORAÇÕES MARIANAS EXPANDIDAS POR CATEGORIA ==========
+
+export interface OracaoMariana {
+  id: number;
+  title: string;
+  content: string;
+  category: string;
+}
+
+export const oracoesMarianaCategories = [
+  { id: 'fundamentais', label: '🔹 Orações Fundamentais', desc: 'As mais conhecidas e rezadas' },
+  { id: 'liturgicas', label: '🔹 Orações Litúrgicas e Tradicionais', desc: 'Orações da tradição da Igreja' },
+  { id: 'titulos', label: '🔹 Orações por Títulos', desc: 'Invocações específicas de Nossa Senhora' },
+  { id: 'devocionais', label: '🔹 Orações Devocionais', desc: 'Para devoção pessoal e consagração' },
+];
+
+export const oracoesMariana: OracaoMariana[] = [
+  // FUNDAMENTAIS
   {
-    id: 1,
+    id: 1, category: 'fundamentais',
     title: 'Ave Maria',
     content: 'Ave Maria, cheia de graça, o Senhor é convosco. Bendita sois vós entre as mulheres, e bendito é o fruto do vosso ventre, Jesus. Santa Maria, Mãe de Deus, rogai por nós, pecadores, agora e na hora da nossa morte. Amém.'
   },
   {
-    id: 2,
+    id: 2, category: 'fundamentais',
     title: 'Salve Rainha',
     content: 'Salve, Rainha, Mãe de misericórdia, vida, doçura e esperança nossa, salve! A vós bradamos, os degredados filhos de Eva; a vós suspiramos, gemendo e chorando neste vale de lágrimas. Eia, pois, Advogada nossa, esses vossos olhos misericordiosos a nós volvei; e depois deste desterro nos mostrai Jesus, bendito fruto do vosso ventre, ó clemente, ó piedosa, ó doce sempre Virgem Maria. Rogai por nós, Santa Mãe de Deus, para que sejamos dignos das promessas de Cristo. Amém.'
   },
   {
-    id: 3,
-    title: 'Consagração a Nossa Senhora',
-    content: 'Ó minha Senhora e minha Mãe, eu me ofereço todo(a) a vós. E em prova da minha devoção, eu vos consagro neste dia e para sempre os meus olhos, os meus ouvidos, a minha boca, o meu coração e inteiramente todo o meu ser. E porque sou vosso(a), ó incomparável Mãe, guardai-me e defendei-me como coisa e propriedade vossa. Amém.'
+    id: 3, category: 'fundamentais',
+    title: 'Angelus',
+    content: 'V. O Anjo do Senhor anunciou a Maria.\nR. E ela concebeu do Espírito Santo.\n\nAve Maria...\n\nV. Eis aqui a serva do Senhor.\nR. Faça-se em mim segundo a vossa palavra.\n\nAve Maria...\n\nV. E o Verbo se fez carne.\nR. E habitou entre nós.\n\nAve Maria...\n\nV. Rogai por nós, Santa Mãe de Deus.\nR. Para que sejamos dignos das promessas de Cristo.\n\nOremos: Derramai, Senhor, a vossa graça em nossas almas, para que nós, que pelo anúncio do Anjo conhecemos a Encarnação de Cristo, vosso Filho, pela sua Paixão e Cruz sejamos levados à glória da Ressurreição. Por Cristo, nosso Senhor. Amém.'
   },
   {
-    id: 4,
+    id: 4, category: 'fundamentais',
+    title: 'Regina Caeli',
+    content: 'Rainha do Céu, alegrai-vos, aleluia!\nPorque Aquele que merecestes trazer em vosso seio, aleluia!\nRessuscitou como disse, aleluia!\nRogai a Deus por nós, aleluia!\n\nV. Exultai e alegrai-vos, ó Virgem Maria, aleluia!\nR. Porque o Senhor ressuscitou verdadeiramente, aleluia!\n\nOremos: Ó Deus, que vos dignastes alegrar o mundo com a Ressurreição do vosso Filho, Nosso Senhor Jesus Cristo, concedei-nos, vos pedimos, que por sua Mãe, a Virgem Maria, alcancemos as alegrias da vida eterna. Por Cristo, nosso Senhor. Amém.'
+  },
+  {
+    id: 5, category: 'fundamentais',
+    title: 'Magnificat',
+    content: 'A minha alma engrandece ao Senhor,\ne o meu espírito exulta em Deus, meu Salvador,\nporque olhou para a humildade de sua serva.\nDoravante todas as gerações me chamarão bem-aventurada,\nporque o Todo-poderoso fez em mim maravilhas.\nSanto é o Seu Nome!\nA Sua misericórdia se estende de geração em geração\nsobre os que O temem.\nManifestou o poder do Seu braço\ne dispersou os soberbos de coração.\nDerrubou os poderosos de seus tronos\ne exaltou os humildes.\nEncheu de bens os famintos\ne despediu os ricos de mãos vazias.\nAcolheu a Israel, Seu servo,\nlembrando-Se da Sua misericórdia,\nconforme prometera a nossos pais,\nem favor de Abraão e de sua descendência para sempre.\nGlória ao Pai, ao Filho e ao Espírito Santo,\ncomo era no princípio, agora e sempre. Amém.'
+  },
+  {
+    id: 6, category: 'fundamentais',
+    title: 'Memorare',
+    content: 'Lembrai-vos, ó piíssima Virgem Maria, que nunca se ouviu dizer que algum daqueles que tivesse recorrido à vossa proteção, implorado a vossa assistência ou reclamado o vosso socorro, fosse por vós desamparado. Animado eu, pois, de igual confiança, a vós, Virgem entre todas singular, como Mãe recorro, de vós me valho, e gemendo sob o peso dos meus pecados, me prostro a vossos pés. Não desprezeis as minhas súplicas, ó Mãe do Verbo Divino, mas dignai-vos de as ouvir propícia e de me alcançar o que vos rogo. Amém.'
+  },
+  // LITÚRGICAS E TRADICIONAIS
+  {
+    id: 7, category: 'liturgicas',
+    title: 'Ladainha de Nossa Senhora',
+    content: 'Senhor, tende piedade de nós. Cristo, tende piedade de nós. Senhor, tende piedade de nós.\n\nSanta Maria, rogai por nós.\nSanta Mãe de Deus, rogai por nós.\nSanta Virgem das Virgens, rogai por nós.\nMãe de Cristo, rogai por nós.\nMãe da Igreja, rogai por nós.\nMãe da divina graça, rogai por nós.\nMãe puríssima, rogai por nós.\nMãe castíssima, rogai por nós.\nMãe sempre virgem, rogai por nós.\nMãe imaculada, rogai por nós.\nMãe amável, rogai por nós.\nMãe admirável, rogai por nós.\nMãe do bom conselho, rogai por nós.\nMãe do Criador, rogai por nós.\nMãe do Salvador, rogai por nós.\nVirgem prudentíssima, rogai por nós.\nVirgem venerável, rogai por nós.\nVirgem louvável, rogai por nós.\nVirgem poderosa, rogai por nós.\nVirgem clemente, rogai por nós.\nVirgem fiel, rogai por nós.\nEspelho de justiça, rogai por nós.\nSede de sabedoria, rogai por nós.\nCausa de nossa alegria, rogai por nós.\nVaso espiritual, rogai por nós.\nVaso honorável, rogai por nós.\nVaso insigne de devoção, rogai por nós.\nRosa mística, rogai por nós.\nTorre de Davi, rogai por nós.\nTorre de marfim, rogai por nós.\nCasa de ouro, rogai por nós.\nArca da aliança, rogai por nós.\nPorta do céu, rogai por nós.\nEstrela da manhã, rogai por nós.\nSaúde dos enfermos, rogai por nós.\nRefúgio dos pecadores, rogai por nós.\nConsoladora dos aflitos, rogai por nós.\nAuxílio dos cristãos, rogai por nós.\nRainha dos Anjos, rogai por nós.\nRainha dos Patriarcas, rogai por nós.\nRainha dos Profetas, rogai por nós.\nRainha dos Apóstolos, rogai por nós.\nRainha dos Mártires, rogai por nós.\nRainha dos Confessores, rogai por nós.\nRainha das Virgens, rogai por nós.\nRainha de todos os Santos, rogai por nós.\nRainha concebida sem pecado original, rogai por nós.\nRainha assunta ao céu, rogai por nós.\nRainha do Santíssimo Rosário, rogai por nós.\nRainha da família, rogai por nós.\nRainha da paz, rogai por nós.\n\nCordeiro de Deus, que tirais o pecado do mundo, perdoai-nos, Senhor.\nCordeiro de Deus, que tirais o pecado do mundo, ouvi-nos, Senhor.\nCordeiro de Deus, que tirais o pecado do mundo, tende piedade de nós.\n\nRogai por nós, Santa Mãe de Deus, para que sejamos dignos das promessas de Cristo. Amém.'
+  },
+  {
+    id: 8, category: 'liturgicas',
     title: 'Ofício da Imaculada Conceição',
     content: 'Deus vos salve, Virgem, Mãe de Deus e nossa Mãe, Maria! Filha e esposa do Rei dos Reis! Concebida sem pecado original, cheia de graça e virtude. Ó Maria, concebida sem pecado, rogai por nós que recorremos a vós! Sede nossa medianeira junto ao vosso Divino Filho. Olhai com piedade para nós, pobres pecadores, e alcançai-nos a graça de sermos fiéis aos mandamentos de Deus. Que por vossa poderosa intercessão, possamos um dia contemplar a glória do Pai, do Filho e do Espírito Santo. Amém.'
   },
   {
-    id: 5,
-    title: 'Ladainha de Nossa Senhora',
-    content: 'Senhor, tende piedade de nós. Cristo, tende piedade de nós. Senhor, tende piedade de nós.\n\nSanta Maria, rogai por nós.\nSanta Mãe de Deus, rogai por nós.\nSanta Virgem das Virgens, rogai por nós.\nMãe de Cristo, rogai por nós.\nMãe da Igreja, rogai por nós.\nMãe da divina graça, rogai por nós.\nMãe puríssima, rogai por nós.\nMãe castíssima, rogai por nós.\nMãe sempre virgem, rogai por nós.\nMãe imaculada, rogai por nós.\nMãe amável, rogai por nós.\nMãe admirável, rogai por nós.\nMãe do bom conselho, rogai por nós.\nMãe do Criador, rogai por nós.\nMãe do Salvador, rogai por nós.\nVirgem prudentíssima, rogai por nós.\nVirgem venerável, rogai por nós.\nVirgem louvável, rogai por nós.\nVirgem poderosa, rogai por nós.\nVirgem clemente, rogai por nós.\nVirgem fiel, rogai por nós.\nEspelho de justiça, rogai por nós.\nSede de sabedoria, rogai por nós.\nCausa de nossa alegria, rogai por nós.\nVaso espiritual, rogai por nós.\nVaso honorável, rogai por nós.\nVaso insigne de devoção, rogai por nós.\nRosa mística, rogai por nós.\nTorre de Davi, rogai por nós.\nTorre de marfim, rogai por nós.\nCasa de ouro, rogai por nós.\nArca da aliança, rogai por nós.\nPorta do céu, rogai por nós.\nEstrela da manhã, rogai por nós.\nSaúde dos enfermos, rogai por nós.\nRefúgio dos pecadores, rogai por nós.\nConsoladora dos aflitos, rogai por nós.\nAuxílio dos cristãos, rogai por nós.\nRainha dos Anjos, rogai por nós.\nRainha dos Patriarcas, rogai por nós.\nRainha dos Profetas, rogai por nós.\nRainha dos Apóstolos, rogai por nós.\nRainha dos Mártires, rogai por nós.\nRainha dos Confessores, rogai por nós.\nRainha das Virgens, rogai por nós.\nRainha de todos os Santos, rogai por nós.\nRainha concebida sem pecado original, rogai por nós.\nRainha assunta ao céu, rogai por nós.\nRainha do Santíssimo Rosário, rogai por nós.\nRainha da família, rogai por nós.\nRainha da paz, rogai por nós.\n\nCordeiro de Deus, que tirais o pecado do mundo, perdoai-nos, Senhor.\nCordeiro de Deus, que tirais o pecado do mundo, ouvi-nos, Senhor.\nCordeiro de Deus, que tirais o pecado do mundo, tende piedade de nós.\n\nRogai por nós, Santa Mãe de Deus, para que sejamos dignos das promessas de Cristo. Amém.'
+    id: 9, category: 'liturgicas',
+    title: 'Sub Tuum Praesidium',
+    content: 'À vossa proteção recorremos, Santa Mãe de Deus. Não desprezeis as nossas súplicas em nossas necessidades, mas livrai-nos sempre de todos os perigos, ó Virgem gloriosa e bendita. Amém.\n\n(Esta é a mais antiga oração mariana conhecida, datando do século III. Foi encontrada em um papiro egípcio e é uma das mais poderosas invocações à proteção de Nossa Senhora.)'
+  },
+  {
+    id: 10, category: 'liturgicas',
+    title: 'Alma Redemptoris Mater',
+    content: 'Santa Mãe do Redentor, porta do céu sempre aberta, estrela do mar, socorrei o povo que tropeça e procura levantar-se: vós que, acolhendo a saudação do Anjo, gerastes, ó prodígio!, o vosso santo Criador, Virgem antes e depois do parto, tende piedade dos pecadores.\n\n(Antífona mariana cantada no tempo do Advento e Natal, atribuída a Hermano Contracto, monge beneditino do século XI.)'
+  },
+  {
+    id: 11, category: 'liturgicas',
+    title: 'Ave Regina Caelorum',
+    content: 'Ave, Rainha dos Céus!\nAve, Senhora dos Anjos!\nSalve, raiz!\nSalve, porta, de onde veio a Luz para o mundo!\nAlegra-te, Virgem gloriosa,\nbela entre todas!\nSalve, formosa!\nRogai a Cristo por nós.\n\n(Antífona mariana cantada desde o século XII, usada na Liturgia das Horas da Apresentação do Senhor até a Quarta-feira Santa.)'
+  },
+  // ORAÇÕES POR TÍTULOS
+  {
+    id: 12, category: 'titulos',
+    title: 'Oração a Nossa Senhora Aparecida',
+    content: 'Ó incomparável Senhora da Conceição Aparecida! Mãe de meu Deus, Rainha dos Anjos, Advogada dos pecadores, Refúgio e Consolação dos aflitos e atribulados, ó Virgem Santíssima! Filha do Eterno Pai, Mãe do Eterno Filho, Esposa do Espírito Santo, eu vos amo ternamente. A vós entrego meu corpo, minha alma, minha vida. Para provar o meu amor e a minha gratidão, eu vos ofereço este obséquio, no qual deposito as minhas angústias e esperanças. Ó Mãe querida, amparai-me em minhas necessidades. Alcançai-me a graça de servir ao vosso Filho com fidelidade e amor até a morte. Amém.'
+  },
+  {
+    id: 13, category: 'titulos',
+    title: 'Oração a Nossa Senhora de Fátima',
+    content: 'Santíssima Virgem de Fátima, que viestes ao mundo para lembrar aos homens a necessidade de oração e penitência, eu vos suplico pela ternura do vosso Imaculado Coração: ajudai-me a cumprir fielmente a vossa mensagem. Que eu reze o Santo Rosário todos os dias, faça penitência pelos pecadores e me consagre ao vosso Imaculado Coração. Ó Mãe de misericórdia, alcançai-me a graça de viver em estado de graça, para que um dia eu possa contemplar-vos no céu. Amém.'
+  },
+  {
+    id: 14, category: 'titulos',
+    title: 'Oração a Nossa Senhora de Lourdes',
+    content: 'Ó Imaculada Virgem Maria, Mãe de misericórdia, saúde dos enfermos, refúgio dos pecadores, consoladora dos aflitos! Vós conheceis as minhas necessidades, os meus sofrimentos. Olhai para mim com misericórdia. Quando aparecestes na gruta de Massabielle, fizestes dela um lugar privilegiado de graças. Muitos enfermos encontraram ali a cura do corpo e da alma. Venho hoje invocar a vossa maternal bondade. Atendei à minha oração, ó Mãe bondosa! Alcançai-me de vosso divino Filho o que vos peço com humildade e confiança. Amém.'
+  },
+  {
+    id: 15, category: 'titulos',
+    title: 'Oração a Nossa Senhora do Carmo',
+    content: 'Ó belíssima Flor do Carmelo, videira frutuosa, esplendor do céu, Virgem Mãe singular, pura e sem pecado! Ó Mãe terna, intocada pelo pecado, ao vosso Filho querido tomai os meus cuidados. Ó Estrela do Mar, ajudai-me e mostrai-me que sois minha Mãe. Ó Santa Maria, Mãe de Deus, Rainha do Céu e da Terra, eu humildemente vos suplico, do fundo do meu coração: socorrei-me nesta necessidade. Não há quem possa resistir ao vosso poder. Ó Maria, concebida sem pecado, rogai por nós que recorremos a vós. Amém.'
+  },
+  {
+    id: 16, category: 'titulos',
+    title: 'Oração a Nossa Senhora das Graças',
+    content: 'Ó Maria, concebida sem pecado, rogai por nós que recorremos a vós! Ó Mãe do Verbo Encarnado, não desprezeis as minhas súplicas, mas dignai-vos de as ouvir propícia e de me alcançar o que vos rogo. Virgem da Medalha Milagrosa, vós sois o canal de todas as graças. Fazei com que os raios de luz que brotam de vossas mãos iluminem meu caminho e me protejam de todo mal. Derramai sobre mim as graças que necessito para viver em santidade e alcançar a vida eterna. Amém.'
+  },
+  {
+    id: 17, category: 'titulos',
+    title: 'Oração a Nossa Senhora do Perpétuo Socorro',
+    content: 'Mãe do Perpétuo Socorro, com o maior afeto de devoção e com o coração cheio de confiança, venho diante da vossa sagrada imagem para pedir-vos socorro. Muitas vezes tenho experimentado a vossa eficaz intercessão. Ó Mãe de misericórdia, aos vossos pés me prostro, suplicando-vos que me ajudeis nesta necessidade. Vós que sois o auxílio dos cristãos, o refúgio dos pecadores, a consolação dos aflitos, socorrei-me! Não permitais que eu pereça. Acudi-me com a vossa bondade maternal. Amém.'
+  },
+  // DEVOCIONAIS
+  {
+    id: 18, category: 'devocionais',
+    title: 'Consagração Tradicional a Nossa Senhora',
+    content: 'Ó minha Senhora e minha Mãe, eu me ofereço todo(a) a vós. E em prova da minha devoção, eu vos consagro neste dia e para sempre os meus olhos, os meus ouvidos, a minha boca, o meu coração e inteiramente todo o meu ser. E porque sou vosso(a), ó incomparável Mãe, guardai-me e defendei-me como coisa e propriedade vossa. Amém.'
+  },
+  {
+    id: 19, category: 'devocionais',
+    title: 'Renovação Diária da Consagração',
+    content: 'Maria, minha Mãe e minha Rainha, neste novo dia renovo minha consagração a vós. Entrego-vos minhas ações, palavras e pensamentos. Cobri-me com o vosso manto protetor. Guiai meus passos no caminho da santidade. Que tudo o que eu fizer hoje seja para a glória de Deus e para a honra do vosso Imaculado Coração. Ó Mãe, presenteai-me hoje com a graça de viver como verdadeiro(a) filho(a) vosso(a). Amém.'
+  },
+  {
+    id: 20, category: 'devocionais',
+    title: 'Ato de Entrega a Nossa Senhora',
+    content: 'Maria Santíssima, minha doce Mãe, eu me entrego totalmente a vós. Recebei meu corpo, minha alma, meus bens espirituais e materiais. Recebei minhas alegrias e tristezas, meus sucessos e fracassos, meu passado, meu presente e meu futuro. Tudo coloco em vossas mãos maternas. Fazei de mim o que quiserdes, para a maior glória de Deus. Não olheis para minha indignidade, mas para o amor infinito do vosso Filho, que me resgatou com Seu Sangue. Amém.'
+  },
+  {
+    id: 21, category: 'devocionais',
+    title: 'Oração à Imaculada Conceição',
+    content: 'Ó Deus, que pela Imaculada Conceição da Virgem Maria preparastes uma digna morada para vosso Filho, vos pedimos: assim como pela morte prevista deste mesmo Filho a preservastes de toda mancha, concedei-nos, por sua intercessão, que cheguemos até vós purificados de todas as culpas. Ó Maria, concebida sem pecado original, rogai por nós que recorremos a vós! Virgem Imaculada, modelo de pureza e santidade, envolvei-nos em vosso manto e protegei-nos de todo mal. Amém.'
+  },
+  {
+    id: 22, category: 'devocionais',
+    title: 'Oração da Medalha Milagrosa',
+    content: 'Ó Virgem Imaculada, nós sabemos que sempre e em toda parte estais disposta a ouvir os vossos filhos, mas na medalha que nos destes, que chamamos de Milagrosa, atraís a atenção para a abundância de graças que derramais sobre quem vos procura. Confiantes em vossa bondade de Mãe, vimos apresentar-vos as nossas súplicas. A medalha nos recorda o mistério da Redenção e nos faz pensar na vida eterna. É um sinal de vosso amor por nós. Não vos afasteis de nós, ó Mãe! Tomai-nos sob vossa proteção e abri-nos os tesouros de vossas graças. Amém.'
   },
 ];
+
+// ========== CONSAGRAÇÃO EXPANDIDA ==========
 
 export const consagracao = {
   title: 'Consagração a Nossa Senhora',
@@ -145,93 +252,241 @@ export const consagracao = {
     {
       day: 1,
       title: 'Conhecer-se a si mesmo',
+      biblicalWord: { text: '"Examina-me, ó Deus, e conhece o meu coração; prova-me e conhece as minhas inquietações."', reference: 'Sl 139,23' },
+      meditation: 'Neste primeiro dia, somos convidados a olhar para dentro. Conhecer-se a si mesmo é o ponto de partida de toda vida espiritual séria. Não se trata de uma autoanálise fria, mas de uma abertura corajosa diante de Deus.\n\nMaria conhecia seu próprio coração. Quando o anjo a saudou como "cheia de graça", ela "ficou perturbada" — sinal de que era consciente de sua pequenez. Ela não se considerava grande, apesar de ser a mais amada por Deus.\n\nNós, porém, frequentemente vivemos na superfície. Corremos de compromisso em compromisso, de distração em distração, sem nunca parar para perguntar: quem sou eu diante de Deus? Quais são minhas fraquezas reais? Quais pecados se repetem em minha vida?\n\nO autoconhecimento espiritual exige silêncio. Exige coragem para encarar as sombras que carregamos. Mas não tenha medo: você não está sozinho nesta jornada. Maria caminha ao seu lado, e o Espírito Santo ilumina cada recanto do seu coração.\n\nPeça ao Espírito Santo que ilumine sua consciência. Não para se condenar, mas para entregar tudo a Maria, que purificará e apresentará a Jesus. Como uma mãe que lava as roupas sujas de seu filho sem nenhum julgamento, Maria acolhe suas misérias e as leva a Jesus.',
+      exameInterior: [
+        'Eu realmente conheço minhas fraquezas e pecados habituais, ou vivo fugindo desse autoconhecimento?',
+        'Que feridas emocionais ou espirituais ainda não apresentei a Deus para cura?',
+        'Em quais áreas da minha vida eu ainda resisto à ação de Deus?',
+        'Tenho coragem de ser totalmente transparente diante de Maria?',
+        'O que eu mais temo encontrar quando olho para dentro de mim?'
+      ],
+      atoConcreto: 'Hoje, reserve 15 minutos de silêncio total. Sem celular, sem música, sem distrações. Sente-se em um lugar tranquilo e peça ao Espírito Santo que lhe mostre quem você realmente é. Anote no seu diário espiritual o que vier ao coração.',
+      prayer: 'Espírito Santo, iluminai minha mente e meu coração. Mostrai-me quem eu sou diante de Deus, sem maquiagens nem ilusões. Dai-me a coragem de enfrentar minhas sombras e a humildade de entregá-las a Maria. Ó Maria, Mãe que tudo conhece e tudo acolhe, recebei minhas fraquezas e transformai-as pela graça do vosso Filho. Que nesta jornada de consagração, eu aprenda a me conhecer como Deus me conhece: com amor infinito. Amém.',
       content: 'Peça ao Espírito Santo que ilumine sua consciência. Reconheça suas fraquezas, pecados e dependências. Não para se condenar, mas para entregar tudo a Maria, que purificará e apresentará a Jesus.'
     },
     {
       day: 2,
       title: 'Renunciar ao espírito do mundo',
+      biblicalWord: { text: '"Não vos conformeis com este mundo, mas transformai-vos pela renovação da vossa mente."', reference: 'Rm 12,2' },
+      meditation: 'O espírito do mundo é sutil. Ele não se apresenta com chifres e tridente — ele se disfarça de normalidade. A busca incessante por conforto, aprovação, status, prazer imediato: tudo isso é o espírito do mundo operando silenciosamente em nossas vidas.\n\nMaria viveu no mundo, mas não era do mundo. Em Nazaré, cercada por uma cultura que não valorizava mulheres, ela manteve sua dignidade silenciosa. Não buscou fama, não se comparou com outros, não acumulou bens. Sua riqueza era interior.\n\nRenunciar ao espírito do mundo não significa abandonar a sociedade ou rejeitar tudo o que é material. Significa reordenar as prioridades. Significa perguntar: o que realmente importa? O que estou buscando com minha vida?\n\nO mundo oferece distrações que nos afastam de Deus: vaidade, apego material, sede de poder, a cultura do descartável nos relacionamentos. Cada uma dessas armadilhas nos afasta do essencial.\n\nHoje, reze pedindo a Maria que te liberte de tudo o que te prende ao mundanismo. Peça a ela olhos novos para discernir o que é de Deus e o que é do mundo.',
+      exameInterior: [
+        'Quais valores do mundo eu absorvi sem perceber? (consumismo, vaidade, comparação)',
+        'Como o uso das redes sociais afeta minha vida espiritual?',
+        'Estou buscando aprovação dos outros ou a aprovação de Deus?',
+        'Em que momentos do dia o "espírito do mundo" mais me influencia?',
+        'O que eu precisaria abandonar para viver mais livremente em Deus?'
+      ],
+      atoConcreto: 'Faça um "jejum digital" hoje: reduza ao mínimo o uso do celular e das redes sociais. Use o tempo livre para rezar ou ler algo espiritual. Observe como você se sente sem as distrações habituais.',
+      prayer: 'Ó Maria, tu que viveste no mundo sem ser do mundo, liberta-me das amarras do mundanismo. Arranca do meu coração a vaidade, o apego ao dinheiro, a busca por aprovação humana. Planta em mim os valores do Evangelho: simplicidade, desprendimento, amor gratuito. Que eu aprenda contigo a viver com o coração livre, voltado unicamente para Deus. Amém.',
       content: 'O mundo oferece distrações que nos afastam de Deus: vaidade, apego material, sede de poder. Hoje, reze pedindo a Maria que te liberte de tudo o que te prende ao mundanismo.'
     },
     {
       day: 3,
       title: 'Conhecer Nossa Senhora',
+      biblicalWord: { text: '"Disse então Maria: A minha alma engrandece ao Senhor, e o meu espírito exulta em Deus, meu Salvador."', reference: 'Lc 1,46-47' },
+      meditation: 'Não se pode amar quem não se conhece. E não se pode consagrar-se a quem não se ama. Por isso, este dia é dedicado a conhecer Maria — não apenas como figura histórica, mas como Mãe viva e presente.\n\nMaria foi uma mulher real. Viveu em Nazaré, uma aldeia insignificante. Trabalhou com as mãos, cozinhou, lavou roupas, cuidou do lar. Não nasceu em palácio nem teve vida fácil. Enfrentou pobreza, perseguição (fuga para o Egito), incompreensão e a dor suprema de ver seu Filho morrer na cruz.\n\nMas Maria é também a Theotokos — a Mãe de Deus. A mulher mais santa que já existiu. Concebida sem pecado, cheia de graça desde o primeiro instante de sua existência. Ela é a Nova Eva, aquela que desatou o nó do pecado original.\n\nConhecer Maria é contemplar suas virtudes: humildade profunda, obediência radical, silêncio contemplativo, fé inabalável, amor sem medida. Cada virtude de Maria é um espelho que nos mostra como deveríamos viver.\n\nQuanto mais a conhecemos, mais a amamos. E quanto mais a amamos, mais nos aproximamos de Jesus — porque Maria sempre nos conduz a Ele.',
+      exameInterior: [
+        'O que eu realmente sei sobre Maria, além das orações decoradas?',
+        'Tenho uma relação pessoal com Nossa Senhora ou apenas uma devoção de costume?',
+        'Quando foi a última vez que conversei com Maria como se fala com uma mãe?',
+        'Que aspecto da vida de Maria mais me toca e por quê?'
+      ],
+      atoConcreto: 'Leia hoje o capítulo 1 do Evangelho de Lucas (a Anunciação e a Visitação). Depois, converse com Maria como se ela estivesse ao seu lado. Conte a ela sobre sua vida, seus medos, seus sonhos.',
+      prayer: 'Maria, minha Mãe, eu quero te conhecer mais profundamente. Não apenas de nome, mas de coração. Mostra-me quem tu és: tua humildade, tua força, teu amor. Que ao te conhecer melhor, eu aprenda a amar como tu amas e a confiar como tu confias. Aproxima-me de ti, para que por ti eu me aproxime de Jesus. Amém.',
       content: 'Leia sobre a vida de Maria, seus mistérios e suas virtudes. Quanto mais a conhecemos, mais a amamos. E quanto mais a amamos, mais nos aproximamos de Jesus.'
     },
     {
       day: 4,
       title: 'Conhecer Jesus Cristo',
+      biblicalWord: { text: '"Eu sou o caminho, a verdade e a vida. Ninguém vem ao Pai senão por mim."', reference: 'Jo 14,6' },
+      meditation: 'Jesus é o centro de tudo. A consagração a Maria não é um fim em si mesma — é um caminho para Jesus. Maria nunca aponta para si; ela sempre aponta para o Filho. Em Caná, ela disse aos servos: "Fazei tudo o que Ele vos disser." Essa é a missão de Maria: conduzir-nos a Cristo.\n\nConhecer Jesus não é apenas saber sobre Ele. É experimentá-Lo. É sentir Sua presença na oração, reconhecer Sua voz no silêncio, encontrá-Lo no rosto dos pobres, dos doentes, dos sofredores.\n\nJesus é Deus que se fez homem. Nasceu pobre em Belém, cresceu em Nazaré, trabalhou como carpinteiro, pregou o Evangelho, curou os doentes, ressuscitou os mortos, morreu na cruz por nós e ressuscitou ao terceiro dia. Ele é o Caminho, a Verdade e a Vida.\n\nMas Jesus não quer ser apenas uma ideia teológica em sua mente. Ele quer ser o centro do seu coração, o Senhor da sua vida, o Amigo mais íntimo. Ele te conhece pelo nome, conta seus fios de cabelo, sabe de suas lágrimas.\n\nHoje, medite sobre quem é Jesus para você. Não quem dizem que Ele é, mas quem Ele é no seu coração, na sua experiência pessoal.',
+      exameInterior: [
+        'Jesus é realmente o centro da minha vida, ou apenas uma parte dela?',
+        'Eu conheço Jesus pela fé pessoal ou apenas pela tradição familiar?',
+        'Quando foi a última vez que me senti verdadeiramente tocado(a) pela presença de Cristo?',
+        'O que me impede de ter uma relação mais profunda com Jesus?',
+        'Se Jesus me perguntasse hoje "Quem sou Eu para ti?", o que eu responderia?'
+      ],
+      atoConcreto: 'Leia um trecho do Evangelho de João (capítulo 15, sobre a videira e os ramos). Depois, faça uma oração pessoal a Jesus, falando com Ele de coração para coração.',
+      prayer: 'Senhor Jesus Cristo, Filho de Deus e filho de Maria, eu quero Te conhecer mais. Não apenas com a mente, mas com o coração. Revela-Te a mim na oração, na Palavra, nos sacramentos, no próximo. Que Maria, Tua Mãe e minha Mãe, me conduza até Ti. Que ao me consagrar a ela, eu me consagre totalmente a Ti. Amém.',
       content: 'Jesus é o centro de tudo. Maria nos leva a Ele. Hoje, medite sobre quem é Jesus para você. Leia um trecho do Evangelho e peça a Maria que aprofunde sua relação com o Filho.'
     },
     {
       day: 5,
       title: 'Oferecer seus bens espirituais',
+      biblicalWord: { text: '"Onde está o vosso tesouro, aí estará também o vosso coração."', reference: 'Mt 6,21' },
+      meditation: 'Nós acumulamos bens espirituais ao longo da vida: o mérito de nossas orações, jejuns, sacrifícios, boas obras, comunhões, rosários. Tudo isso tem um valor imenso diante de Deus.\n\nA consagração a Maria nos convida a entregar esses bens espirituais nas mãos dela. Não para perdê-los, mas para que Maria os administre da melhor forma, segundo a vontade de Deus. Ela sabe melhor do que nós quem precisa de graça, quem precisa de intercessão.\n\nSão Luís de Montfort explica que, ao entregarmos tudo a Maria, nossos bens espirituais são purificados e multiplicados. É como entregar ouro bruto a um artesão habilidoso — ele transforma em joia.\n\nIsso exige desprendimento. Estamos acostumados a "guardar" nossos méritos, a controlar onde nossas orações vão. Mas a entrega total significa confiar que Maria fará melhor do que nós faríamos.\n\nÉ um ato radical de confiança. E é profundamente libertador. Quando soltamos o controle, encontramos a paz.',
+      exameInterior: [
+        'Eu realmente confio que Maria saberá distribuir meus bens espirituais melhor do que eu?',
+        'Tenho apego ao "mérito" das minhas boas obras? Faço o bem para ser visto?',
+        'Estou disposto(a) a entregar até o mérito das minhas orações mais queridas?',
+        'Como seria minha vida espiritual se eu vivesse em total desprendimento?'
+      ],
+      atoConcreto: 'Ofereça hoje todas as suas orações, sacrifícios e boas obras pelas mãos de Maria. Diga: "Maria, tudo o que eu fizer hoje, coloco em tuas mãos. Distribui como quiseres."',
+      prayer: 'Ó Maria, minha Mãe e minha Rainha, entrego-vos todos os meus bens espirituais: o mérito das minhas orações, jejuns, sacrifícios e boas obras. Eu nada guardo para mim. Tudo é vosso. Distribuí segundo a vontade de Deus, para as almas que mais necessitam. Que eu viva em total desprendimento, confiando que vós fareis tudo melhor do que eu jamais poderia. Amém.',
       content: 'Entregue a Maria o mérito de suas orações, sacrifícios e boas obras. Ela saberá distribuí-los da melhor forma, segundo a vontade de Deus.'
     },
     {
       day: 6,
       title: 'Pedir a graça da fidelidade',
+      biblicalWord: { text: '"Aquele que perseverar até o fim, esse será salvo."', reference: 'Mt 24,13' },
+      meditation: 'Consagrar-se a Nossa Senhora não é um evento de um dia. É um compromisso de toda a vida. E todo compromisso de longo prazo exige uma graça especial: a graça da fidelidade.\n\nA fidelidade é uma virtude rara no mundo de hoje. Vivemos na era do descartável: relacionamentos, compromissos, promessas — tudo parece provisório. Mas Deus não é provisório. E Sua aliança conosco é eterna.\n\nMaria foi fiel do primeiro ao último instante. Desde o "sim" da Anunciação até os pés da cruz, ela nunca vacilou. Nunca desistiu. Nunca se arrependeu de ter dito "sim" a Deus. Mesmo quando o caminho era escuro, mesmo quando a espada da dor atravessou seu coração (como Simeão profetizou), ela permaneceu fiel.\n\nA fidelidade não é algo que produzimos por esforço próprio. É uma graça que precisamos pedir todos os dias. Sem a graça de Deus, somos fracos, inconstantes, volúveis. Com Sua graça, somos capazes de perseverar.\n\nHoje, peça a Maria — a Virgem Fiel — que interceda por você. Peça a graça de ser fiel à sua consagração, fiel à oração diária, fiel ao caminho da santidade.',
+      exameInterior: [
+        'Eu costumo começar bem as coisas e desistir no meio do caminho?',
+        'Quais compromissos espirituais eu já abandonei por preguiça ou distração?',
+        'Tenho medo de me comprometer de forma definitiva com Deus?',
+        'O que precisa mudar na minha rotina para que eu seja mais fiel à vida de oração?',
+        'Estou preparado(a) para renovar esta consagração todos os dias da minha vida?'
+      ],
+      atoConcreto: 'Escreva no seu diário espiritual um compromisso concreto: uma oração, um gesto, um hábito que você se compromete a manter diariamente como fruto desta consagração.',
+      prayer: 'Maria, Virgem Fiel, dai-me a graça da perseverança. Quando o entusiasmo passar e a rotina pesar, sustentai-me com vossa intercessão. Não permitais que eu abandone o caminho da santidade. Que eu seja fiel à minha consagração todos os dias, em todas as circunstâncias, até o último suspiro. Amém.',
       content: 'Consagrar-se não é um evento de um dia — é um compromisso de vida. Peça a Maria a graça de ser fiel à sua consagração todos os dias.'
     },
     {
       day: 7,
       title: 'Ato de Consagração',
+      biblicalWord: { text: '"Eis aqui a serva do Senhor; faça-se em mim segundo a tua palavra."', reference: 'Lc 1,38' },
+      meditation: 'Chegou o dia da entrega. Sete dias de preparação trouxeram você até aqui. Você se conheceu, renunciou ao mundanismo, conheceu Maria, conheceu Jesus, entregou seus bens espirituais e pediu a graça da fidelidade.\n\nAgora é hora de dizer o seu "sim" — como Maria disse o dela.\n\nA consagração é um ato de amor. Não é uma fórmula mágica, não é superstição. É uma decisão livre e consciente de entregar sua vida nas mãos de Maria para que ela te conduza a Jesus.\n\nQuando você se consagra, não perde nada — ganha tudo. Ganha uma Mãe que intercede por você 24 horas por dia. Ganha uma proteção especial contra o mal. Ganha um caminho seguro para a santidade.\n\nSão Luís de Montfort dizia que a devoção a Maria é "o caminho mais seguro, mais fácil, mais curto e mais perfeito para chegar a Jesus". E a consagração é o ápice dessa devoção.\n\nFaça o Ato de Consagração com o coração aberto. Não importa se você se sente digno ou não. Maria não espera perfeição — espera amor. Entregue-se como está, com suas imperfeições, e confie que ela fará o resto.',
+      exameInterior: [
+        'Estou verdadeiramente pronto(a) para entregar minha vida a Maria?',
+        'Existe algo que eu ainda estou segurando, que não quero entregar?',
+        'Como me sinto ao chegar a este momento? Com medo? Com alegria? Com paz?',
+        'O que espero desta consagração? Estou aberto(a) ao que Deus quiser?'
+      ],
+      atoConcreto: 'Faça o Ato de Consagração em um momento solene: acenda uma vela, coloque-se de joelhos se possível, e reze com todo o coração. Depois, registre a data como marco espiritual na sua vida.',
+      prayer: 'Ó Maria, minha Mãe e minha Senhora, eu me consagro inteiramente a vós. Entrego-vos meu corpo, minha alma, meus bens espirituais e materiais, o mérito de minhas boas obras passadas, presentes e futuras. Disponde de mim e de tudo o que me pertence, segundo a vossa vontade, para a maior glória de Deus, no tempo e na eternidade. Recebei, ó Virgem benignissima, esta pequena oferta da minha escravidão, em honra e união daquela submissão que o Verbo Eterno quis ter à vossa soberania. Que eu viva para Jesus por meio de vós, ó Maria, e que tudo em mim glorifique o vosso Filho. Amém.',
       content: 'Hoje é o dia da entrega. Com o coração aberto, faça o Ato de Consagração a Nossa Senhora. Entregue tudo: passado, presente e futuro. Confie que Maria cuidará de você como a mais amorosa das mães.'
     },
   ],
   atoConsagracao: 'Ó Maria, minha Mãe e minha Senhora, eu me consagro inteiramente a vós. Entrego-vos meu corpo, minha alma, meus bens espirituais e materiais, o mérito de minhas boas obras passadas, presentes e futuras. Disponde de mim e de tudo o que me pertence, segundo a vossa vontade, para a maior glória de Deus, no tempo e na eternidade. Recebei, ó Virgem benignissima, esta pequena oferta da minha escravidão, em honra e união daquela submissão que o Verbo Eterno quis ter à vossa soberania. Que eu viva para Jesus por meio de vós, ó Maria, e que tudo em mim glorifique o vosso Filho. Amém.'
 };
 
+// ========== VIRTUDES MARIANAS EXPANDIDAS ==========
+
 export const virtudesMarianas = [
   {
     id: 'humildade',
     title: 'Humildade',
-    explanation: 'Maria é o maior exemplo de humildade. Mesmo sendo a Mãe de Deus, ela se apresentou como "a serva do Senhor". Não buscou reconhecimento, não se vangloriou de seus privilégios. Viveu em Nazaré, uma vila pequena e insignificante, fazendo as tarefas mais simples do cotidiano. A humildade de Maria nos ensina que a grandeza verdadeira não está em títulos ou posições, mas em reconhecer que tudo o que somos e temos vem de Deus.',
-    application: 'Pratique a humildade no dia a dia: não busque elogios por suas boas ações, reconheça seus erros com simplicidade, coloque-se a serviço dos outros sem esperar nada em troca. Quando sentir orgulho ou vaidade, lembre-se de Maria e peça sua intercessão.',
-    prayer: 'Maria, Mãe humilde, ensina-me a ser pequeno(a) diante de Deus. Que eu reconheça que tudo é graça e que sem Ele nada posso. Cura meu orgulho e enche meu coração de verdadeira humildade. Amém.'
+    biblicalWord: { text: '"Porque olhou para a humildade de sua serva. Doravante todas as gerações me chamarão bem-aventurada."', reference: 'Lc 1,48' },
+    contextualEspiritual: 'Quando o anjo Gabriel apareceu a Maria, ela era uma jovem desconhecida de Nazaré — uma vila tão insignificante que Natanael perguntou: "De Nazaré pode sair algo bom?" Era nesse cenário humilde que Deus escolheu colocar a mulher mais importante da história. Maria não tinha poder, riqueza nem influência social. Mas tinha algo que Deus mais valoriza: um coração humilde. Na cultura judaica, ser "serva do Senhor" era o título mais honroso possível. Maria o abraçou com naturalidade, porque era exatamente isso que ela era — e queria ser.',
+    explanation: 'Maria é o maior exemplo de humildade. Mesmo sendo a Mãe de Deus, ela se apresentou como "a serva do Senhor". Não buscou reconhecimento, não se vangloriou de seus privilégios. Viveu em Nazaré, uma vila pequena e insignificante, fazendo as tarefas mais simples do cotidiano. A humildade de Maria nos ensina que a grandeza verdadeira não está em títulos ou posições, mas em reconhecer que tudo o que somos e temos vem de Deus. A humildade não é fraqueza — é a coragem de ser verdadeiro diante de Deus e dos homens. É reconhecer tanto nossas misérias quanto nossos dons, sabendo que tudo é graça.',
+    formacaoProfunda: 'A humildade é a base de todas as virtudes. Sem ela, nenhuma outra virtude pode existir de forma autêntica. Santo Agostinho dizia: "Se me perguntais qual a primeira virtude do cristão, eu respondo: a humildade. E a segunda? A humildade. E a terceira? A humildade." O orgulho foi o pecado de Lúcifer — querer ser como Deus sem Deus. A humildade é o oposto: é querer estar com Deus, reconhecendo que sem Ele nada somos. No coração humilde, Deus encontra morada. No coração orgulhoso, não há espaço para a graça.',
+    exameDe: [
+      'Eu busco reconhecimento e elogios pelas minhas boas ações?',
+      'Tenho dificuldade em aceitar correções ou críticas?',
+      'Costumo me comparar com os outros, sentindo-me superior ou inferior?',
+      'Reconheço genuinamente que tudo o que tenho é dom de Deus?',
+      'Sirvo os outros sem esperar nada em troca?'
+    ],
+    application: 'Hoje: Faça uma boa ação em segredo — que ninguém saiba além de Deus.\n\nEsta semana: Quando receber um elogio, agradeça e ofereça internamente a glória a Deus.\n\nDesafio espiritual: Durante 7 dias, evite falar sobre suas conquistas, qualidades ou realizações. Deixe que suas ações falem por você.',
+    prayer: 'Maria, Mãe humilde, ensina-me a ser pequeno(a) diante de Deus. Que eu reconheça que tudo é graça e que sem Ele nada posso. Arranca de mim todo vestígio de orgulho, vaidade e autossuficiência. Planta em meu coração a humildade verdadeira — aquela que me faz servir sem esperar recompensa, que me faz reconhecer meus erros sem amargura, que me faz alegrar-me com o sucesso dos outros. Ó Maria, Virgem humilíssima, faz de mim instrumento dócil nas mãos de Deus. Amém.'
   },
   {
     id: 'obediencia',
     title: 'Obediência',
-    explanation: 'A obediência de Maria foi total e incondicional. Quando o anjo anunciou o plano de Deus, ela respondeu: "Faça-se em mim segundo a tua palavra." Não questionou, não impôs condições, não pediu garantias. Sua obediência não foi passividade — foi um ato de fé profunda, confiança plena e amor radical.',
-    application: 'Obedecer a Deus significa discernir Sua vontade e segui-la, mesmo quando não compreendemos. No seu dia a dia, procure identificar o que Deus está pedindo de você: talvez perdoar alguém, mudar um hábito, tomar uma decisão difícil. Obedeça com fé.',
-    prayer: 'Maria, Mãe obediente, ensina-me a dizer "sim" a Deus como tu disseste. Que eu aceite Sua vontade com alegria, mesmo quando for difícil de entender. Amém.'
+    biblicalWord: { text: '"Eis aqui a serva do Senhor; faça-se em mim segundo a tua palavra."', reference: 'Lc 1,38' },
+    contextualEspiritual: 'O "sim" de Maria aconteceu em um dos momentos mais extraordinários da história. Um anjo apareceu a uma jovem desconhecida e lhe anunciou que ela seria mãe do Filho do Altíssimo. Isso implicava riscos enormes: ser acusada de adultério (punível com apedrejamento), incompreensão de José, escândalo social. Maria sabia disso. Mesmo assim, disse "sim". Sua obediência não foi cega — foi iluminada pela fé.',
+    explanation: 'A obediência de Maria foi total e incondicional. Quando o anjo anunciou o plano de Deus, ela respondeu: "Faça-se em mim segundo a tua palavra." Não questionou, não impôs condições, não pediu garantias. Sua obediência não foi passividade — foi um ato de fé profunda, confiança plena e amor radical. A obediência cristã é diferente da submissão servil: é a decisão livre de alinhar nossa vontade com a vontade de Deus, confiando que Ele sabe o que é melhor.',
+    formacaoProfunda: 'A obediência é uma das virtudes mais incompreendidas do nosso tempo. O mundo moderno valoriza a autonomia absoluta e vê a obediência como fraqueza. Mas a obediência cristã é força — é a força de quem confia em Deus mais do que em si mesmo. Jesus foi "obediente até a morte, e morte de cruz" (Fl 2,8). Maria foi obediente desde a Anunciação até os pés da cruz. A obediência não anula nossa liberdade — a eleva, porque nos liberta do maior de todos os tiranos: nosso próprio ego.',
+    exameDe: [
+      'Em que áreas da minha vida eu resisto à vontade de Deus?',
+      'Quando Deus me pede algo difícil, minha primeira reação é obedecer ou questionar?',
+      'Sou obediente apenas quando é conveniente para mim?',
+      'Aceito a autoridade legítima (pais, pastores, superiores) com respeito?',
+      'Alguma vez Deus me pediu algo que eu fingi não ouvir?'
+    ],
+    application: 'Hoje: Identifique algo que Deus tem pedido e que você tem adiado. Dê o primeiro passo de obediência.\n\nEsta semana: Pratique a obediência nos pequenos detalhes: cumpra seus deveres com alegria, mesmo os que não gosta.\n\nDesafio espiritual: Faça uma oração de entrega: "Senhor, mostra-me Tua vontade e dá-me a graça de obedecê-la."',
+    prayer: 'Maria, Mãe obediente, ensina-me a dizer "sim" a Deus como tu disseste. Que eu aceite Sua vontade com alegria, mesmo quando for difícil de entender. Liberta-me da rebeldia, da teimosia e do orgulho que me impedem de obedecer. Que o teu "Fiat" seja o modelo para todos os meus "sins" a Deus. Amém.'
   },
   {
     id: 'silencio',
     title: 'Silêncio',
-    explanation: 'Maria é a Virgem do silêncio. Nos Evangelhos, suas palavras são poucas, mas cada uma é profunda. Ela "guardava todas estas coisas, meditando-as em seu coração." O silêncio de Maria não era vazio — era cheio de oração, contemplação e escuta de Deus.',
-    application: 'No mundo barulhento em que vivemos, o silêncio é revolucionário. Reserve momentos do seu dia para o silêncio interior: desligue o celular, feche os olhos, escute a voz de Deus. No silêncio, as respostas vêm.',
-    prayer: 'Maria, Virgem do silêncio, ensina-me a calar para ouvir a Deus. Que eu aprenda a meditar em meu coração, como tu fizeste, guardando as palavras do Senhor com amor. Amém.'
+    biblicalWord: { text: '"Maria, porém, guardava todas estas coisas, meditando-as em seu coração."', reference: 'Lc 2,19' },
+    contextualEspiritual: 'Nos Evangelhos, Maria fala pouquíssimas vezes. Após o nascimento de Jesus, quando os pastores vieram adorá-Lo e contaram o que os anjos disseram, a reação de Maria não foi falar — foi "guardar todas essas coisas, meditando-as em seu coração." Este silêncio de Maria não era vazio — era cheio de Deus. Era contemplação pura.',
+    explanation: 'Maria é a Virgem do silêncio. Nos Evangelhos, suas palavras são poucas, mas cada uma é profunda. Ela "guardava todas estas coisas, meditando-as em seu coração." O silêncio de Maria não era vazio — era cheio de oração, contemplação e escuta de Deus. Na era do barulho constante, o silêncio é revolucionário e profundamente necessário para o encontro com o Senhor.',
+    formacaoProfunda: 'O silêncio é a linguagem de Deus. Como dizia São João da Cruz: "A Palavra de Deus é Seu Filho, e Ele a pronuncia eternamente no silêncio." Se queremos ouvir Deus, precisamos aprender a calar. O silêncio não é ausência de som — é presença de Deus. No silêncio, descobrimos quem somos, ouvimos a voz do Espírito e encontramos a paz que o mundo não pode dar. Os grandes santos foram homens e mulheres de silêncio: São Bruno, São Bento, Santa Teresa de Ávila.',
+    exameDe: [
+      'Quanto tempo do meu dia é dedicado ao silêncio interior?',
+      'Eu falo demais? Falo sobre assuntos desnecessários?',
+      'Tenho medo do silêncio? Por quê?',
+      'Consigo ouvir os outros sem interromper ou pensar na minha resposta?',
+      'Quando foi a última vez que me sentei em silêncio diante de Deus?'
+    ],
+    application: 'Hoje: Reserve 10 minutos de silêncio total. Sem celular, sem música, sem conversa interior. Apenas esteja diante de Deus.\n\nEsta semana: Antes de falar algo importante, pare 3 segundos e pergunte: "Isso precisa ser dito?"\n\nDesafio espiritual: Um dia inteiro sem reclamar. Cada vez que quiser reclamar, ofereça o silêncio como oração.',
+    prayer: 'Maria, Virgem do silêncio, ensina-me a calar para ouvir a Deus. Que eu aprenda a meditar em meu coração, como tu fizeste, guardando as palavras do Senhor com amor. Liberta-me do barulho interior, das palavras vazias, da necessidade de preencher todo silêncio. Faz do meu coração um tabernáculo de paz onde Deus possa habitar. Amém.'
   },
   {
     id: 'fe',
     title: 'Fé',
-    explanation: 'Maria é chamada de "bem-aventurada porque acreditou." Sua fé não foi baseada em evidências visíveis — foi pura confiança em Deus. Ela acreditou que seria mãe virgem, que seu filho seria o Salvador, que Deus cumpriria Suas promessas. Mesmo diante da cruz, sua fé não vacilou.',
-    application: 'A fé é provada nos momentos difíceis. Quando tudo parece dar errado, quando as orações parecem não ser ouvidas, quando o sofrimento aperta — é aí que a fé precisa ser exercitada. Como Maria, confie que Deus está no controle.',
-    prayer: 'Maria, Mãe da fé, fortalece minha crença quando ela vacilar. Nos momentos de dúvida, lembra-me de que Deus é fiel e Suas promessas são verdadeiras. Amém.'
+    biblicalWord: { text: '"Bem-aventurada és tu que acreditaste, pois se cumprirá o que te foi dito da parte do Senhor."', reference: 'Lc 1,45' },
+    contextualEspiritual: 'Quando Isabel saudou Maria com estas palavras, reconheceu algo extraordinário: Maria acreditou. Acreditou no impossível. Acreditou que seria mãe sem conhecer homem. Acreditou que seu Filho seria o Salvador. Acreditou mesmo quando não entendia. A fé de Maria não era ingenuidade — era certeza absoluta em Deus.',
+    explanation: 'Maria é chamada de "bem-aventurada porque acreditou." Sua fé não foi baseada em evidências visíveis — foi pura confiança em Deus. Ela acreditou que seria mãe virgem, que seu filho seria o Salvador, que Deus cumpriria Suas promessas. Mesmo diante da cruz, sua fé não vacilou. A fé de Maria é modelo para nossa própria fé, especialmente nos momentos de escuridão espiritual.',
+    formacaoProfunda: 'A fé é dom de Deus, mas também é decisão nossa. Deus oferece a graça da fé, mas nós precisamos acolhê-la e exercitá-la. A fé cresce com o uso — como um músculo que se fortalece com o exercício. E a fé é provada no sofrimento. É fácil acreditar quando tudo vai bem; a fé verdadeira se revela quando tudo desmorona. Maria acreditou no Sábado Santo — o dia em que Jesus estava morto, antes da Ressurreição. Naquele dia, ela foi provavelmente a única pessoa no mundo que ainda acreditava.',
+    exameDe: [
+      'Minha fé vacila diante das dificuldades?',
+      'Eu acredito mais no que vejo ou no que Deus promete?',
+      'Quando foi a última vez que confiei em Deus contra toda lógica humana?',
+      'Alimento minha fé com oração, sacramentos e leitura espiritual?',
+      'Existe alguma promessa de Deus na qual eu tenho dificuldade de acreditar?'
+    ],
+    application: 'Hoje: Identifique uma situação na qual você precisa confiar mais em Deus. Entregue-a em oração.\n\nEsta semana: Leia um capítulo do Evangelho por dia, pedindo que a fé aumente.\n\nDesafio espiritual: Escreva uma "carta de fé" a Deus, dizendo: "Eu acredito em Ti, mesmo quando não entendo."',
+    prayer: 'Maria, Mãe da fé, fortalece minha crença quando ela vacilar. Nos momentos de dúvida, lembra-me de que Deus é fiel e Suas promessas são verdadeiras. Intercede por mim para que eu nunca perca a fé, mesmo nas noites mais escuras da alma. Que como tu, eu acredite no impossível, confie no invisível e espere no eterno. Amém.'
   },
   {
     id: 'pureza',
     title: 'Pureza',
-    explanation: 'Maria é a Virgem Puríssima, concebida sem pecado original, preservada de toda mancha. Sua pureza não se limita ao corpo — é pureza de coração, de intenções, de pensamentos. Maria nos mostra que é possível viver no mundo sem ser contaminado por ele.',
-    application: 'Cuide dos seus pensamentos, do que você consome com os olhos e ouvidos, das companhias que frequenta. A pureza começa na mente e no coração. Peça a Maria que purifique tudo o que está manchado em sua vida.',
-    prayer: 'Maria, Virgem Puríssima, purifica meu coração e minha mente. Afasta de mim tudo o que é impuro e me conduz à santidade. Que eu viva em pureza de corpo e alma. Amém.'
+    biblicalWord: { text: '"Bem-aventurados os puros de coração, porque verão a Deus."', reference: 'Mt 5,8' },
+    contextualEspiritual: 'Maria foi concebida sem pecado original — o dogma da Imaculada Conceição. Desde o primeiro instante de sua existência, ela foi pura. Não por mérito próprio, mas pela graça antecipada de Cristo. Essa pureza não a afastou do mundo — ela viveu entre pessoas pecadoras, em uma sociedade imperfeita. Mas seu coração permaneceu límpido, como um lago cristalino que reflete o céu.',
+    explanation: 'Maria é a Virgem Puríssima, concebida sem pecado original, preservada de toda mancha. Sua pureza não se limita ao corpo — é pureza de coração, de intenções, de pensamentos. Maria nos mostra que é possível viver no mundo sem ser contaminado por ele. A pureza é a transparência da alma que permite ver Deus e ser visto por Ele sem obstáculos.',
+    formacaoProfunda: 'A pureza é muito mais do que castidade sexual — embora a inclua. Pureza é integridade interior: pensar, sentir e agir de acordo com a vontade de Deus. Jesus prometeu que os puros de coração verão a Deus. Isso significa que a pureza abre os olhos espirituais para perceber a presença divina. O coração impuro está turvo, confuso, dividido. O coração puro está claro, focado, unificado em Deus. Num mundo que banaliza a pureza, vivê-la é um ato profético.',
+    exameDe: [
+      'Meus pensamentos são puros? Ou alimentei pensamentos que me afastam de Deus?',
+      'O que eu consumo com os olhos (TV, internet, redes sociais) contribui para minha pureza?',
+      'Minhas intenções são puras, ou frequentemente escondo motivações egoístas?',
+      'Cuido do meu corpo como templo do Espírito Santo?',
+      'Existe algum pecado habitual contra a pureza que eu preciso confessar e abandonar?'
+    ],
+    application: 'Hoje: Faça um "jejum dos olhos": evite conscientemente imagens, vídeos ou conteúdos que manchem a pureza.\n\nEsta semana: Confesse seus pecados contra a pureza e receba a graça do sacramento.\n\nDesafio espiritual: Comece cada manhã pedindo: "Maria, cobre-me com teu manto de pureza."',
+    prayer: 'Maria, Virgem Puríssima, purifica meu coração e minha mente. Afasta de mim tudo o que é impuro e me conduz à santidade. Cobre-me com teu manto imaculado e protege meus sentidos de todo mal. Que eu viva em pureza de corpo, alma e intenção, para que meu coração seja digna morada do Espírito Santo. Amém.'
   },
   {
     id: 'confianca',
     title: 'Confiança',
-    explanation: 'Maria confiou em Deus de forma absoluta. Nas bodas de Caná, quando o vinho acabou, ela disse aos servos: "Fazei tudo o que Ele vos disser." Essa confiança inabalável mostra que Maria sabia que Jesus agiria. Ela não sabia como, mas sabia que Ele o faria.',
-    application: 'Confie em Deus, mesmo quando você não vê saída. Entregue suas preocupações ao Senhor e, como Maria nas bodas de Caná, simplesmente diga: "Faça o que Ele disser." A confiança é o antídoto para a ansiedade.',
-    prayer: 'Maria, Mãe da confiança, ensina-me a confiar plenamente em Deus. Quando a ansiedade me dominar, lembra-me de que Ele cuida de tudo. Eu confio, Senhor. Amém.'
+    biblicalWord: { text: '"Fazei tudo o que Ele vos disser."', reference: 'Jo 2,5' },
+    contextualEspiritual: 'Nas bodas de Caná, o vinho acabou. Uma situação constrangedora para os noivos. Maria percebeu o problema e disse a Jesus: "Eles não têm mais vinho." Jesus respondeu que ainda não era sua hora. Mas Maria, com uma confiança inabalável, virou-se para os servos e disse: "Fazei tudo o que Ele vos disser." Ela não sabia o que Jesus faria. Não sabia como. Mas sabia que Ele faria. Essa é a confiança de Maria.',
+    explanation: 'Maria confiou em Deus de forma absoluta. Nas bodas de Caná, quando o vinho acabou, ela disse aos servos: "Fazei tudo o que Ele vos disser." Essa confiança inabalável mostra que Maria sabia que Jesus agiria. Ela não sabia como, mas sabia que Ele o faria. A confiança é o antídoto para a ansiedade, para o medo e para o desespero.',
+    formacaoProfunda: 'Confiar em Deus é o ato mais radical que um ser humano pode fazer. Porque significa abrir mão do controle — e nós amamos o controle. Queremos saber o que vai acontecer, queremos ter garantias, queremos segurança. Mas Deus não nos oferece um mapa — Ele nos oferece Sua mão. A confiança não elimina o sofrimento, mas muda nossa relação com ele. Quem confia sabe que, mesmo na tempestade, o barco não vai afundar — porque Jesus está nele.',
+    exameDe: [
+      'Em que área da minha vida eu mais luto para confiar em Deus?',
+      'A ansiedade domina meu dia a dia? Por quê?',
+      'Eu tento controlar tudo ou sei soltar nas mãos de Deus?',
+      'Quando foi a última vez que Deus me surpreendeu positivamente?',
+      'Acredito genuinamente que Deus cuida de mim em todos os detalhes?'
+    ],
+    application: 'Hoje: Escolha uma preocupação e entregue-a formalmente a Deus em oração. Não pegue de volta.\n\nEsta semana: Cada vez que a ansiedade aparecer, repita: "Maria, eu confio em ti. Jesus, eu confio em vós."\n\nDesafio espiritual: Crie um "pote de confiança": escreva suas preocupações em papéis e coloque dentro. No final do mês, releia e veja quantas Deus já resolveu.',
+    prayer: 'Maria, Mãe da confiança, ensina-me a confiar plenamente em Deus. Quando a ansiedade me dominar, lembra-me de que Ele cuida de tudo. Quando o medo paralisar meus passos, mostra-me que Deus vai adiante de mim. Que eu repita com todo o coração: "Fazei tudo o que Ele vos disser." Eu confio, Senhor, mas aumentai a minha confiança. Amém.'
   },
   {
     id: 'entrega',
     title: 'Entrega',
-    explanation: 'A entrega de Maria foi completa: ela entregou sua vida, seu filho, sua vontade, tudo. Não guardou nada para si. Desde o "sim" da Anunciação até os pés da cruz, Maria viveu uma vida de entrega total a Deus. Sua entrega não foi resignação passiva — foi um ato de amor heroico.',
-    application: 'Entregar-se a Deus significa soltar o controle. Pare de tentar resolver tudo sozinho. Ofereça a Deus seus planos, seus medos, suas expectativas. Deixe que Ele conduza sua vida. A entrega traz paz.',
-    prayer: 'Maria, Mãe da entrega, ajuda-me a soltar o controle da minha vida e entregá-la nas mãos de Deus. Que eu confie em Seu plano e descanse em Seu amor. Tudo é Teu, Senhor. Amém.'
+    biblicalWord: { text: '"Pai, em tuas mãos entrego o meu espírito."', reference: 'Lc 23,46' },
+    contextualEspiritual: 'Aos pés da cruz, Maria viveu o momento supremo de entrega. Ela entregou seu Filho a Deus, entregou sua dor como oferenda, entregou seu futuro ao desconhecido. Não sabemos exatamente o que ela sentiu — mas sabemos que permaneceu de pé. Não desmaiou, não fugiu, não amaldiçoou. Ficou. E ao ficar, entregou tudo. A entrega de Maria foi espelhada na entrega de Jesus: "Pai, em tuas mãos entrego o meu espírito."',
+    explanation: 'A entrega de Maria foi completa: ela entregou sua vida, seu filho, sua vontade, tudo. Não guardou nada para si. Desde o "sim" da Anunciação até os pés da cruz, Maria viveu uma vida de entrega total a Deus. Sua entrega não foi resignação passiva — foi um ato de amor heroico. Entregar-se é o ponto mais alto da vida espiritual.',
+    formacaoProfunda: 'A entrega é o coroamento de todas as outras virtudes. Quem é humilde, obediente, silencioso, fiel, puro e confiante está pronto para se entregar totalmente. A entrega é dizer: "Deus, eu não tenho mais nada que seja meu. Tudo é Teu." Isso pode parecer assustador, mas é profundamente libertador. Porque quando soltamos tudo, descobrimos que Deus segura tudo. A entrega não nos esvazia — nos preenche com Deus.',
+    exameDe: [
+      'O que eu ainda seguro com mãos fechadas, sem querer entregar a Deus?',
+      'Tenho medo de me entregar completamente? De quê exatamente?',
+      'Vivo tentando controlar o futuro, ou descanso no plano de Deus?',
+      'Consigo dizer com sinceridade: "Faça-se a Tua vontade, não a minha"?',
+      'Existe algum sonho ou desejo que eu preciso devolver a Deus?'
+    ],
+    application: 'Hoje: Reze com os braços abertos: "Senhor, eu me entrego. Tudo é Teu."\n\nEsta semana: Identifique algo que você está controlando obsessivamente e solte conscientemente.\n\nDesafio espiritual: Faça um ato de entrega formal: escreva em um papel tudo o que deseja entregar a Deus. Leia em voz alta como oração.',
+    prayer: 'Maria, Mãe da entrega, ajuda-me a soltar o controle da minha vida e entregá-la nas mãos de Deus. Que eu confie em Seu plano e descanse em Seu amor. Como tu entregaste tudo — teu Filho, tua dor, teu futuro —, ensina-me a entregar sem reservas. Tudo é Teu, Senhor. Faz de mim o que quiseres. Amém.'
   },
 ];
+
+// ========== LEITURAS ==========
 
 export const leiturasMarianasData = [
   {
@@ -310,21 +565,21 @@ export const leiturasFormacaoData = [
     id: 1,
     title: 'O que é a Graça Santificante',
     summary: 'Entendendo o dom que nos torna filhos de Deus.',
-    content: 'A graça santificante é o dom sobrenatural que Deus derrama em nossa alma no Batismo, tornando-nos participantes da natureza divina. É ela que nos faz filhos de Deus, templos do Espírito Santo e herdeiros do céu. O pecado mortal destrói a graça santificante; a Confissão a restaura. Por isso a vida sacramental é tão importante: ela nos mantém conectados à fonte da graça. Viver em estado de graça significa viver na amizade de Deus, abertos à Sua ação transformadora em nossa vida.',
-    recommendedBooks: ['Catecismo da Igreja Católica – Seção sobre a Graça', 'João 15,5']
+    content: 'A graça santificante é o dom sobrenatural que Deus infunde na alma no Batismo. É ela que nos torna filhos adotivos de Deus, participantes da natureza divina. Sem a graça, somos incapazes de alcançar a salvação. Com ela, somos templos do Espírito Santo. A graça santificante pode ser perdida pelo pecado mortal e recuperada pela Confissão. Por isso, os sacramentos são essenciais: eles são os canais ordinários da graça. Cada vez que recebemos a Eucaristia em estado de graça, a graça santificante cresce em nós.',
+    recommendedBooks: ['Catecismo da Igreja Católica, nn. 1996-2005', 'A Vida da Graça – Adolphe Tanquerey']
   },
   {
     id: 2,
-    title: 'Os Sacramentos como Encontro com Cristo',
-    summary: 'Cada sacramento é uma experiência viva do amor de Deus.',
-    content: 'Os sete sacramentos não são meros rituais — são encontros reais com Cristo. No Batismo, morremos e ressuscitamos com Ele. Na Eucaristia, recebemos Seu Corpo e Sangue. Na Confissão, experimentamos Sua misericórdia. Cada sacramento é um canal de graça, um momento em que o céu toca a terra. Participar dos sacramentos com consciência e devoção transforma nossa vida. Não são obrigações — são presentes de Deus para nos fortalecer no caminho da santidade.',
-    recommendedBooks: ['Catecismo da Igreja Católica – Sacramentos', 'Sacrosanctum Concilium']
+    title: 'Os Sete Sacramentos',
+    summary: 'Sinais visíveis da graça invisível de Deus.',
+    content: 'Os sete sacramentos são: Batismo, Confirmação, Eucaristia, Penitência, Unção dos Enfermos, Ordem e Matrimônio. Cada um foi instituído por Cristo e confia à Igreja graças específicas. O Batismo nos torna filhos de Deus. A Confirmação nos fortalece com o Espírito Santo. A Eucaristia nos alimenta com o Corpo e Sangue de Cristo. A Penitência nos reconcilia com Deus. A Unção dos Enfermos nos consola na doença. A Ordem consagra ministros sagrados. O Matrimônio santifica a união conjugal. Participar dos sacramentos é a forma mais eficaz de crescer na vida espiritual.',
+    recommendedBooks: ['Catecismo da Igreja Católica, nn. 1210-1690', 'Os Sacramentos da Igreja – Papa Bento XVI']
   },
   {
     id: 3,
-    title: 'A Oração como Relacionamento',
-    summary: 'Rezar não é recitar — é conversar com Deus.',
-    content: 'Muitas pessoas abandonam a oração porque a tratam como uma lista de pedidos ou uma obrigação. Mas a oração é, antes de tudo, um relacionamento. É conversa com Deus — e toda conversa inclui falar, ouvir e simplesmente estar presente. Santa Teresa de Ávila definiu a oração como "um trato de amizade, um estar a sós com quem sabemos que nos ama." Quando rezamos com essa mentalidade, a oração deixa de ser pesada e se torna prazerosa. Reserve um tempo diário para a oração. Comece com cinco minutos. Fale com Deus como se fala com um amigo. E depois, escute.',
-    recommendedBooks: ['Caminho de Perfeição – Santa Teresa de Ávila', 'Catecismo da Igreja Católica – A Oração']
+    title: 'A Importância da Direção Espiritual',
+    summary: 'Por que todo cristão precisa de um guia.',
+    content: 'A direção espiritual é a prática de ter um guia — geralmente um sacerdote ou pessoa consagrada — que acompanha sua jornada de fé. O diretor espiritual ajuda a discernir a vontade de Deus, identifica armadilhas do inimigo, corrige desvios e encoraja nos momentos difíceis. Todos os grandes santos tiveram diretores espirituais. Santa Faustina tinha o Padre Sopoćko. Santa Teresa de Ávila era dirigida por São João da Cruz. Ter um guia não é sinal de fraqueza — é sinal de sabedoria. Ninguém caminha bem sozinho na vida espiritual.',
+    recommendedBooks: ['Introdução à Vida Devota – São Francisco de Sales', 'A Alma de Todo Apostolado']
   },
 ];
