@@ -45,7 +45,7 @@ import arcanjoGabriel from '@/assets/arcanjo-gabriel.png';
 import arcanjoRafael from '@/assets/arcanjo-rafael.png';
 import logoCaminho from '@/assets/caminho-da-santidade.png';
 import nossaSenhoraImg from '@/assets/nossa-senhora.png';
-import bibliaImg from '@/assets/biblia.png';
+import leiturasImg from '@/assets/leituras-espirituais.png';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -453,29 +453,25 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
   ];
   
   return (
-    <motion.div className="space-y-8" variants={staggerContainer} initial="initial" animate="animate">
+    <motion.div className="space-y-10" variants={staggerContainer} initial="initial" animate="animate">
       {/* Hero Carousel */}
       <Carousel className="rounded-2xl overflow-hidden shadow-3d">
         {/* Slide 1 - Welcome */}
-        <div className="relative min-h-[320px] bg-gradient-celestial">
+        <div className="relative min-h-[360px] bg-gradient-celestial">
           <div className="absolute inset-0">
-            <img src={archangelsHero} alt="Os Três Arcanjos" className="w-full h-full object-cover opacity-40" />
-            <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/95 via-navy/80 to-transparent" />
+            <img src={archangelsHero} alt="Os Três Arcanjos" className="w-full h-full object-cover opacity-30" />
+            <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/95 via-navy-dark/85 to-navy/70" />
           </div>
-          <div className="relative h-full p-8 flex flex-col justify-center min-h-[320px]">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-            >
-              <p className="text-gold/80 font-body text-sm tracking-widest mb-2">BEM-VINDO AO CAMINHO DA SANTIDADE</p>
-              <h1 className="text-3xl lg:text-4xl font-display text-cream mb-3">
-                {userName ? `Olá, ${userName}` : 'Paz e Bênçãos'}
+          <div className="relative h-full p-8 lg:p-12 flex flex-col justify-center min-h-[360px]">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+              <p className="text-gold/70 font-body text-sm tracking-[0.3em] mb-3 uppercase">Caminho da Santidade</p>
+              <h1 className="text-3xl lg:text-5xl font-display text-cream mb-4 leading-tight">
+                {userName ? `Seja bem-vindo, ${userName}.` : 'Paz e Bênçãos.'}
               </h1>
-              <p className="text-cream/80 font-body text-lg max-w-xl italic">"{dailyQuote}"</p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Button onClick={() => setActiveSection('devotional')} className="bg-gold hover:bg-gold-light text-navy-dark font-body">
-                  <ScrollText className="w-4 h-4 mr-2" />
+              <p className="text-cream/70 font-body text-lg max-w-xl">Hoje é mais um passo rumo à santidade.</p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button onClick={() => setActiveSection('devotional')} className="bg-gold hover:bg-gold-light text-navy-dark font-body px-6 py-3 text-base shadow-lg">
+                  <ScrollText className="w-5 h-5 mr-2" />
                   Iniciar Jornada de 30 Dias
                 </Button>
               </div>
@@ -483,148 +479,117 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
           </div>
         </div>
 
-        {/* Slide 2 - Devotional of the Day */}
-        <div className="relative min-h-[320px] bg-gradient-to-br from-navy-dark via-navy to-brown/50 p-8 flex flex-col justify-center">
+        {/* Slide 2 - Devotional */}
+        <div className="relative min-h-[360px] bg-gradient-to-br from-navy-dark via-navy to-brown/50 p-8 lg:p-12 flex flex-col justify-center">
           <div className="absolute top-4 right-4 px-3 py-1 bg-gold/20 rounded-full">
             <span className="text-gold text-xs font-body">Dia {todayDevotional.day}</span>
           </div>
-          <p className="text-gold/80 font-body text-sm tracking-widest mb-2">DEVOCIONAL DE HOJE</p>
-          <h2 className="text-2xl lg:text-3xl font-display text-cream mb-4">{todayDevotional.theme}</h2>
-          <p className="text-cream/75 font-body line-clamp-3 max-w-2xl mb-6">
-            {todayDevotional.reflection.substring(0, 200)}...
-          </p>
-          <Button onClick={() => { setActiveSection('devotional'); setSelectedItem(todayDevotional); }} className="bg-gold hover:bg-gold-light text-navy-dark font-body w-fit">
+          <p className="text-gold/70 font-body text-sm tracking-[0.3em] mb-3 uppercase">Devocional de Hoje</p>
+          <h2 className="text-2xl lg:text-4xl font-display text-cream mb-4">{todayDevotional.theme}</h2>
+          <p className="text-cream/65 font-body line-clamp-3 max-w-2xl mb-6 text-lg">{todayDevotional.reflection.substring(0, 200)}...</p>
+          <Button onClick={() => { setActiveSection('devotional'); setSelectedItem(todayDevotional); }} className="bg-gold hover:bg-gold-light text-navy-dark font-body w-fit px-6">
             Ler Reflexão Completa
           </Button>
         </div>
 
         {/* Slide 3 - Daily Prayer */}
-        <div className="relative min-h-[320px] bg-gradient-to-br from-brown/80 via-navy-dark to-navy p-8 flex flex-col justify-center">
-          <p className="text-gold/80 font-body text-sm tracking-widest mb-2">ORAÇÃO DO DIA</p>
-          <h2 className="text-2xl lg:text-3xl font-display text-cream mb-4">{dailyPrayer.title}</h2>
-          <p className="text-cream/75 font-body line-clamp-4 max-w-2xl mb-6">{dailyPrayer.content}</p>
-          <Button onClick={() => setActiveSection('prayers')} className="bg-gold hover:bg-gold-light text-navy-dark font-body w-fit">
+        <div className="relative min-h-[360px] bg-gradient-to-br from-brown/80 via-navy-dark to-navy p-8 lg:p-12 flex flex-col justify-center">
+          <p className="text-gold/70 font-body text-sm tracking-[0.3em] mb-3 uppercase">Oração do Dia</p>
+          <h2 className="text-2xl lg:text-4xl font-display text-cream mb-4">{dailyPrayer.title}</h2>
+          <p className="text-cream/65 font-body line-clamp-4 max-w-2xl mb-6 text-lg">{dailyPrayer.content}</p>
+          <Button onClick={() => setActiveSection('prayers')} className="bg-gold hover:bg-gold-light text-navy-dark font-body w-fit px-6">
             Ver Mais Orações
           </Button>
         </div>
       </Carousel>
 
-      {/* Quick Stats - Moved to top */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { icon: ScrollText, label: 'Devocional', value: `Dia ${todayDevotional.day}`, color: 'text-gold', action: () => setActiveSection('devotional') },
-          { icon: BookHeart, label: 'Novena', value: `${completedNovenas}/15 dias`, color: 'text-green-400', action: () => setActiveSection('novenas') },
-          { icon: Heart, label: 'Orações', value: '119 disponíveis', color: 'text-pink-400', action: () => setActiveSection('prayers') },
-          { icon: BookOpen, label: 'Leituras', value: '12 reflexões', color: 'text-blue-400', action: () => setActiveSection('readings') },
-        ].map((stat, i) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-          >
-            <Card 
-              className="cursor-pointer group hover:border-gold/30 transition-all duration-300 bg-card/80 backdrop-blur-sm"
-              onClick={stat.action}
-            >
-              <CardContent className="p-4 flex items-center gap-4">
-                <div className={`p-3 rounded-xl bg-muted ${stat.color}`}>
-                  <stat.icon className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-muted-foreground text-xs font-body">{stat.label}</p>
-                  <p className="text-foreground font-display text-lg">{stat.value}</p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
-      </div>
+      {/* Progresso Espiritual */}
+      <section>
+        <div className="flex items-center gap-3 mb-5">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+          <h2 className="text-lg font-display text-foreground tracking-wide">Seu Progresso Espiritual</h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { icon: ScrollText, label: 'Devocional', value: `Dia ${todayDevotional.day}`, color: 'text-gold', action: () => setActiveSection('devotional') },
+            { icon: BookHeart, label: 'Novena', value: `${completedNovenas}/15 dias`, color: 'text-green-400', action: () => setActiveSection('novenas') },
+            { icon: Heart, label: 'Orações', value: '119 disponíveis', color: 'text-pink-400', action: () => setActiveSection('prayers') },
+            { icon: BookOpen, label: 'Leituras', value: '40 reflexões', color: 'text-blue-400', action: () => setActiveSection('readings') },
+          ].map((stat, i) => (
+            <motion.div key={stat.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
+              <Card className="cursor-pointer group hover:border-gold/30 transition-all duration-300 bg-card/80 backdrop-blur-sm" onClick={stat.action}>
+                <CardContent className="p-4 flex items-center gap-4">
+                  <div className={`p-3 rounded-xl bg-muted ${stat.color}`}>
+                    <stat.icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground text-xs font-body">{stat.label}</p>
+                    <p className="text-foreground font-display text-lg">{stat.value}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
-      {/* Daily Content - Passagem e Oração do Dia */}
-      <div className="grid lg:grid-cols-2 gap-6">
-        {/* Bible Passage */}
-        <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/10 overflow-hidden">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-gold/10">
-                <BookOpen className="w-5 h-5 text-gold" />
+      {/* Hoje Para Você */}
+      <section>
+        <div className="flex items-center gap-3 mb-5">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+          <h2 className="text-lg font-display text-foreground tracking-wide">Hoje Para Você</h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+        </div>
+        <div className="grid lg:grid-cols-2 gap-6">
+          <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/10 overflow-hidden">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-lg bg-gold/10"><BookOpen className="w-5 h-5 text-gold" /></div>
+                <CardTitle className="text-foreground text-lg font-display">Passagem do Dia</CardTitle>
               </div>
-              <CardTitle className="text-foreground text-lg font-display">Passagem do Dia</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <blockquote className="text-foreground/85 font-body text-base leading-relaxed italic border-l-2 border-gold/50 pl-4">
-              "{dailyPassage.passage}"
-            </blockquote>
-            <p className="text-gold mt-4 font-display text-sm">{dailyPassage.reference}</p>
-          </CardContent>
-        </Card>
-
-        {/* Today's Prayer */}
-        <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/10 overflow-hidden">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <div className="p-2 rounded-lg bg-gold/10">
-                <Heart className="w-5 h-5 text-gold" />
+            </CardHeader>
+            <CardContent>
+              <blockquote className="text-foreground/85 font-body text-base leading-relaxed italic border-l-2 border-gold/50 pl-4">"{dailyPassage.passage}"</blockquote>
+              <p className="text-gold mt-4 font-display text-sm">{dailyPassage.reference}</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/10 overflow-hidden">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-lg bg-gold/10"><Heart className="w-5 h-5 text-gold" /></div>
+                <CardTitle className="text-foreground text-lg font-display">Oração do Dia</CardTitle>
               </div>
-              <CardTitle className="text-foreground text-lg font-display">Oração do Dia</CardTitle>
-            </div>
-            <CardDescription className="font-body">{dailyPrayer.title}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-foreground/85 font-body text-base leading-relaxed line-clamp-4">{dailyPrayer.content}</p>
-          </CardContent>
-        </Card>
-      </div>
+              <CardDescription className="font-body">{dailyPrayer.title}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-foreground/85 font-body text-base leading-relaxed line-clamp-4">{dailyPrayer.content}</p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
       {/* Como Usar Este Guia */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
         <Card className="bg-gradient-to-br from-card via-card to-muted/30 border-gold/20 overflow-hidden">
           <CardHeader className="pb-4">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-gold/10">
-                <BookOpen className="w-6 h-6 text-gold" />
-              </div>
+              <div className="p-3 rounded-xl bg-gold/10"><BookOpen className="w-6 h-6 text-gold" /></div>
               <div>
                 <CardTitle className="text-foreground text-xl font-display">Como Usar Este Guia</CardTitle>
-                <CardDescription className="font-body">Para aproveitar ao máximo esta jornada espiritual de 30 dias</CardDescription>
+                <CardDescription className="font-body">Para aproveitar ao máximo esta jornada espiritual</CardDescription>
               </div>
             </div>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
               {[
-                {
-                  icon: Calendar,
-                  title: 'Reze durante 30 Dias Seguidos',
-                  description: 'Dedique-se a cada oração diariamente, seguindo a sequência recomendada para maior benefício espiritual.'
-                },
-                {
-                  icon: Clock,
-                  title: 'Reserve um Momento Tranquilo',
-                  description: 'Escolha um horário fixo do dia, de preferência pela manhã, para sua oração em silêncio e sem distrações.'
-                },
-                {
-                  icon: Heart,
-                  title: 'Ore com o Coração',
-                  description: 'Entregue-se de coração aberto, permitindo que cada palavra ressoe em sua alma e transforme sua vida.'
-                }
+                { icon: Calendar, title: 'Reze durante 30 Dias Seguidos', description: 'Dedique-se a cada oração diariamente, seguindo a sequência recomendada.' },
+                { icon: Clock, title: 'Reserve um Momento Tranquilo', description: 'Escolha um horário fixo do dia para sua oração em silêncio.' },
+                { icon: Heart, title: 'Ore com o Coração', description: 'Entregue-se de coração aberto, permitindo que cada palavra transforme sua vida.' }
               ].map((item, i) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + i * 0.1 }}
-                  className="p-5 rounded-xl bg-muted/30 border border-gold/10 hover:border-gold/30 transition-all"
-                >
-                  <div className="p-3 rounded-lg bg-gold/10 w-fit mb-4">
-                    <item.icon className="w-6 h-6 text-gold" />
-                  </div>
+                <motion.div key={item.title} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.1 }} className="p-5 rounded-xl bg-muted/30 border border-gold/10 hover:border-gold/30 transition-all">
+                  <div className="p-3 rounded-lg bg-gold/10 w-fit mb-4"><item.icon className="w-6 h-6 text-gold" /></div>
                   <h3 className="font-display text-lg text-foreground mb-2">{item.title}</h3>
                   <p className="text-muted-foreground font-body text-sm leading-relaxed">{item.description}</p>
                 </motion.div>
@@ -634,71 +599,49 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
         </Card>
       </motion.div>
 
-      {/* Nossa Senhora - Central Mariana */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.35 }}
-        className="cursor-pointer"
-        onClick={() => setActiveSection('central-mariana')}
-      >
-        <Card className="overflow-hidden hover:border-gold/40 hover:shadow-xl transition-all duration-300 group">
-          <CardContent className="p-8 text-center">
-            <div className="relative mx-auto w-48 h-48 mb-6">
-              <div className="absolute inset-0 bg-gold/10 rounded-full blur-2xl group-hover:bg-gold/20 transition-all" />
-              <img
-                src={nossaSenhoraImg}
-                alt="Nossa Senhora"
-                className="relative w-full h-full object-cover rounded-2xl shadow-2xl border border-gold/20 group-hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-            <p className="text-foreground/85 font-body text-base leading-relaxed max-w-xl mx-auto italic">
-              "Nossa Senhora, modelo de fé, humildade e entrega. Caminhe com Maria rumo à santidade."
-            </p>
-            <Button className="mt-4 bg-gold hover:bg-gold-light text-navy-dark font-body">
-              <Flower2 className="w-4 h-4 mr-2" />
-              Central Mariana
-            </Button>
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* Os Três Arcanjos */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 rounded-xl bg-gold/10">
-            <Shield className="w-6 h-6 text-gold" />
-          </div>
-          <div>
-            <h2 className="text-2xl font-display text-foreground">Os Três Arcanjos</h2>
-            <p className="text-muted-foreground font-body text-sm">Seus protetores celestiais</p>
-          </div>
+      {/* Caminhe com Maria */}
+      <section>
+        <div className="flex items-center gap-3 mb-5">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+          <h2 className="text-xl font-display text-foreground tracking-wide">Caminhe com Maria</h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
         </div>
-        
+        <p className="text-muted-foreground font-body text-center text-sm mb-6">Maria conduz cada passo rumo à santidade.</p>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }} className="cursor-pointer" onClick={() => setActiveSection('central-mariana')}>
+          <Card className="overflow-hidden hover:border-gold/40 hover:shadow-xl transition-all duration-300 group bg-gradient-to-br from-card via-card to-navy/5 border-gold/15">
+            <CardContent className="p-10 text-center">
+              <div className="relative mx-auto w-56 h-56 mb-8">
+                <div className="absolute inset-0 bg-gold/10 rounded-full blur-3xl group-hover:bg-gold/20 transition-all" />
+                <img src={nossaSenhoraImg} alt="Nossa Senhora" className="relative w-full h-full object-cover rounded-2xl shadow-2xl border-2 border-gold/20 group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <p className="text-foreground/85 font-body text-lg leading-relaxed max-w-xl mx-auto italic mb-6">
+                "Nossa Senhora, modelo de fé, humildade e entrega. Caminhe com Maria rumo à santidade."
+              </p>
+              <Button className="bg-gold hover:bg-gold-light text-navy-dark font-body px-8 py-3 text-base shadow-lg">
+                <Flower2 className="w-5 h-5 mr-2" />
+                Entrar na Central Mariana
+              </Button>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </section>
+
+      {/* Seus Protetores Celestiais */}
+      <section>
+        <div className="flex items-center gap-3 mb-5">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+          <h2 className="text-xl font-display text-foreground tracking-wide">Seus Protetores Celestiais</h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+        </div>
+        <p className="text-muted-foreground font-body text-center text-sm mb-6">Miguel protege, Gabriel orienta, Rafael cura.</p>
         <div className="grid md:grid-cols-3 gap-6">
           {archangels.map((archangel, i) => (
-            <motion.div
-              key={archangel.name}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5 + i * 0.1 }}
-            >
-              <Card 
-                className={`overflow-hidden group hover:border-gold/40 transition-all duration-300 bg-gradient-to-br ${archangel.color} cursor-pointer`}
-                onClick={() => setActiveSection('archangels')}
-              >
+            <motion.div key={archangel.name} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4 + i * 0.1 }}>
+              <Card className={`overflow-hidden group hover:border-gold/40 transition-all duration-300 bg-gradient-to-br ${archangel.color} cursor-pointer`} onClick={() => setActiveSection('archangels')}>
                 <CardContent className="p-6 text-center">
                   <div className="relative mx-auto w-32 h-32 mb-4">
                     <div className="absolute inset-0 bg-gold/10 rounded-full blur-xl group-hover:bg-gold/20 transition-all" />
-                    <img 
-                      src={archangel.image} 
-                      alt={archangel.name} 
-                      className="relative w-full h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-300" 
-                    />
+                    <img src={archangel.image} alt={archangel.name} className="relative w-full h-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-300" />
                   </div>
                   <h3 className="font-display text-lg text-foreground mb-2">{archangel.name}</h3>
                   <p className="text-muted-foreground font-body text-sm italic leading-relaxed">"{archangel.phrase}"</p>
@@ -707,39 +650,31 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
             </motion.div>
           ))}
         </div>
-      </motion.div>
+      </section>
 
-      {/* Bible Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-      >
+      {/* Leituras Espirituais */}
+      <section>
+        <div className="flex items-center gap-3 mb-5">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+          <h2 className="text-xl font-display text-foreground tracking-wide">Leituras Espirituais</h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+        </div>
         <Card className="bg-gradient-to-br from-card via-card to-amber-900/10 border-gold/20 overflow-hidden">
           <CardContent className="p-8 text-center">
-            <h2 className="text-2xl lg:text-3xl font-display text-gold mb-6">Leia a Bíblia</h2>
             <div className="relative mx-auto max-w-md mb-6">
               <div className="absolute inset-0 bg-gold/5 rounded-2xl blur-2xl" />
-              <img 
-                src={bibliaImg} 
-                alt="Sagrada Bíblia" 
-                className="relative w-full h-auto rounded-2xl shadow-2xl border border-gold/20"
-              />
+              <img src={leiturasImg} alt="Leituras Espirituais" className="relative w-full h-auto rounded-2xl shadow-2xl border border-gold/20" />
             </div>
             <p className="text-foreground/85 font-body text-lg leading-relaxed max-w-2xl mx-auto">
-              A Bíblia é fonte de sabedoria eterna. Nela estão as palavras que iluminam decisões, curam feridas e fortalecem a fé.
+              Reflexões espirituais que transformam o coração. Leituras para crescer na fé, nas virtudes e no amor a Deus.
             </p>
-            <Button 
-              onClick={() => setActiveSection('readings')} 
-              className="mt-6 bg-gold hover:bg-gold-light text-navy-dark font-body"
-            >
+            <Button onClick={() => setActiveSection('readings')} className="mt-6 bg-gold hover:bg-gold-light text-navy-dark font-body px-8">
               <BookOpen className="w-4 h-4 mr-2" />
               Explorar Leituras
             </Button>
           </CardContent>
         </Card>
-      </motion.div>
-
+      </section>
     </motion.div>
   );
 };
@@ -1405,6 +1340,12 @@ const DetailView = ({ item, goBack, section, isRead, isFavorite, toggleRead, tog
               {item.content}
             </div>
           )}
+          {item.application && (
+            <div>
+              <h4 className="font-display text-gold mb-3 text-lg">📌 Aplicação Prática</h4>
+              <p className="text-foreground/85 font-body leading-relaxed bg-muted/30 p-5 rounded-xl">{item.application}</p>
+            </div>
+          )}
           {item.reflection && (
             <div>
               <h4 className="font-display text-gold mb-3 text-lg">Reflexão</h4>
@@ -1421,6 +1362,14 @@ const DetailView = ({ item, goBack, section, isRead, isFavorite, toggleRead, tog
             <div>
               <h4 className="font-display text-gold mb-3 text-lg">Intenção</h4>
               <p className="text-gold/90 font-body bg-gold/10 p-4 rounded-xl">{item.intention}</p>
+            </div>
+          )}
+          {item.continueReading && item.continueReading.length > 0 && (
+            <div>
+              <h4 className="font-display text-gold mb-3 text-lg">📖 Continue Aprofundando</h4>
+              <ul className="list-disc list-inside text-muted-foreground font-body space-y-1">
+                {item.continueReading.map((b: string, i: number) => <li key={i}>{b}</li>)}
+              </ul>
             </div>
           )}
           {item.recommendedBooks && (
