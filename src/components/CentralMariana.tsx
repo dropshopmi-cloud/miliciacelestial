@@ -255,13 +255,24 @@ const JornadaSection = ({ goBack, onSelect }: any) => {
 const TitulosSection = ({ goBack, onSelect }: any) => (
   <div className="space-y-6">
     <BackButton onClick={goBack} />
-    <h2 className="text-2xl font-display text-foreground">👑 Títulos Marianos</h2>
+    <div className="flex items-center gap-3 mb-2">
+      <div className="p-3 rounded-xl bg-gold/10">
+        <Crown className="w-6 h-6 text-gold" />
+      </div>
+      <div>
+        <h2 className="text-2xl font-display text-foreground">Títulos Marianos</h2>
+        <p className="text-muted-foreground font-body text-sm">{titulosMarianos.length} títulos para conhecer e venerar</p>
+      </div>
+    </div>
     <motion.div className="grid md:grid-cols-2 gap-4" variants={staggerContainer} initial="initial" animate="animate">
       {titulosMarianos.map((t) => (
         <motion.div key={t.id} variants={fadeInUp}>
           <Card className="cursor-pointer hover:border-gold/40 transition-all group" onClick={() => onSelect({ ...t, type: 'titulo' })}>
             <CardContent className="p-6">
-              <h3 className="font-display text-xl text-foreground mb-2 group-hover:text-gold transition-colors">{t.title}</h3>
+              <div className="flex items-center gap-2 mb-2">
+                <Crown className="w-4 h-4 text-gold/60" />
+                <h3 className="font-display text-xl text-foreground group-hover:text-gold transition-colors">{t.title}</h3>
+              </div>
               <p className="text-gold text-sm font-body">{t.date}</p>
             </CardContent>
           </Card>
@@ -547,8 +558,14 @@ const TituloDetail = ({ item }: { item: any }) => (
   <>
     <div>
       <h4 className="font-display text-gold mb-3 text-lg">Breve História</h4>
-      <p className="text-foreground/90 font-body leading-relaxed">{item.history}</p>
+      <p className="text-foreground/90 font-body leading-relaxed whitespace-pre-line">{item.history}</p>
     </div>
+    {item.significance && (
+      <div>
+        <h4 className="font-display text-gold mb-3 text-lg">Significado Espiritual</h4>
+        <p className="text-foreground/85 font-body leading-relaxed bg-muted/30 p-5 rounded-xl">{item.significance}</p>
+      </div>
+    )}
     <div>
       <h4 className="font-display text-gold mb-3 text-lg">Mensagem Principal</h4>
       <p className="text-foreground/85 font-body leading-relaxed bg-muted/30 p-5 rounded-xl">{item.message}</p>

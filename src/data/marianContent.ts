@@ -54,7 +54,8 @@ export const titulosMarianos = [
     id: 'aparecida',
     title: 'Nossa Senhora Aparecida',
     date: '12 de outubro',
-    history: 'Em 1717, três pescadores — Domingos Garcia, Felipe Pedroso e João Alves — lançaram suas redes no rio Paraíba do Sul, em São Paulo. As redes vinham vazias até que, milagrosamente, pescaram uma imagem de Nossa Senhora da Conceição, sem cabeça. Na tentativa seguinte, pescaram a cabeça. A partir desse momento, as redes transbordaram de peixes. A imagem escura, moldada em terracota, tornou-se símbolo de fé para milhões de brasileiros. O Santuário Nacional de Aparecida é hoje o maior templo mariano do mundo, recebendo milhões de peregrinos todos os anos.',
+    history: 'Em 1717, três pescadores — Domingos Garcia, Felipe Pedroso e João Alves — lançaram suas redes no rio Paraíba do Sul, em São Paulo. As redes vinham vazias até que, milagrosamente, pescaram uma imagem de Nossa Senhora da Conceição, sem cabeça. Na tentativa seguinte, pescaram a cabeça. A partir desse momento, as redes transbordaram de peixes.\n\nA imagem escura, moldada em terracota, tornou-se símbolo de fé para milhões de brasileiros. A devoção cresceu rapidamente, e uma pequena capela foi construída para abrigar a imagem. Ao longo dos séculos, milagres e graças multiplicaram-se, e o Santuário Nacional de Aparecida é hoje o maior templo mariano do mundo, recebendo milhões de peregrinos todos os anos.\n\nEm 1930, o Papa Pio XI proclamou Nossa Senhora Aparecida como Padroeira do Brasil, consolidando seu papel central na fé do povo brasileiro.',
+    significance: 'Nossa Senhora Aparecida representa a presença maternal de Maria no coração do Brasil. Ela é símbolo de esperança para os humildes, força para os que sofrem e abrigo para os que buscam fé. Sua imagem escura, tirada das águas, nos lembra que Deus age através das coisas simples e quebradas.',
     message: 'Nossa Senhora Aparecida nos ensina que Deus age através das coisas simples e humildes. Uma imagem quebrada, tirada das águas, tornou-se a Padroeira do Brasil. Assim também, Deus pode transformar nossas vidas, mesmo quando nos sentimos quebrados ou perdidos.',
     prayer: 'Ó incomparável Senhora da Conceição Aparecida! Mãe de meu Deus, Rainha dos Anjos, Advogada dos pecadores, Refúgio e Consolação dos aflitos e atribulados, ó Virgem Santíssima! Filha do Eterno Pai, Mãe do Eterno Filho, Esposa do Espírito Santo, eu vos amo ternamente. A vós entrego meu corpo, minha alma, minha vida. Sede minha protetora e minha guia em todos os momentos. Amém.'
   },
@@ -62,9 +63,64 @@ export const titulosMarianos = [
     id: 'fatima',
     title: 'Nossa Senhora de Fátima',
     date: '13 de maio',
-    history: 'Em 1917, na pequena vila de Fátima, em Portugal, a Virgem Maria apareceu seis vezes a três pastorinhos: Lúcia, Francisco e Jacinta. As aparições ocorreram entre maio e outubro, sempre no dia 13. Nossa Senhora pediu oração, penitência e a consagração da Rússia ao seu Imaculado Coração. Revelou três segredos que incluíam visões do inferno, a Segunda Guerra Mundial e a perseguição à Igreja. O Milagre do Sol, testemunhado por cerca de 70 mil pessoas em 13 de outubro de 1917, confirmou a autenticidade das aparições.',
+    history: 'Em 1917, na pequena vila de Fátima, em Portugal, a Virgem Maria apareceu seis vezes a três pastorinhos: Lúcia, Francisco e Jacinta. As aparições ocorreram entre maio e outubro, sempre no dia 13.\n\nNossa Senhora pediu oração, penitência e a consagração da Rússia ao seu Imaculado Coração. Revelou três segredos que incluíam visões do inferno, a Segunda Guerra Mundial e a perseguição à Igreja.\n\nO Milagre do Sol, testemunhado por cerca de 70 mil pessoas em 13 de outubro de 1917, confirmou a autenticidade das aparições. O sol pareceu "dançar" no céu, mudando de cores e girando, sendo visto por crentes e descrentes igualmente.',
+    significance: 'Fátima é um chamado urgente à conversão. A mensagem de Nossa Senhora permanece atual: o mundo precisa de oração e penitência. Maria prometeu que, no final, seu Imaculado Coração triunfará.',
     message: 'Nossa Senhora de Fátima nos chama à conversão, à oração do Rosário e à reparação pelos pecados. Sua mensagem é urgente e atual: o mundo precisa voltar-se para Deus. Maria prometeu que, no final, seu Imaculado Coração triunfará.',
     prayer: 'Santíssima Virgem de Fátima, que viestes lembrar aos homens a necessidade de oração e penitência, eu vos suplico: ajudai-me a viver vossa mensagem. Que eu reze o Rosário todos os dias, faça sacrifícios pelos pecadores e me consagre ao vosso Imaculado Coração. Amém.'
+  },
+  {
+    id: 'lourdes',
+    title: 'Nossa Senhora de Lourdes',
+    date: '11 de fevereiro',
+    history: 'Em 1858, na cidade de Lourdes, no sudoeste da França, a Virgem Maria apareceu 18 vezes a Bernadette Soubirous, uma jovem pobre e doente de 14 anos. As aparições ocorreram na gruta de Massabielle, às margens do rio Gave.\n\nNa nona aparição, Maria pediu a Bernadette que cavasse o chão. Uma fonte de água brotou milagrosamente, e desde então milhares de curas foram registradas — muitas reconhecidas oficialmente pela Igreja após rigorosa investigação médica.\n\nNa décima sexta aparição, Maria se apresentou com as palavras: "Eu sou a Imaculada Conceição", confirmando o dogma proclamado pelo Papa Pio IX apenas quatro anos antes, em 1854.',
+    significance: 'Lourdes é sinal de que Deus não abandona seus filhos na dor. A água da fonte simboliza a cura que Maria oferece — não apenas do corpo, mas também da alma. Lourdes é um dos maiores santuários de peregrinação do mundo.',
+    message: 'Maria chama os doentes, os sofredores e os pecadores a buscarem cura e conversão. Lourdes é sinal de que Deus não abandona seus filhos na dor.',
+    prayer: 'Nossa Senhora de Lourdes, Imaculada Conceição, olhai com compaixão para mim. Curai meu corpo enfermo, minha alma ferida e meu coração cansado. Que a água da vossa fonte lave minhas dores e renove minha esperança. Amém.'
+  },
+  {
+    id: 'carmo',
+    title: 'Nossa Senhora do Carmo',
+    date: '16 de julho',
+    history: 'A devoção a Nossa Senhora do Carmo remonta ao Monte Carmelo, na Terra Santa, onde o profeta Elias teve a visão de uma nuvem que traria chuva sobre a terra seca — interpretada pela tradição cristã como prefiguração de Maria.\n\nNo século XII, eremitas cristãos se estabeleceram no Monte Carmelo e fundaram a Ordem Carmelita, dedicada à contemplação e à devoção mariana. Em 16 de julho de 1251, Nossa Senhora apareceu a São Simão Stock, superior geral dos carmelitas, e lhe entregou o Escapulário, prometendo:\n\n"Quem morrer revestido deste Escapulário não padecerá o fogo eterno."\n\nO Escapulário do Carmo tornou-se um dos sacramentais mais populares da Igreja, usado por milhões de fiéis em todo o mundo.',
+    significance: 'Nossa Senhora do Carmo nos ensina a importância da vida contemplativa e da proteção maternal de Maria. O Escapulário é sinal visível de consagração a Maria e de confiança em sua intercessão.',
+    message: 'Sob o manto de Nossa Senhora do Carmo, encontramos proteção e guia para o caminho da santidade. O Escapulário é sinal de pertença a Maria.',
+    prayer: 'Ó belíssima Flor do Carmelo, videira frutuosa, esplendor do céu, Virgem Mãe singular, pura e sem pecado! Ó Mãe terna, intocada pelo pecado, ao vosso Filho querido tomai os meus cuidados. Ó Estrela do Mar, ajudai-me e mostrai-me que sois minha Mãe. Amém.'
+  },
+  {
+    id: 'gracas',
+    title: 'Nossa Senhora das Graças',
+    date: '27 de novembro',
+    history: 'Em 1830, a Virgem Maria apareceu a Santa Catarina Labouré, uma jovem noviça das Filhas da Caridade, na Rue du Bac, em Paris. Na visão, Maria estava de pé sobre o globo terrestre, esmagando a serpente, com raios de luz brotando de suas mãos.\n\nMaria pediu que fosse cunhada uma medalha com essa imagem, com a inscrição: "Ó Maria, concebida sem pecado, rogai por nós que recorremos a vós." Prometeu que quem usasse a medalha receberia grandes graças.\n\nA medalha foi cunhada em 1832, e tantos milagres ocorreram que o povo a chamou de "Medalha Milagrosa". A devoção se espalhou pelo mundo inteiro.',
+    significance: 'Nossa Senhora das Graças nos lembra que Maria é o canal de todas as graças. Os raios que brotam de suas mãos simbolizam as graças que ela distribui a todos que a invocam com fé.',
+    message: 'Maria é canal de todas as graças de Deus. A Medalha Milagrosa é sinal de proteção e confiança na intercessão maternal de Nossa Senhora.',
+    prayer: 'Ó Maria, concebida sem pecado, rogai por nós que recorremos a vós! Ó Mãe do Verbo Encarnado, não desprezeis as minhas súplicas, mas dignai-vos de as ouvir propícia e de me alcançar o que vos rogo. Virgem da Medalha Milagrosa, derramai sobre mim as graças que necessito. Amém.'
+  },
+  {
+    id: 'perpetuo-socorro',
+    title: 'Nossa Senhora do Perpétuo Socorro',
+    date: '27 de junho',
+    history: 'O ícone de Nossa Senhora do Perpétuo Socorro é uma das imagens marianas mais antigas e veneradas do mundo. Pintado em estilo bizantino, provavelmente entre os séculos XIII e XV, retrata Maria segurando o Menino Jesus, que olha assustado para os anjos que lhe mostram os instrumentos da Paixão.\n\nO ícone passou por diversas mãos até ser confiado aos Padres Redentoristas em Roma, em 1866, pelo Papa Pio IX, com as palavras: "Fazei-a conhecida em todo o mundo."\n\nDesde então, a devoção a Nossa Senhora do Perpétuo Socorro se espalhou por todos os continentes, com novenas perpétuas celebradas em milhares de igrejas semanalmente.',
+    significance: 'No ícone, Jesus se agarra às mãos de Maria ao ver os instrumentos de sua futura Paixão. Isso nos ensina que, diante do medo e do sofrimento, devemos correr para Maria, que sempre nos socorre.',
+    message: 'Maria é socorro permanente para seus filhos. Em todas as angústias e necessidades, ela está pronta para interceder por nós junto ao seu Filho.',
+    prayer: 'Mãe do Perpétuo Socorro, com o maior afeto de devoção e com o coração cheio de confiança, venho diante da vossa sagrada imagem para pedir-vos socorro. Muitas vezes tenho experimentado a vossa eficaz intercessão. Acudi-me com a vossa bondade maternal. Amém.'
+  },
+  {
+    id: 'guadalupe',
+    title: 'Nossa Senhora de Guadalupe',
+    date: '12 de dezembro',
+    history: 'Em dezembro de 1531, na colina do Tepeyac, no México, a Virgem Maria apareceu ao indígena São Juan Diego. Ela se apresentou como a "Mãe do verdadeiro Deus" e pediu que fosse construído um templo naquele local.\n\nO bispo local, Juan de Zumárraga, pediu um sinal. Maria disse a Juan Diego que colhesse rosas no topo da colina — algo impossível no inverno. Ao encontrá-las milagrosamente, Juan Diego as guardou em sua tilma (manto). Quando abriu a tilma diante do bispo, as rosas caíram e a imagem de Nossa Senhora estava miraculosamente impressa no tecido.\n\nA tilma, feita de fibra de cacto (que normalmente se decompõe em 20 anos), permanece intacta até hoje, quase 500 anos depois. Estudos científicos não conseguiram explicar a origem da imagem.',
+    significance: 'Nossa Senhora de Guadalupe é Padroeira das Américas. Sua aparição como mulher mestiça simboliza a universalidade do amor de Deus, que abraça todas as raças e culturas.',
+    message: 'Maria veio ao povo simples e humilde, mostrando que Deus não faz distinção de raças ou classes. Ela é Mãe de todos os povos.',
+    prayer: 'Nossa Senhora de Guadalupe, Mãe das Américas, Estrela da evangelização, rogai por nós! Vós que imprimistes vossa imagem no coração e na tilma de Juan Diego, imprimi em nossos corações a imagem de vosso Filho Jesus. Que sejamos missionários do Evangelho, levando o amor de Deus a todos os povos. Amém.'
+  },
+  {
+    id: 'imaculada',
+    title: 'Imaculada Conceição',
+    date: '8 de dezembro',
+    history: 'O dogma da Imaculada Conceição foi proclamado pelo Papa Pio IX em 8 de dezembro de 1854, através da bula Ineffabilis Deus. O dogma declara que Maria foi concebida sem a mancha do pecado original, por uma graça especial de Deus, em vista dos méritos de Jesus Cristo.\n\nA crença na Imaculada Conceição, porém, é muito anterior ao dogma. Desde os primeiros séculos, os Padres da Igreja chamavam Maria de "a Nova Eva", pura e sem pecado. A festa litúrgica existe desde o século VII no Oriente e desde o século XI no Ocidente.\n\nEm 1858, apenas quatro anos após a proclamação do dogma, Nossa Senhora confirmou esta verdade ao se apresentar a Santa Bernadette em Lourdes com as palavras: "Eu sou a Imaculada Conceição."',
+    significance: 'A Imaculada Conceição revela o plano perfeito de Deus: preparar uma morada digna para seu Filho. Maria é o primeiro fruto da redenção de Cristo, preservada do pecado para ser a Mãe do Salvador.',
+    message: 'Maria é a criatura mais perfeita que Deus criou — cheia de graça desde o primeiro instante. Sua pureza nos inspira a buscar a santidade e a viver em estado de graça.',
+    prayer: 'Ó Deus, que pela Imaculada Conceição da Virgem Maria preparastes uma digna morada para vosso Filho, vos pedimos: assim como pela morte prevista deste mesmo Filho a preservastes de toda mancha, concedei-nos, por sua intercessão, que cheguemos até vós purificados de todas as culpas. Ó Maria, concebida sem pecado original, rogai por nós que recorremos a vós! Amém.'
   },
 ];
 
