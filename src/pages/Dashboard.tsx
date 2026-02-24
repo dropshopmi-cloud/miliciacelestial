@@ -1262,33 +1262,86 @@ const ArchangelsSection = ({ goBack }: { goBack: () => void }) => (
       <div className="p-3 rounded-xl bg-gold/10">
         <Cross className="w-6 h-6 text-gold" />
       </div>
-      <h2 className="text-2xl font-display text-foreground">Os Três Arcanjos</h2>
+      <div>
+        <h2 className="text-2xl font-display text-foreground">Seus Guardiões Espirituais</h2>
+        <p className="text-muted-foreground font-body text-sm">Guias práticos para sua jornada de fé</p>
+      </div>
     </div>
-    <motion.div className="space-y-6" variants={staggerContainer} initial="initial" animate="animate">
-      {Object.entries(archangelsInfo).map(([key, arch]) => (
+    <motion.div className="space-y-8" variants={staggerContainer} initial="initial" animate="animate">
+      {Object.entries(archangelsInfo).map(([key, arch]: [string, any]) => (
         <motion.div key={key} variants={fadeInUp}>
           <Card className="overflow-hidden">
             <div className="bg-gradient-to-r from-navy via-navy-dark to-brown/30 p-6">
               <h3 className="text-2xl font-display text-gold">{arch.name}</h3>
-              <p className="text-cream/80 font-body">{arch.title} • "{arch.meaning}"</p>
+              <p className="text-cream/90 font-body text-lg italic mt-1">"{arch.phrase}"</p>
             </div>
-            <CardContent className="p-6 space-y-4">
-              <p className="text-foreground/85 font-body leading-relaxed">{arch.description}</p>
-              <p className="text-foreground/80 font-body leading-relaxed">{arch.history}</p>
-              <div className="flex flex-wrap gap-4 pt-4 border-t border-border">
+            <CardContent className="p-6 space-y-6">
+              {/* Quem é */}
+              <div>
+                <h4 className="font-display text-gold text-lg mb-3 flex items-center gap-2">
+                  <Star className="w-5 h-5" /> Quem é
+                </h4>
+                <p className="text-foreground/85 font-body leading-relaxed">{arch.description}</p>
+                <p className="text-foreground/80 font-body leading-relaxed mt-2">{arch.history}</p>
+              </div>
+
+              {/* Dia da Festa e Patrono */}
+              <div className="grid sm:grid-cols-2 gap-4 p-4 bg-muted/30 rounded-xl border border-border/50">
                 <div>
-                  <span className="font-display text-sm text-foreground block mb-2">Festa:</span>
-                  <span className="px-3 py-1 rounded-full bg-gold/20 text-gold text-sm">{arch.feast}</span>
+                  <span className="font-display text-sm text-gold block mb-1">📅 Dia da Festa</span>
+                  <span className="px-3 py-1 rounded-full bg-gold/20 text-foreground text-sm font-body">{arch.feast}</span>
                 </div>
                 <div>
-                  <span className="font-display text-sm text-foreground block mb-2">Patrono de:</span>
-                  <div className="flex flex-wrap gap-2">
-                    {arch.patronOf.map((p, i) => (
-                      <span key={i} className="px-2 py-1 rounded bg-muted text-muted-foreground text-xs">{p}</span>
+                  <span className="font-display text-sm text-gold block mb-1">🙏 Patrono de</span>
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {arch.patronOf.map((p: string, i: number) => (
+                      <span key={i} className="px-2 py-1 rounded bg-muted text-muted-foreground text-xs font-body">{p}</span>
                     ))}
                   </div>
                 </div>
               </div>
+
+              {/* Quando recorrer */}
+              {arch.whenToInvoke && (
+                <div>
+                  <h4 className="font-display text-gold text-lg mb-3 flex items-center gap-2">
+                    <Shield className="w-5 h-5" /> Quando Recorrer a Ele
+                  </h4>
+                  <p className="text-foreground/85 font-body leading-relaxed bg-gold/5 p-4 rounded-xl border border-gold/15">{arch.whenToInvoke}</p>
+                </div>
+              )}
+
+              {/* Intenções Recomendadas */}
+              {arch.intentions && (
+                <div>
+                  <h4 className="font-display text-gold text-lg mb-3 flex items-center gap-2">
+                    <Heart className="w-5 h-5" /> Intenções Recomendadas
+                  </h4>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    {arch.intentions.map((intent: any, i: number) => (
+                      <div key={i} className="p-4 rounded-xl bg-muted/40 border border-border/50 hover:border-gold/30 transition-all">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-xl">{intent.icon}</span>
+                          <span className="font-display text-foreground text-sm">{intent.label}</span>
+                        </div>
+                        <p className="text-muted-foreground text-xs font-body leading-relaxed">{intent.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Oração Própria */}
+              {arch.specialPrayer && (
+                <div>
+                  <h4 className="font-display text-gold text-lg mb-3 flex items-center gap-2">
+                    <BookHeart className="w-5 h-5" /> Oração Própria
+                  </h4>
+                  <div className="text-foreground/80 font-body italic leading-relaxed bg-gold/5 p-5 rounded-xl border border-gold/20 whitespace-pre-line">
+                    {arch.specialPrayer}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
         </motion.div>
@@ -1303,11 +1356,15 @@ const DetailView = ({ item, goBack, section, isRead, isFavorite, toggleRead, tog
     if (section === 'readings') return 'reading';
     if (section === 'devotional') return 'devotional';
     if (section === 'novenas') return 'novena';
+    if (section === 'meditation') return 'meditation';
     return 'item';
   };
   
   const itemType = getItemType();
   const itemId = item.category ? `${item.category}-${item.id}` : `${item.id}`;
+
+  // Check if this is a structured meditation
+  const isMeditation = section === 'meditation' && item.preparation;
 
   return (
     <div className="space-y-6">
@@ -1335,7 +1392,73 @@ const DetailView = ({ item, goBack, section, isRead, isFavorite, toggleRead, tog
           </div>
         </div>
         <CardContent className="p-6 space-y-6">
-          {item.content && (
+          {/* Structured meditation layout */}
+          {isMeditation && (
+            <>
+              {/* Preparação */}
+              <div className="p-5 bg-muted/30 rounded-xl border border-border/50">
+                <h4 className="font-display text-gold mb-3 text-lg flex items-center gap-2">
+                  🕯 Preparação
+                </h4>
+                <p className="text-foreground/85 font-body leading-relaxed">{item.preparation}</p>
+              </div>
+
+              {/* Respiração Guiada */}
+              <div className="p-5 bg-blue-500/5 rounded-xl border border-blue-500/15">
+                <h4 className="font-display text-gold mb-3 text-lg flex items-center gap-2">
+                  🌬 Respiração Guiada
+                </h4>
+                <p className="text-foreground/85 font-body leading-relaxed">{item.breathing}</p>
+              </div>
+
+              {/* Reflexão / Visualização Principal */}
+              <div>
+                <h4 className="font-display text-gold mb-3 text-lg flex items-center gap-2">
+                  ✨ Reflexão
+                </h4>
+                <div className="text-foreground/90 font-body text-base leading-relaxed whitespace-pre-line bg-muted/20 p-6 rounded-xl border border-border/40">
+                  {item.reflection}
+                </div>
+              </div>
+
+              {/* Palavra-chave do Dia */}
+              {item.keyword && (
+                <div className="text-center py-4">
+                  <p className="text-muted-foreground font-body text-sm mb-1">Palavra de hoje</p>
+                  <span className="text-gold font-display text-2xl tracking-wide">{item.keyword}</span>
+                </div>
+              )}
+
+              {/* Momento de Silêncio */}
+              <div className="p-5 bg-gold/5 rounded-xl border border-gold/15 text-center">
+                <h4 className="font-display text-gold mb-2 text-lg">🕊 Momento de Silêncio</h4>
+                <p className="text-foreground/80 font-body italic leading-relaxed">{item.silence || "Permaneça em silêncio por alguns instantes."}</p>
+              </div>
+
+              {/* Oração Final */}
+              <div>
+                <h4 className="font-display text-gold mb-3 text-lg flex items-center gap-2">
+                  🙏 Oração Final
+                </h4>
+                <div className="text-foreground/80 font-body italic whitespace-pre-line bg-gold/5 p-5 rounded-xl border border-gold/20">
+                  {item.finalPrayer}
+                </div>
+              </div>
+
+              {/* Aplicação Prática */}
+              {item.practicalApplication && (
+                <div className="p-5 bg-green-500/5 rounded-xl border border-green-500/15">
+                  <h4 className="font-display text-gold mb-3 text-lg flex items-center gap-2">
+                    🌱 Aplicação Prática
+                  </h4>
+                  <p className="text-foreground/85 font-body leading-relaxed">{item.practicalApplication}</p>
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Legacy content fallback */}
+          {!isMeditation && item.content && (
             <div className="text-foreground/90 font-body text-base leading-relaxed whitespace-pre-line">
               {item.content}
             </div>
@@ -1346,7 +1469,7 @@ const DetailView = ({ item, goBack, section, isRead, isFavorite, toggleRead, tog
               <p className="text-foreground/85 font-body leading-relaxed bg-muted/30 p-5 rounded-xl">{item.application}</p>
             </div>
           )}
-          {item.reflection && (
+          {!isMeditation && item.reflection && (
             <div>
               <h4 className="font-display text-gold mb-3 text-lg">Reflexão</h4>
               <p className="text-foreground/85 font-body leading-relaxed bg-muted/30 p-5 rounded-xl">{item.reflection}</p>

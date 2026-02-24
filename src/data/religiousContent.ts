@@ -226,48 +226,132 @@ export const meditationCategories = {
     description: "Meditações para invocar proteção celestial",
     recommended: true,
     meditations: [
-      { id: 1, title: "Meditação da Proteção com São Miguel", duration: "10 min", content: "Encontre um lugar tranquilo e sente-se confortavelmente. Feche os olhos e respire profundamente três vezes. Visualize uma luz dourada envolvendo todo o seu corpo. Imagine São Miguel Arcanjo surgindo ao seu lado, vestido com armadura dourada e empunhando sua espada flamejante. Sinta a força de sua presença afastando todo medo e insegurança. Ele coloca seu escudo diante de você, protegendo-o de todo mal. Permaneça nesta proteção por alguns minutos. Agradeça a São Miguel e abra lentamente os olhos." },
-      { id: 2, title: "Meditação do Escudo Celestial", duration: "12 min", content: "Respire profundamente e relaxe cada parte do seu corpo. Visualize-se em um campo de batalha espiritual. São Miguel surge como um guerreiro resplandecente. Ele estende seu escudo sobre você, formando uma cúpula de luz. Nenhuma flecha do inimigo pode penetrar esta proteção. Sinta-se completamente seguro sob a guarda do Arcanjo. Declare em voz alta: 'Estou protegido pelo poder de Deus'. Agradeça e retorne suavemente." }
+      { id: 1, title: "Meditação da Proteção com São Miguel", duration: "10 min", keyword: "Proteção",
+        preparation: "Encontre um lugar silencioso e confortável. Desligue o celular e afaste todas as distrações. Sente-se com a coluna ereta ou deite-se confortavelmente. Coloque-se conscientemente na presença de Deus. Diga interiormente: 'Senhor, estou aqui diante de Ti.'",
+        breathing: "Inspire profundamente pelo nariz contando até 4. Segure o ar por 4 segundos. Expire lentamente pela boca contando até 6. Repita três vezes. Sinta seu corpo relaxar a cada expiração.",
+        reflection: "Visualize uma luz dourada envolvendo todo o seu corpo, como um manto celestial de proteção.\n\nImagine São Miguel Arcanjo surgindo ao seu lado, vestido com armadura dourada e empunhando sua espada flamejante. Sinta a força de sua presença — não como algo que gera medo, mas como a certeza inabalável de que você está seguro.\n\nEle coloca seu escudo diante de você, formando uma barreira impenetrável contra todo mal. Nenhuma ansiedade, nenhum medo, nenhuma ameaça pode ultrapassar esta proteção.\n\nPermaneça neste espaço de segurança. Sinta a paz que vem de saber que o Príncipe da Milícia Celestial está ao seu lado.\n\nDiga em seu coração: 'São Miguel, eu confio em vossa proteção.'",
+        silence: "Permaneça em silêncio por alguns instantes. Não busque palavras. Apenas descanse na presença protetora de Deus e de São Miguel.",
+        finalPrayer: "São Miguel Arcanjo, agradeço por vossa presença constante em minha vida. Protegei-me de todo mal visível e invisível. Cobri minha família, meu lar e meus caminhos com vossa espada de luz. Que eu caminhe sempre seguro sob vossa guarda. Amém.",
+        practicalApplication: "Hoje, ao enfrentar qualquer situação que gere medo ou insegurança, lembre-se: São Miguel está ao seu lado. Você não caminha sozinho."
+      },
+      { id: 2, title: "Meditação do Escudo Celestial", duration: "12 min", keyword: "Segurança",
+        preparation: "Escolha um ambiente tranquilo. Apague luzes fortes se possível. Sente-se ou deite-se confortavelmente. Feche os olhos e deixe as preocupações do dia de lado. Entregue este momento a Deus.",
+        breathing: "Inspire profundamente, imaginando que está inalando a paz de Deus. Segure por alguns segundos. Expire lentamente, liberando toda tensão e preocupação. Repita três vezes.",
+        reflection: "Visualize-se em um campo aberto, sob um céu estrelado. O silêncio é profundo.\n\nSão Miguel surge como um guerreiro resplandecente, maior que qualquer ameaça que você possa imaginar. Sua armadura brilha como o sol.\n\nEle estende seu escudo sobre você, formando uma cúpula de luz dourada. Dentro desta cúpula, reina paz absoluta. Nenhuma flecha do inimigo pode penetrar esta proteção.\n\nSinta-se completamente seguro. As preocupações ficam do lado de fora. O medo não tem permissão para entrar.\n\nDeclare em seu coração: 'Estou protegido pelo poder de Deus. Nada me faltará.'",
+        silence: "Permaneça em silêncio dentro desta cúpula de luz. Respire calmamente. Sinta a presença de Deus.",
+        finalPrayer: "Senhor, agradeço pelo escudo de proteção que São Miguel estende sobre mim. Que esta segurança me acompanhe durante todo o dia. Que eu transmita paz a todos que encontrar. Amém.",
+        practicalApplication: "Ao longo do dia, sempre que sentir insegurança, visualize mentalmente o escudo de São Miguel sobre você. Lembre-se: você está protegido."
+      }
     ]
   },
   cura: {
     name: "Cura e Restauração",
     description: "Meditações para cura física e emocional",
     meditations: [
-      { id: 1, title: "Meditação de Cura com São Rafael", duration: "15 min", content: "Deite-se confortavelmente ou sente-se relaxado. Feche os olhos e respire profundamente. Visualize São Rafael Arcanjo aproximando-se de você, irradiando uma luz verde esmeralda curativa. Ele coloca suas mãos sobre sua cabeça e você sente uma onda de energia curativa percorrendo seu corpo. A luz verde penetra em cada célula, dissolvendo toda doença e enfermidade. Sinta a cura acontecendo em cada parte do seu ser. Agradeça a São Rafael pela cura recebida." },
-      { id: 2, title: "Meditação da Cura Interior", duration: "18 min", content: "Entre em estado de relaxamento. São Rafael convida você a caminhar por um jardim celestial. Cada flor representa uma ferida emocional. À medida que ele toca cada flor, ela se transforma em luz. Suas feridas interiores são curadas uma a uma. Ao final do caminho, você encontra uma fonte de água cristalina. Beba desta água e sinta a cura completa." }
+      { id: 1, title: "Meditação de Cura com São Rafael", duration: "15 min", keyword: "Cura",
+        preparation: "Deite-se confortavelmente ou sente-se em uma posição relaxada. Este é um momento sagrado de encontro com o Deus que cura. Desconecte-se do mundo exterior. Coloque as mãos abertas sobre o colo, em gesto de acolhimento.",
+        breathing: "Inspire profundamente, recebendo o sopro de vida de Deus. Segure por 3 segundos. Expire lentamente, liberando toda dor e tensão. Repita três vezes, sentindo cada expiração como um ato de entrega.",
+        reflection: "Visualize São Rafael Arcanjo aproximando-se de você. Ele irradia uma luz verde esmeralda — a luz da cura divina.\n\nEle coloca suas mãos sobre sua cabeça. Uma onda de energia curativa percorre lentamente todo o seu corpo, da cabeça aos pés.\n\nA luz verde penetra em cada célula, dissolvendo toda doença, toda dor, toda enfermidade. Onde há inflamação, traz alívio. Onde há fraqueza, traz força.\n\nMas São Rafael não cura apenas o corpo. Sua luz alcança também as feridas da alma — mágoas antigas, traumas, medos que você carrega há tanto tempo.\n\nPermita que a cura aconteça. Não resista. Entregue cada dor a Deus através de São Rafael.",
+        silence: "Permaneça em silêncio, sentindo a cura acontecer dentro de você. Confie no tempo de Deus.",
+        finalPrayer: "São Rafael Arcanjo, medicina de Deus, agradeço pela cura que estou recebendo. Curai meu corpo, minha mente, minha alma. Restaurai em mim a saúde plena que o Criador deseja para mim. Por Jesus Cristo, nosso Senhor. Amém.",
+        practicalApplication: "Hoje, cuide do seu corpo como templo do Espírito Santo. Beba água, descanse, alimente-se bem. A cura é também um ato de cuidado com o dom da vida."
+      },
+      { id: 2, title: "Meditação da Cura Interior", duration: "18 min", keyword: "Restauração",
+        preparation: "Encontre um lugar onde ninguém o interrompa. Este é um momento de encontro profundo consigo mesmo e com Deus. Sente-se confortavelmente. Permita-se ser vulnerável.",
+        breathing: "Inspire lentamente, recebendo a misericórdia de Deus. Segure suavemente. Expire, liberando toda mágoa e ressentimento. Repita três vezes.",
+        reflection: "São Rafael convida você a caminhar por um jardim celestial. As flores são de cores vibrantes, o perfume é suave, a brisa é morna.\n\nCada flor representa uma ferida emocional sua. Algumas são antigas, outras recentes. Todas precisam de cura.\n\nÀ medida que São Rafael toca cada flor, ela se transforma em luz pura. A mágoa se dissolve. O trauma perde seu poder. A tristeza dá lugar à paz.\n\nAo final do caminho, você encontra uma fonte de água cristalina. São Rafael convida: 'Beba desta água.' É a água viva que Jesus prometeu — aquela que sacia para sempre.\n\nBeba desta água e sinta a cura completa inundando todo o seu ser.",
+        silence: "Permaneça junto à fonte em silêncio. Deixe a água viva restaurar tudo o que precisa ser curado.",
+        finalPrayer: "Senhor Jesus, que prometestes a água viva a quem Te busca, derrama sobre mim esta água curativa. Pela intercessão de São Rafael, curai todas as feridas que carrego. Restaurai minha alegria de viver. Amém.",
+        practicalApplication: "Nesta semana, perdoe uma pessoa que o feriu. O perdão é a porta da cura interior. Não é esquecer, mas libertar-se."
+      }
     ]
   },
   paz: {
     name: "Paz Interior",
     description: "Meditações para serenidade e equilíbrio",
     meditations: [
-      { id: 1, title: "Meditação da Paz Profunda", duration: "15 min", content: "Respire lentamente, inspirando paz e expirando toda tensão. Concentre-se no batimento do seu coração. Repita mentalmente: 'A paz de Deus está comigo'. Os três Arcanjos surgem ao seu redor, trazendo serenidade celestial. São Miguel afasta toda perturbação. São Gabriel traz silêncio à sua mente. São Rafael acalma suas emoções. Permaneça neste estado de paz profunda." },
-      { id: 2, title: "Meditação do Silêncio Sagrado", duration: "20 min", content: "Elimine todas as distrações ao seu redor. Feche os olhos e entre no silêncio interior. São Gabriel, o anjo do silêncio divino, conduz você a um templo celestial onde reina absoluta quietude. Neste espaço sagrado, ouça a voz suave de Deus falando ao seu coração. Permaneça em comunhão silenciosa. Retorne lentamente, trazendo esta paz." }
+      { id: 1, title: "Meditação da Paz Profunda", duration: "15 min", keyword: "Paz",
+        preparation: "Afaste-se de tudo que gera ruído — físico e mental. Encontre um espaço silencioso. Sente-se com os pés no chão. Feche os olhos. Diga: 'Senhor, venho buscar a Tua paz.'",
+        breathing: "Inspire lentamente, dizendo interiormente 'paz'. Segure por 3 segundos. Expire, dizendo interiormente 'entrego'. Repita três vezes, sentindo a tensão sair do corpo a cada expiração.",
+        reflection: "Concentre-se no batimento do seu coração. Cada batida é um presente de Deus. Você está vivo. Você é amado.\n\nOs três Arcanjos surgem ao seu redor, trazendo serenidade celestial. São Miguel está à sua direita, afastando toda perturbação. São Gabriel está à sua esquerda, trazendo silêncio sagrado à sua mente. São Rafael está diante de você, acalmando suas emoções.\n\nRepita mentalmente: 'A paz de Deus está comigo. A paz de Deus é maior que toda preocupação.'\n\nSinta seu corpo relaxar completamente. Os ombros baixam. A mandíbula relaxa. As mãos se abrem.\n\nVocê está em paz. Não porque os problemas desapareceram, mas porque Deus está no controle.",
+        silence: "Permaneça neste estado de paz profunda por alguns instantes. Não pense em nada. Apenas seja.",
+        finalPrayer: "Senhor Jesus, que dissestes 'A minha paz vos dou', derramai sobre mim esta paz que o mundo não pode dar. Pelos Santos Arcanjos, acalmai meu coração. Amém.",
+        practicalApplication: "Hoje, quando a ansiedade bater, pare por 30 segundos. Respire. Diga: 'A paz de Deus está comigo.' Repita até sentir a calma retornar."
+      },
+      { id: 2, title: "Meditação do Silêncio Sagrado", duration: "20 min", keyword: "Silêncio",
+        preparation: "Elimine todas as distrações ao seu redor. Desligue o celular. Feche a porta. Este é um encontro entre você e Deus — e o silêncio é a linguagem deste encontro.",
+        breathing: "Inspire devagar, contando até 5. Segure por 3 segundos. Expire contando até 7. Cada expiração é mais longa que a inspiração. Repita três vezes.",
+        reflection: "São Gabriel, o anjo do silêncio divino, conduz você a um templo celestial. As paredes são de luz. O chão é transparente como cristal.\n\nNeste espaço sagrado reina absoluta quietude. Nenhum ruído do mundo exterior chega aqui. Nenhuma preocupação tem permissão para entrar.\n\nNo centro do templo, uma presença suave e poderosa: é Deus. Ele não fala com palavras, mas com amor. Ele não exige, apenas convida.\n\nFique em Sua presença. Não precisa dizer nada. Deus já sabe tudo o que está no seu coração.\n\nApenas ouça. Ouça o silêncio. No silêncio, Deus fala ao coração.",
+        silence: "Permaneça em comunhão silenciosa com Deus pelo tempo que desejar. Este é o momento mais precioso da meditação.",
+        finalPrayer: "Deus de paz e silêncio, agradeço por este encontro sagrado. Que o silêncio do Teu templo habite em meu coração ao longo do dia. São Gabriel, ajudai-me a ouvir a voz de Deus em meio ao barulho do mundo. Amém.",
+        practicalApplication: "Reserve 5 minutos de silêncio absoluto em algum momento do dia. Sem celular, sem música, sem conversa. Apenas silêncio e Deus."
+      }
     ]
   },
   orientacao: {
     name: "Orientação Divina",
     description: "Meditações para discernimento e direção",
     meditations: [
-      { id: 1, title: "Meditação para Decisões", duration: "12 min", content: "Aquiete sua mente e abra seu coração. Peça a São Gabriel que traga clareza sobre uma decisão importante. Visualize o Arcanjo com um pergaminho luminoso nas mãos. Ele abre o pergaminho diante de você, revelando a sabedoria divina. Observe as imagens e palavras que surgem. São Gabriel ilumina sua mente com discernimento. Anote qualquer insight após a meditação." },
-      { id: 2, title: "Meditação da Vocação", duration: "15 min", content: "Entre em estado contemplativo. Pergunte a Deus qual é sua missão nesta vida. São Gabriel surge como portador da resposta divina. Ele traz um símbolo ou imagem que representa sua vocação. Contemple este símbolo e seu significado. Comprometa-se a seguir o chamado de Deus." }
+      { id: 1, title: "Meditação para Decisões", duration: "12 min", keyword: "Discernimento",
+        preparation: "Aquiete sua mente e abra seu coração. Se há uma decisão importante em sua vida, traga-a agora à presença de Deus. Sente-se confortavelmente e feche os olhos.",
+        breathing: "Inspire profundamente, pedindo luz. Segure por 3 segundos. Expire lentamente, liberando a confusão. Repita três vezes.",
+        reflection: "Peça a São Gabriel que traga clareza sobre a decisão que ocupa seu coração.\n\nVisualize o Arcanjo com um pergaminho luminoso nas mãos. Com reverência, ele abre o pergaminho diante de você.\n\nNão busque ler palavras — observe as imagens, sensações e intuições que surgem. São Gabriel ilumina sua mente com o discernimento que vem do alto.\n\nPergunte-se: 'Esta decisão me aproxima de Deus ou me afasta Dele?' 'Traz paz ao meu coração ou inquietação?'\n\nO que gera paz interior verdadeira é geralmente sinal da vontade de Deus.",
+        silence: "Permaneça em silêncio, acolhendo as inspirações que surgiram. Não force. Confie.",
+        finalPrayer: "São Gabriel, mensageiro fiel, agradeço pela clareza que estou recebendo. Iluminai minha mente para que eu tome a decisão certa. Que eu escolha sempre o que glorifica a Deus. Amém.",
+        practicalApplication: "Anote em um caderno os insights que recebeu durante a meditação. Releia-os antes de tomar sua decisão. Deus fala também através da reflexão."
+      },
+      { id: 2, title: "Meditação da Vocação", duration: "15 min", keyword: "Chamado",
+        preparation: "Entre em estado contemplativo. Esta meditação é sobre o propósito da sua vida. Sente-se em silêncio e abra seu coração para ouvir o chamado de Deus.",
+        breathing: "Inspire recebendo o amor de Deus. Segure por 3 segundos. Expire entregando suas inseguranças. Repita três vezes.",
+        reflection: "Pergunte a Deus: 'Qual é minha missão nesta vida? Para que fui criado?'\n\nSão Gabriel surge como portador da resposta divina. Ele não traz um mapa completo — traz o próximo passo.\n\nEle carrega um símbolo ou imagem que representa algo sobre sua vocação. Pode ser uma pessoa que precisa de você, um talento que você deve desenvolver, um serviço que precisa ser realizado.\n\nContemple este símbolo. O que ele diz ao seu coração?\n\nDeus não nos revela tudo de uma vez. Ele revela o suficiente para o próximo passo. E o próximo passo é o que importa agora.",
+        silence: "Permaneça em silêncio com o símbolo que recebeu. Acolha-o sem pressa.",
+        finalPrayer: "Senhor, revela-me Teu plano para minha vida. Não peço todo o mapa, apenas o próximo passo. São Gabriel, ajudai-me a dizer 'sim' como Maria disse. Amém.",
+        practicalApplication: "Comprometa-se a fazer algo concreto hoje que esteja alinhado com o que sentiu durante a meditação. Um pequeno passo é melhor que nenhum."
+      }
     ]
   },
   manha: {
     name: "Meditações Matinais",
     description: "Meditações para começar bem o dia",
     meditations: [
-      { id: 1, title: "Meditação do Amanhecer", duration: "8 min", content: "Ao acordar, antes de levantar, agradeça pelo novo dia. Invoque os três Arcanjos para este dia. São Miguel, proteja-me. São Gabriel, guie-me. São Rafael, fortaleça-me. Visualize o sol nascente como a bênção de Deus sobre você. Comprometa-se a viver este dia em santidade. Levante-se com energia renovada." },
-      { id: 2, title: "Meditação de Consagração do Dia", duration: "10 min", content: "Sente-se confortavelmente e respire profundamente. Ofereça este dia inteiro a Deus através dos Santos Arcanjos. Cada hora, cada tarefa, cada encontro - tudo consagrado. Os Arcanjos recebem sua oferenda e prometem abençoar cada momento. Levante-se pronto para um dia de graças." }
+      { id: 1, title: "Meditação do Amanhecer", duration: "8 min", keyword: "Gratidão",
+        preparation: "Ao acordar, antes de pegar o celular, reserve este momento para Deus. Sente-se na cama ou em uma cadeira. Este é o primeiro ato do dia: entregar-se ao Criador.",
+        breathing: "Inspire profundamente o ar fresco da manhã. Segure por 3 segundos. Expire liberando o cansaço da noite. Repita três vezes.",
+        reflection: "Agradeça pelo novo dia. Cada manhã é uma nova chance, um recomeço.\n\nInvoque os três Arcanjos para acompanhá-lo:\n\n'São Miguel, proteja-me hoje de todo mal.'\n'São Gabriel, guie minhas palavras e decisões.'\n'São Rafael, fortaleça meu corpo e cure minhas fraquezas.'\n\nVisualize o sol nascente como a bênção de Deus sobre você. A luz que dissipa as trevas da noite é a mesma luz que ilumina sua vida.\n\nComprometer-se a viver este dia em santidade não significa ser perfeito. Significa estar presente, ser grato, e confiar em Deus.",
+        silence: "Permaneça em silêncio por um instante, acolhendo o dia que se inicia. Receba-o como presente.",
+        finalPrayer: "Senhor, agradeço por este novo dia. Consagro-o inteiramente a Ti. Que eu seja instrumento da Tua paz em cada encontro, em cada tarefa, em cada momento. Amém.",
+        practicalApplication: "Ao sair de casa, sorria para a primeira pessoa que encontrar. Comece o dia espalhando a luz que recebeu."
+      },
+      { id: 2, title: "Meditação de Consagração do Dia", duration: "10 min", keyword: "Entrega",
+        preparation: "Sente-se confortavelmente em um lugar tranquilo. Respire profundamente. Ofereça conscientemente este dia a Deus. Cada minuto, cada encontro, cada desafio — tudo Lhe pertence.",
+        breathing: "Inspire dizendo 'Tudo é Teu, Senhor'. Segure 3 segundos. Expire dizendo 'Faça-se a Tua vontade'. Repita três vezes.",
+        reflection: "Ofereça este dia inteiro a Deus através dos Santos Arcanjos.\n\nCada hora será consagrada. Cada tarefa, mesmo a mais simples, pode ser oração quando feita com amor.\n\nOs Arcanjos recebem sua oferenda e comprometem-se a abençoar cada momento:\n\nSão Miguel protegerá suas batalhas. São Gabriel inspirará suas palavras. São Rafael guardará sua saúde.\n\nNada neste dia está fora do olhar de Deus. Nenhum esforço é em vão. Nenhuma dificuldade é maior que Sua graça.",
+        silence: "Permaneça em silêncio, sentindo a consagração se consolidar em seu coração.",
+        finalPrayer: "Senhor, este dia é Teu. Cada momento, cada respiração, cada encontro — tudo ofereço a Ti. Que eu viva hoje como Maria viveu: em total entrega à Tua vontade. Amém.",
+        practicalApplication: "Em cada tarefa do dia, antes de começar, diga silenciosamente: 'Faço isto para Ti, Senhor.' Transforme o ordinário em extraordinário."
+      }
     ]
   },
   noite: {
     name: "Meditações Noturnas",
     description: "Meditações para um sono abençoado",
     meditations: [
-      { id: 1, title: "Meditação do Anoitecer", duration: "10 min", content: "Antes de dormir, revise seu dia com gratidão. Peça perdão por falhas cometidas. Agradeça pelas proteções recebidas. Entregue seu sono aos Santos Arcanjos. São Miguel vigia enquanto você dorme. São Gabriel traz sonhos de paz. São Rafael restaura seu corpo durante a noite. Durma sob a guarda celestial." },
-      { id: 2, title: "Meditação do Descanso Seguro", duration: "12 min", content: "Deite-se relaxado e feche os olhos. Visualize os três Arcanjos posicionando-se ao redor da sua cama. São Miguel à direita com sua espada. São Gabriel à esquerda com sua luz. São Rafael aos pés com sua cura. Você está completamente protegido. Entregue-se ao sono restaurador." }
+      { id: 1, title: "Meditação do Anoitecer", duration: "10 min", keyword: "Gratidão",
+        preparation: "Antes de dormir, desligue todas as telas. Deite-se ou sente-se confortavelmente. Este é o momento de encerrar o dia na presença de Deus, em paz e gratidão.",
+        breathing: "Inspire profundamente, recebendo a paz da noite. Segure suavemente. Expire liberando todo o peso do dia. Repita três vezes, sentindo o corpo relaxar.",
+        reflection: "Revise seu dia com gratidão. Não com julgamento, mas com misericórdia.\n\nO que aconteceu de bom? Agradeça. Houve dificuldades? Entregue-as a Deus. Cometeu falhas? Peça perdão com serenidade.\n\nEntregue seu sono aos Santos Arcanjos:\n\nSão Miguel vigia enquanto você dorme — nenhum mal se aproximará. São Gabriel traz sonhos de paz — sua mente descansará. São Rafael restaura seu corpo durante a noite — você acordará renovado.\n\nDiga: 'Senhor, entrego-me aos Teus cuidados esta noite. Durmo em paz porque Tu velas por mim.'",
+        silence: "Permaneça em silêncio, sentindo o sono chegar naturalmente. Não lute contra ele. Deixe-se embalar pela paz de Deus.",
+        finalPrayer: "Anjo da Guarda, meu zeloso guardador, a ti me confiou a piedade divina. Nesta noite, ilumina-me, guarda-me, rege-me e governa-me. Santos Arcanjos, vigiai meu sono. Amém.",
+        practicalApplication: "Faça deste ritual uma prática diária. Encerrar o dia com Deus transforma a qualidade do seu sono e do seu amanhecer."
+      },
+      { id: 2, title: "Meditação do Descanso Seguro", duration: "12 min", keyword: "Confiança",
+        preparation: "Deite-se em sua cama. Ajuste os travesseiros. Este é o último momento do dia — e Deus quer que você durma em paz. Feche os olhos e entregue-se.",
+        breathing: "Inspire lentamente contando até 5. Segure por 2 segundos. Expire contando até 7. A expiração mais longa ativa o relaxamento. Repita três vezes.",
+        reflection: "Visualize os três Arcanjos posicionando-se ao redor da sua cama.\n\nSão Miguel está à sua direita, com sua espada de fogo, afastando todo mal. Nenhum pesadelo, nenhum espírito inquieto ousará se aproximar.\n\nSão Gabriel está à sua esquerda, com sua luz suave, trazendo serenidade à sua mente. Os pensamentos agitados do dia se acalmam.\n\nSão Rafael está aos seus pés, com suas mãos curadoras. Enquanto você dorme, seu corpo se restaura.\n\nVocê está completamente protegido, completamente cuidado, completamente amado.\n\nEntregue-se ao sono como uma criança nos braços do Pai.",
+        silence: "Permaneça em silêncio. Deixe o sono vir naturalmente. Você está seguro.",
+        finalPrayer: "Senhor, confio em Ti. Entrego minha noite, meus sonhos, meu descanso. Que os Santos Arcanjos me guardem até o amanhecer. Amém.",
+        practicalApplication: "Se acordar durante a noite, não se preocupe. Diga apenas: 'São Miguel está aqui.' E volte a dormir em paz."
+      }
     ]
   }
 };
@@ -388,35 +472,62 @@ export const archangelsInfo = {
   miguel: {
     name: "São Miguel Arcanjo",
     meaning: "Quem é como Deus?",
-    title: "Príncipe da Milícia Celeste",
+    phrase: "Quem é como Deus?",
+    title: "Príncipe da Milícia Celestial",
     feast: "29 de Setembro",
-    patronOf: ["Soldados", "Policiais", "Enfermos", "Marinhos", "Paraquedistas", "A Igreja Católica"],
-    description: "São Miguel Arcanjo é o líder dos exércitos celestiais e o grande defensor da Igreja. Seu nome é um grito de guerra espiritual que proclama a supremacia de Deus. Ele é invocado para proteção contra o mal e é venerado em todo o mundo cristão como o poderoso príncipe do céu.",
-    history: "Segundo a tradição católica, São Miguel liderou as forças celestiais contra Lúcifer e os anjos rebeldes, precipitando-os no inferno. Ele aparece nas Escrituras como protetor do povo de Deus e defensor da justiça divina. No Apocalipse, é descrito vencendo o grande dragão. Ao longo da história, muitas aparições foram atribuídas a ele, incluindo o famoso Monte Gargano na Itália.",
-    symbols: ["Espada flamejante", "Balança da justiça", "Armadura dourada", "Dragão sob os pés"],
-    color: "Vermelho e Dourado"
+    patronOf: ["Policiais", "Militares", "Paramédicos", "Padeiros", "A Igreja Católica"],
+    description: "São Miguel Arcanjo é o príncipe dos exércitos celestiais, líder dos anjos fiéis a Deus. Ele combateu e venceu Lúcifer e seus anjos rebeldes, precipitando-os ao inferno. Seu grito de guerra — 'Quem é como Deus?' — é a afirmação definitiva da soberania do Criador.",
+    history: "Nas Escrituras, Miguel aparece como defensor do povo de Deus e guerreiro contra as forças do mal. No Livro de Daniel, é chamado 'um dos primeiros príncipes'. No Apocalipse, ele lidera o combate celestial contra o dragão. A devoção a São Miguel é uma das mais antigas da Igreja, sendo invocado especialmente em momentos de batalha espiritual e proteção contra o mal.",
+    symbols: ["Espada flamejante", "Escudo", "Armadura", "Balança da justiça"],
+    color: "Vermelho e Dourado",
+    whenToInvoke: "Invoque São Miguel quando precisar de proteção espiritual, quando sentir-se atacado por forças ocultas, em momentos de tentação intensa, para combater o medo, para proteger sua família e seu lar de influências malignas, e quando precisar de coragem para enfrentar situações difíceis.",
+    intentions: [
+      { icon: "🛡", label: "Proteção espiritual", description: "Contra todo ataque, tentação e influência do mal" },
+      { icon: "⚔️", label: "Libertação", description: "De vícios, maldições, opressões e laços espirituais" },
+      { icon: "🔥", label: "Combate interior", description: "Força para vencer fraquezas, medos e pecados habituais" },
+      { icon: "🏠", label: "Proteção do lar", description: "Guarda da casa e da família contra todo perigo" }
+    ],
+    specialPrayer: `São Miguel Arcanjo, defendei-nos no combate. Sede nosso refúgio contra as maldades e ciladas do demônio. Ordene-lhe Deus, instantemente pedimos. E vós, Príncipe da milícia celeste, pelo divino poder, precipitai no inferno a Satanás e a todos os espíritos malignos que vagam pelo mundo para perdição das almas. Amém.`
   },
   gabriel: {
     name: "São Gabriel Arcanjo",
     meaning: "Força de Deus",
+    phrase: "Mensageiro de Deus",
     title: "Mensageiro Celestial",
     feast: "29 de Setembro",
     patronOf: ["Comunicadores", "Diplomatas", "Carteiros", "Telecomunicações", "Jornalistas"],
-    description: "São Gabriel é o grande mensageiro de Deus, encarregado de transmitir as mais importantes revelações divinas à humanidade. Foi ele quem anunciou a Maria que ela seria mãe do Salvador e a Zacarias o nascimento de João Batista.",
-    history: "Gabriel aparece em momentos cruciais da história da salvação. No Antigo Testamento, explicou visões ao profeta Daniel. No Novo Testamento, anunciou a encarnação do Verbo a Maria com as palavras 'Ave, cheia de graça'. Segundo a tradição islâmica, também foi Gabriel quem revelou o Corão a Maomé. Seu papel como mensageiro o torna patrono de todos os meios de comunicação.",
+    description: "São Gabriel é o grande mensageiro de Deus, encarregado de transmitir as mais importantes revelações divinas à humanidade. Foi ele quem anunciou a Maria que ela seria mãe do Salvador, trazendo a maior notícia da história da humanidade.",
+    history: "Gabriel aparece em momentos cruciais da história da salvação. No Antigo Testamento, explicou visões ao profeta Daniel. No Novo Testamento, anunciou o nascimento de João Batista a Zacarias e a encarnação do Verbo a Maria com as palavras 'Ave, cheia de graça'. Seu papel como mensageiro o torna patrono de todos os meios de comunicação.",
     symbols: ["Lírio branco", "Trombeta", "Pergaminho", "Lanterna"],
-    color: "Branco e Azul"
+    color: "Branco e Azul",
+    whenToInvoke: "Invoque São Gabriel quando precisar de clareza para tomar decisões, quando buscar discernimento da vontade de Deus, em momentos de comunicação importante, para anúncios e notícias, quando precisar transmitir uma mensagem difícil, e para purificar a mente e o coração.",
+    intentions: [
+      { icon: "💡", label: "Clareza e direção", description: "Para enxergar o caminho certo e a vontade de Deus" },
+      { icon: "🔍", label: "Discernimento", description: "Para distinguir a voz de Deus em meio aos ruídos do mundo" },
+      { icon: "📢", label: "Anúncios importantes", description: "Para boas novas, revelações e momentos decisivos" },
+      { icon: "🗣", label: "Comunicação", description: "Para falar com sabedoria, ouvir com atenção e dialogar com caridade" }
+    ],
+    specialPrayer: `Ó glorioso São Gabriel Arcanjo, mensageiro fiel do Altíssimo, que trouxestes a Maria a mais sublime mensagem jamais confiada a uma criatura, olhai para mim com benevolência. Iluminai minha mente com a sabedoria do céu. Abri meus ouvidos espirituais para que eu possa discernir a vontade de Deus em minha vida. Ajudai-me a transmitir com fidelidade e caridade a mensagem do Evangelho. Intercedei por mim junto ao trono de Deus, para que eu receba a clareza e a direção de que necessito. Por Jesus Cristo, nosso Senhor. Amém.`
   },
   rafael: {
     name: "São Rafael Arcanjo",
     meaning: "Deus cura",
+    phrase: "Deus cura",
     title: "Medicina de Deus",
     feast: "29 de Setembro",
     patronOf: ["Médicos", "Enfermeiros", "Farmacêuticos", "Viajantes", "Jovens namorados", "Cegos"],
     description: "São Rafael é conhecido como o anjo da cura e dos viajantes. Sua missão é trazer a cura divina aos enfermos de corpo e alma, além de guiar os peregrinos em suas jornadas. Ele é a manifestação da misericórdia curadora de Deus.",
-    history: "A história de Rafael é contada no Livro de Tobias. Disfarçado como um jovem chamado Azarias, ele acompanhou Tobias em uma longa jornada, protegendo-o dos perigos, ajudando em seu casamento com Sara (libertando-a de um demônio) e curando a cegueira de seu pai Tobit. Ao final, revelou ser 'um dos sete que estão diante do Senhor', mostrando sua alta posição celestial.",
+    history: "A história de Rafael é contada no Livro de Tobias. Disfarçado como um jovem chamado Azarias, ele acompanhou Tobias em uma longa jornada, protegendo-o dos perigos, ajudando em seu casamento com Sara (libertando-a de um demônio) e curando a cegueira de seu pai Tobit. Ao final, revelou ser 'um dos sete que estão diante do Senhor'.",
     symbols: ["Cajado de peregrino", "Peixe", "Vaso de remédios", "Asas verdes"],
-    color: "Verde e Dourado"
+    color: "Verde e Dourado",
+    whenToInvoke: "Invoque São Rafael quando precisar de cura física, emocional ou espiritual, ao iniciar uma viagem, quando buscar um companheiro(a) de vida, para acompanhamento em jornadas difíceis, para restauração de relacionamentos, e quando precisar de forças para recomeçar.",
+    intentions: [
+      { icon: "💚", label: "Cura física", description: "Restauração da saúde do corpo, recuperação de enfermidades" },
+      { icon: "💜", label: "Cura emocional", description: "Cura de traumas, mágoas, tristezas e feridas interiores" },
+      { icon: "🕊", label: "Acompanhamento espiritual", description: "Guia e consolo nas jornadas da vida e nos momentos de provação" },
+      { icon: "🛤", label: "Caminhos de vida", description: "Orientação em mudanças, decisões e novas direções" }
+    ],
+    specialPrayer: `Glorioso São Rafael Arcanjo, medicina celestial do Altíssimo, vós que fostes enviado por Deus para curar Tobit de sua cegueira e libertar Sara do demônio que a atormentava, voltai vosso olhar misericordioso para mim. Tocai meu corpo enfermo com vossa luz curativa. Penetrai em cada célula, cada órgão, cada sistema do meu corpo. Curai também as feridas da minha alma, as mágoas do meu coração, os traumas do meu passado. Acompanhai-me em todas as jornadas da vida, protegendo-me dos perigos e guiando-me pelos caminhos de Deus. Por Jesus Cristo, nosso Senhor. Amém.`
   }
 };
 
