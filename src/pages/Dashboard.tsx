@@ -502,7 +502,7 @@ const SpecialContentSection = () => {
           const IconComp = mod.icon;
 
           return (
-            <Card key={mod.id} className={`transition-all duration-300 ${isUnlocked ? 'border-green-500/30 bg-gradient-to-br from-card to-green-500/5' : 'border-gold/15'}`}>
+            <Card key={mod.id} className={`transition-all duration-300 ${isUnlocked ? 'border-green-500/30 bg-gradient-to-br from-card to-green-500/5' : 'border-gold/15 hover:border-[#4ade80] hover:shadow-[0_10px_25px_rgba(74,222,128,0.25)] hover:-translate-y-1'}`}>
               <CardContent className="p-5 flex flex-col items-center text-center gap-3">
                 <div className={`p-3 rounded-xl ${isUnlocked ? 'bg-green-500/10' : 'bg-gold/10'}`}>
                   <IconComp className={`w-6 h-6 ${isUnlocked ? 'text-green-400' : 'text-gold'}`} />
