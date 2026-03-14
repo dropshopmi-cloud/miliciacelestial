@@ -541,6 +541,9 @@ const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDev
         </div>
       </section>
 
+      {/* Conteúdos Especiais */}
+      <SpecialContentSection />
+
       {/* Hoje Para Você */}
       <section>
         <div className="flex items-center gap-3 mb-5">
