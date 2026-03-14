@@ -37,7 +37,14 @@ import {
   ScrollText,
   Sun,
   Moon,
-  
+  Lock,
+  Unlock,
+  ShoppingCart,
+  KeyRound,
+  HandHeart,
+  Flame,
+  ShieldCheck,
+  Gem,
 } from 'lucide-react';
 import archangelsHero from '@/assets/three-archangels.jpg';
 import arcanjoMiguel from '@/assets/arcanjo-miguel.png';
