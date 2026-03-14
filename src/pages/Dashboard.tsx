@@ -557,7 +557,7 @@ const SpecialContentSection = () => {
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="w-full text-xs text-muted-foreground hover:text-foreground"
+                      className="w-full text-xs text-muted-foreground border border-transparent hover:border-[#4ade80] hover:text-[#4ade80] transition-all duration-300"
                       onClick={() => window.open('#', '_blank')}
                     >
                       <ShoppingCart className="w-3.5 h-3.5 mr-1.5" />
