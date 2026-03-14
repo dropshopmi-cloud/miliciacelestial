@@ -434,8 +434,147 @@ const BackButton = ({ onClick }: { onClick: () => void }) => (
     <span>Voltar</span>
   </motion.button>
 );
+const SPECIAL_MODULES = [
+  {
+    id: 'oracoes-ansiedade',
+    title: 'Orações Contra Ansiedade',
+    code: '2580',
+    url: 'https://oracoescontraansiedade.netlify.app/',
+    icon: HandHeart,
+  },
+  {
+    id: '21-dias-nossa-senhora',
+    title: '21 Dias com Nossa Senhora',
+    code: '1914',
+    url: 'https://devocionalnossasenhora.netlify.app/',
+    icon: Flower2,
+  },
+  {
+    id: 'blindagem-espiritual',
+    title: 'Blindagem Espiritual Católica',
+    code: '2304',
+    url: 'https://blindagemespiritualcatolica.netlify.app/',
+    icon: ShieldCheck,
+  },
+  {
+    id: 'novena-sao-jose',
+    title: 'Novena de São José para Prosperidade',
+    code: '0312',
+    url: 'https://novenaprosperidadesaojose.netlify.app/',
+    icon: Gem,
+  },
+];
 
-const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDevotional, novenaProgress, setActiveSection, setSelectedItem }: any) => {
+const SpecialContentSection = () => {
+  const [unlockedModules, setUnlockedModules] = useState<Record<string, boolean>>(() => {
+    const saved = localStorage.getItem('specialModulesAccess');
+    return saved ? JSON.parse(saved) : {};
+  });
+  const [activeInput, setActiveInput] = useState<string | null>(null);
+  const [inputCode, setInputCode] = useState('');
+  const [error, setError] = useState<string | null>(null);
+
+  const handleUnlock = (moduleId: string, correctCode: string) => {
+    if (inputCode === correctCode) {
+      const updated = { ...unlockedModules, [moduleId]: true };
+      setUnlockedModules(updated);
+      localStorage.setItem('specialModulesAccess', JSON.stringify(updated));
+      setActiveInput(null);
+      setInputCode('');
+      setError(null);
+      toast.success('Acesso liberado!');
+    } else {
+      setError('Código incorreto. Tente novamente.');
+    }
+  };
+
+  return (
+    <section>
+      <div className="flex items-center gap-3 mb-5">
+        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+        <h2 className="text-lg font-display text-foreground tracking-wide">Conteúdos Especiais</h2>
+        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {SPECIAL_MODULES.map((mod) => {
+          const isUnlocked = unlockedModules[mod.id];
+          const isInputActive = activeInput === mod.id;
+          const IconComp = mod.icon;
+
+          return (
+            <Card key={mod.id} className={`transition-all duration-300 ${isUnlocked ? 'border-green-500/30 bg-gradient-to-br from-card to-green-500/5' : 'border-gold/15'}`}>
+              <CardContent className="p-5 flex flex-col items-center text-center gap-3">
+                <div className={`p-3 rounded-xl ${isUnlocked ? 'bg-green-500/10' : 'bg-gold/10'}`}>
+                  <IconComp className={`w-6 h-6 ${isUnlocked ? 'text-green-400' : 'text-gold'}`} />
+                </div>
+                <h3 className="font-display text-base text-foreground leading-tight">{mod.title}</h3>
+
+                {isUnlocked ? (
+                  <div className="w-full space-y-2 mt-1">
+                    <div className="flex items-center justify-center gap-1.5 text-green-400 text-xs font-body">
+                      <Check className="w-3.5 h-3.5" />
+                      <span>Acesso Liberado</span>
+                    </div>
+                    <Button
+                      size="sm"
+                      className="w-full bg-gold hover:bg-gold-light text-navy-dark font-body"
+                      onClick={() => window.open(mod.url, '_blank')}
+                    >
+                      Entrar
+                    </Button>
+                  </div>
+                ) : isInputActive ? (
+                  <div className="w-full space-y-2 mt-1">
+                    <Input
+                      placeholder="Código de 4 dígitos"
+                      maxLength={4}
+                      value={inputCode}
+                      onChange={(e) => { setInputCode(e.target.value); setError(null); }}
+                      className="h-9 text-center text-sm"
+                      autoFocus
+                    />
+                    {error && <p className="text-destructive text-xs font-body">{error}</p>}
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="ghost" className="flex-1 text-xs" onClick={() => { setActiveInput(null); setInputCode(''); setError(null); }}>
+                        Cancelar
+                      </Button>
+                      <Button size="sm" className="flex-1 bg-gold hover:bg-gold-light text-navy-dark text-xs" onClick={() => handleUnlock(mod.id, mod.code)}>
+                        Confirmar
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="w-full space-y-2 mt-1">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full text-xs border-gold/30 text-gold hover:bg-gold/10"
+                      onClick={() => { setActiveInput(mod.id); setInputCode(''); setError(null); }}
+                    >
+                      <KeyRound className="w-3.5 h-3.5 mr-1.5" />
+                      Inserir Código
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="w-full text-xs text-muted-foreground hover:text-foreground"
+                      onClick={() => window.open('#', '_blank')}
+                    >
+                      <ShoppingCart className="w-3.5 h-3.5 mr-1.5" />
+                      Comprar Acesso
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+    </section>
+  );
+};
+
+
   const completedNovenas = novenaProgress.length;
 
   const archangels = [
