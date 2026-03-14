@@ -574,7 +574,7 @@ const SpecialContentSection = () => {
   );
 };
 
-
+const HomeSection = ({ userName, dailyPassage, dailyPrayer, dailyQuote, todayDevotional, novenaProgress, setActiveSection, setSelectedItem }: any) => {
   const completedNovenas = novenaProgress.length;
 
   const archangels = [
