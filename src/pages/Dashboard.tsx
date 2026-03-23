@@ -45,6 +45,7 @@ import {
   Flame,
   ShieldCheck,
   Gem,
+  Mail,
 } from 'lucide-react';
 import archangelsHero from '@/assets/three-archangels.jpg';
 import arcanjoMiguel from '@/assets/arcanjo-miguel.png';
