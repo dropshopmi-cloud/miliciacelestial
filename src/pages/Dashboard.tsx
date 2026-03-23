@@ -307,7 +307,10 @@ const Dashboard = () => {
             {menuItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => { setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); setSearchQuery(''); setShowFavoritesOnly(false); }}
+                onClick={() => { 
+                  if (item.id === 'suporte') { window.location.href = 'mailto:caminho.suportte@gmail.com'; return; }
+                  setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); setSearchQuery(''); setShowFavoritesOnly(false); 
+                }}
                 className={`px-4 py-2 rounded-lg font-body text-sm transition-all duration-300 ${
                   activeSection === item.id 
                     ? 'bg-gold/20 text-gold shadow-sm border border-gold/20' 
