@@ -558,15 +558,17 @@ const SpecialContentSection = () => {
                       <KeyRound className="w-3.5 h-3.5 mr-1.5" />
                       Inserir Código
                     </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="w-full text-xs border-gold/30 text-gold hover:bg-[#4ade80] hover:text-white hover:border-gold/30 transition-all duration-300"
-                      onClick={() => window.open('#', '_blank')}
-                    >
-                      <ShoppingCart className="w-3.5 h-3.5 mr-1.5" />
-                      Comprar Acesso
-                    </Button>
+                    {mod.buyUrl && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full text-xs border-gold/30 text-gold hover:bg-[#4ade80] hover:text-white hover:border-gold/30 transition-all duration-300"
+                        onClick={() => window.open(mod.buyUrl, '_blank')}
+                      >
+                        <ShoppingCart className="w-3.5 h-3.5 mr-1.5" />
+                        Comprar Acesso
+                      </Button>
+                    )}
                   </div>
                 )}
               </CardContent>
