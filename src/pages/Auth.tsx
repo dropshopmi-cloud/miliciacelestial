@@ -241,6 +241,21 @@ const Auth = () => {
                 </Button>
               </motion.div>
             </form>
+
+            <motion.div
+              className="text-center mt-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              <a
+                href="mailto:caminho.suportte@gmail.com"
+                className="text-sm text-gold hover:text-gold-light transition-colors font-body inline-flex items-center gap-1.5"
+              >
+                <Mail className="w-4 h-4" />
+                Suporte
+              </a>
+            </motion.div>
           </CardContent>
         </Card>
       </motion.div>

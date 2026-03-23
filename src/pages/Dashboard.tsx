@@ -45,6 +45,7 @@ import {
   Flame,
   ShieldCheck,
   Gem,
+  Mail,
 } from 'lucide-react';
 import archangelsHero from '@/assets/three-archangels.jpg';
 import arcanjoMiguel from '@/assets/arcanjo-miguel.png';
@@ -150,6 +151,7 @@ const Dashboard = () => {
     { id: 'rosary', label: 'Rosário', icon: Flower2 },
     { id: 'calendar', label: 'Calendário', icon: Calendar },
     { id: 'archangels', label: 'Arcanjos', icon: Cross },
+    { id: 'suporte', label: 'Suporte', icon: Mail },
   ];
 
   if (loading) {
@@ -305,7 +307,10 @@ const Dashboard = () => {
             {menuItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => { setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); setSearchQuery(''); setShowFavoritesOnly(false); }}
+                onClick={() => { 
+                  if (item.id === 'suporte') { window.location.href = 'mailto:caminho.suportte@gmail.com'; return; }
+                  setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); setSearchQuery(''); setShowFavoritesOnly(false); 
+                }}
                 className={`px-4 py-2 rounded-lg font-body text-sm transition-all duration-300 ${
                   activeSection === item.id 
                     ? 'bg-gold/20 text-gold shadow-sm border border-gold/20' 
@@ -396,7 +401,10 @@ const Dashboard = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    onClick={() => { setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); setMobileMenuOpen(false); setSearchQuery(''); setShowFavoritesOnly(false); }} 
+                    onClick={() => { 
+                      if (item.id === 'suporte') { window.location.href = 'mailto:caminho.suportte@gmail.com'; setMobileMenuOpen(false); return; }
+                      setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); setMobileMenuOpen(false); setSearchQuery(''); setShowFavoritesOnly(false); 
+                    }} 
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeSection === item.id ? 'bg-gold/20 text-gold border border-gold/20' : 'text-cream/70 hover:bg-gold/10 hover:text-cream'}`}
                   >
                     <item.icon className="w-5 h-5" />
@@ -439,28 +447,32 @@ const SPECIAL_MODULES = [
     id: 'oracoes-ansiedade',
     title: 'Orações Contra Ansiedade',
     code: '2580',
-    url: 'https://oracoescontraansiedade.netlify.app/',
+    url: 'https://oracoesansiedade.caminhosdasantidade.site',
+    buyUrl: 'https://pay.hotmart.com/E105025674B',
     icon: HandHeart,
   },
   {
     id: '21-dias-nossa-senhora',
     title: '21 Dias com Nossa Senhora',
     code: '1914',
-    url: 'https://devocionalnossasenhora.netlify.app/',
+    url: 'https://devocionalnossasenhora.caminhosdasantidade.site',
+    buyUrl: null,
     icon: Flower2,
   },
   {
     id: 'blindagem-espiritual',
     title: 'Blindagem Espiritual Católica',
     code: '2304',
-    url: 'https://blindagemespiritualcatolica.netlify.app/',
+    url: 'https://blindagemespiritual.caminhosdasantidade.site',
+    buyUrl: 'https://pay.hotmart.com/W105025612T',
     icon: ShieldCheck,
   },
   {
     id: 'novena-sao-jose',
     title: 'Novena de São José para Prosperidade',
     code: '0312',
-    url: 'https://novenaprosperidadesaojose.netlify.app/',
+    url: 'https://novenasaojose.caminhosdasantidade.site',
+    buyUrl: 'https://pay.hotmart.com/E105025655G',
     icon: Gem,
   },
 ];
@@ -554,15 +566,17 @@ const SpecialContentSection = () => {
                       <KeyRound className="w-3.5 h-3.5 mr-1.5" />
                       Inserir Código
                     </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="w-full text-xs border-gold/30 text-gold hover:bg-[#4ade80] hover:text-white hover:border-gold/30 transition-all duration-300"
-                      onClick={() => window.open('#', '_blank')}
-                    >
-                      <ShoppingCart className="w-3.5 h-3.5 mr-1.5" />
-                      Comprar Acesso
-                    </Button>
+                    {mod.buyUrl && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="w-full text-xs border-gold/30 text-gold hover:bg-[#4ade80] hover:text-white hover:border-gold/30 transition-all duration-300"
+                        onClick={() => window.open(mod.buyUrl, '_blank')}
+                      >
+                        <ShoppingCart className="w-3.5 h-3.5 mr-1.5" />
+                        Comprar Acesso
+                      </Button>
+                    )}
                   </div>
                 )}
               </CardContent>
