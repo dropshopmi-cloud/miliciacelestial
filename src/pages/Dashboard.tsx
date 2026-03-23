@@ -456,7 +456,7 @@ const SPECIAL_MODULES = [
     title: '21 Dias com Nossa Senhora',
     code: '1914',
     url: 'https://devocionalnossasenhora.caminhosdasantidade.site',
-    buyUrl: null,
+    buyUrl: 'https://pay.hotmart.com/I104993193M',
     icon: Flower2,
   },
   {
