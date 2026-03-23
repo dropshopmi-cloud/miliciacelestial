@@ -401,7 +401,10 @@ const Dashboard = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
-                    onClick={() => { setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); setMobileMenuOpen(false); setSearchQuery(''); setShowFavoritesOnly(false); }} 
+                    onClick={() => { 
+                      if (item.id === 'suporte') { window.location.href = 'mailto:caminho.suportte@gmail.com'; setMobileMenuOpen(false); return; }
+                      setActiveSection(item.id); setSelectedCategory(null); setSelectedItem(null); setMobileMenuOpen(false); setSearchQuery(''); setShowFavoritesOnly(false); 
+                    }} 
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeSection === item.id ? 'bg-gold/20 text-gold border border-gold/20' : 'text-cream/70 hover:bg-gold/10 hover:text-cream'}`}
                   >
                     <item.icon className="w-5 h-5" />
