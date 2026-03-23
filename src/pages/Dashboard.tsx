@@ -150,6 +150,7 @@ const Dashboard = () => {
     { id: 'rosary', label: 'Rosário', icon: Flower2 },
     { id: 'calendar', label: 'Calendário', icon: Calendar },
     { id: 'archangels', label: 'Arcanjos', icon: Cross },
+    { id: 'suporte', label: 'Suporte', icon: Mail },
   ];
 
   if (loading) {
